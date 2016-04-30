@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EntidadAdmViewDlg" widgetVar="EntidadAdmViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_adm.ViewEntidadAdmTitle}" closeOnEscape="true">
+
+            <h:form id="EntidadAdmViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{entidadAdmController.selected != null}">
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_idEntidad}"/>
+                        <h:outputText value="#{entidadAdmController.selected.idEntidad}" title="#{msg_adm.ViewEntidadAdmTitle_idEntidad}"/>
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_tipoEmpresa}"/>
+                        <h:outputText value="#{entidadAdmController.selected.tipoEmpresa}" title="#{msg_adm.ViewEntidadAdmTitle_tipoEmpresa}"/>
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_dni}"/>
+                        <h:outputText value="#{entidadAdmController.selected.dni}" title="#{msg_adm.ViewEntidadAdmTitle_dni}"/>
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_nombre}"/>
+                        <h:outputText value="#{entidadAdmController.selected.nombre}" title="#{msg_adm.ViewEntidadAdmTitle_nombre}"/>
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_apellido}"/>
+                        <h:outputText value="#{entidadAdmController.selected.apellido}" title="#{msg_adm.ViewEntidadAdmTitle_apellido}"/>
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_senalUsuario}"/>
+                        <h:selectBooleanCheckbox id="senalUsuario" value="#{entidadAdmController.selected.senalUsuario}" title="#{msg_adm.EditEntidadAdmTitle_senalUsuario}"  disabled="true"/>
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_ciudad}"/>
+                        <h:outputText value="#{entidadAdmController.selected.ciudad.nombreCorto}"/>
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_genero}"/>
+                        <h:outputText value="#{entidadAdmController.selected.genero.nombreCorto}"/>
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_nacionalidad}"/>
+                        <h:outputText value="#{entidadAdmController.selected.nacionalidad.nombreCorto}"/>
+
+                        <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_tipoidentificacion}"/>
+                        <h:outputText value="#{entidadAdmController.selected.tipoidentificacion.nombreCorto}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_adm.Close}" onclick="PF('EntidadAdmViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

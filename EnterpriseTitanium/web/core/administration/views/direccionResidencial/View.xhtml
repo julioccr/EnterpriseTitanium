@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DireccionResidencialViewDlg" widgetVar="DireccionResidencialViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_adm.ViewDireccionResidencialTitle}" closeOnEscape="true">
+
+            <h:form id="DireccionResidencialViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{direccionResidencialController.selected != null}">
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_idDireccion}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.idDireccion}" title="#{msg_adm.ViewDireccionResidencialTitle_idDireccion}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_calle}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.calle}" title="#{msg_adm.ViewDireccionResidencialTitle_calle}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_numero}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.numero}" title="#{msg_adm.ViewDireccionResidencialTitle_numero}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_nivel}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.nivel}" title="#{msg_adm.ViewDireccionResidencialTitle_nivel}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_referencia}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.referencia}" title="#{msg_adm.ViewDireccionResidencialTitle_referencia}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_fechaRegistro}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.fechaRegistro}" title="#{msg_adm.ViewDireccionResidencialTitle_fechaRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_estado}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.estado}" title="#{msg_adm.ViewDireccionResidencialTitle_estado}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_ciudad}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.ciudad.nombreCorto}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_idEntidad}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.idEntidad.nombre}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_lugar}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.lugar.nombreCorto}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_pais}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.pais.nombreCorto}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_sector}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.sector.nombreCorto}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_urbanizacion}"/>
+                        <h:outputText value="#{direccionResidencialController.selected.urbanizacion.nombreCorto}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_adm.Close}" onclick="PF('DireccionResidencialViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

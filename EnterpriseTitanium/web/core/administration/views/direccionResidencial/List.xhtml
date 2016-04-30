@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DireccionResidencialListForm">
+
+        <p:panel header="#{msg_adm.ListDireccionResidencialTitle}">
+            <p:contextMenu id="DireccionResidencialDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_adm.Create}" onclick="document.getElementById('DireccionResidencialListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_adm.View}" onclick="document.getElementById('DireccionResidencialListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_adm.Edit}" onclick="document.getElementById('DireccionResidencialListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_adm.Delete}" onclick="document.getElementById('DireccionResidencialListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_ciudad}" icon="ui-icon-search"  actionListener="#{direccionResidencialController.prepareCiudad}" update=":TablaLogicaAdmViewForm" oncomplete="PF('TablaLogicaAdmViewDialog').show()" disabled="#{empty direccionResidencialController.selected.ciudad}"/>  
+                <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_idEntidad}" icon="ui-icon-search"  actionListener="#{direccionResidencialController.prepareIdEntidad}" update=":EntidadAdmViewForm" oncomplete="PF('EntidadAdmViewDialog').show()" disabled="#{empty direccionResidencialController.selected.idEntidad}"/>  
+                <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_lugar}" icon="ui-icon-search"  actionListener="#{direccionResidencialController.prepareLugar}" update=":TablaLogicaAdmViewForm" oncomplete="PF('TablaLogicaAdmViewDialog').show()" disabled="#{empty direccionResidencialController.selected.lugar}"/>  
+                <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_pais}" icon="ui-icon-search"  actionListener="#{direccionResidencialController.preparePais}" update=":TablaLogicaAdmViewForm" oncomplete="PF('TablaLogicaAdmViewDialog').show()" disabled="#{empty direccionResidencialController.selected.pais}"/>  
+                <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_sector}" icon="ui-icon-search"  actionListener="#{direccionResidencialController.prepareSector}" update=":TablaLogicaAdmViewForm" oncomplete="PF('TablaLogicaAdmViewDialog').show()" disabled="#{empty direccionResidencialController.selected.sector}"/>  
+                <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_urbanizacion}" icon="ui-icon-search"  actionListener="#{direccionResidencialController.prepareUrbanizacion}" update=":TablaLogicaAdmViewForm" oncomplete="PF('TablaLogicaAdmViewDialog').show()" disabled="#{empty direccionResidencialController.selected.urbanizacion}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{direccionResidencialController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{direccionResidencialController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{direccionResidencialController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idDireccion}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DireccionResidencialDataTableContextMenu" listener="#{direccionResidencialController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DireccionResidencialDataTableContextMenu" listener="#{direccionResidencialController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{direccionResidencialController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DireccionResidencialListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idDireccion}" filterBy="#{item.idDireccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_idDireccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idDireccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.calle}" filterBy="#{item.calle}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_calle}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.calle}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numero}" filterBy="#{item.numero}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_numero}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numero}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nivel}" filterBy="#{item.nivel}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_nivel}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nivel}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.referencia}" filterBy="#{item.referencia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_referencia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.referencia}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaRegistro}" filterBy="#{item.fechaRegistro}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_fechaRegistro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaRegistro}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ciudad.nombreCorto}" filterBy="#{item.ciudad.nombreCorto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_ciudad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ciudad.nombreCorto}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.idEntidad.nombre}" filterBy="#{item.idEntidad.nombre}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_idEntidad}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idEntidad.nombre}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.lugar.nombreCorto}" filterBy="#{item.lugar.nombreCorto}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_lugar}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.lugar.nombreCorto}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.pais.nombreCorto}" filterBy="#{item.pais.nombreCorto}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_pais}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.pais.nombreCorto}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.sector.nombreCorto}" filterBy="#{item.sector.nombreCorto}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_sector}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.sector.nombreCorto}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.urbanizacion.nombreCorto}" filterBy="#{item.urbanizacion.nombreCorto}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_adm.ListDireccionResidencialTitle_urbanizacion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.urbanizacion.nombreCorto}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_adm.Create}" actionListener="#{direccionResidencialController.prepareCreate}" update=":DireccionResidencialCreateForm" oncomplete="PF('DireccionResidencialCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_adm.View}" update=":DireccionResidencialViewForm" oncomplete="PF('DireccionResidencialViewDialog').show()" disabled="#{empty direccionResidencialController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_adm.Edit}" update=":DireccionResidencialEditForm" oncomplete="PF('DireccionResidencialEditDialog').show()" disabled="#{empty direccionResidencialController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_adm.Delete}" actionListener="#{direccionResidencialController.delete}" update=":growl,datalist" disabled="#{empty direccionResidencialController.selected}">
+                <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/administration/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

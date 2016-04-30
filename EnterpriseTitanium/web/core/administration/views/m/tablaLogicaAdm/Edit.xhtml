@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TablaLogicaAdmEditPage" lazy="true">
+        <pm:header title="#{msg_adm.EditTablaLogicaAdmTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_adm.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TablaLogicaAdmListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TablaLogicaAdmEditForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="TablaLogicaAdmTabView">
+
+                        <p:tab id="TablaLogicaAdmTab1" title="#{msg_adm.TabHeaderPrefix} 1">
+                            <p:outputPanel rendered="#{tablaLogicaAdmController.selected != null}">
+                                <pm:field>
+                                    <h:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_idCodec}" for="idCodec" />
+                                    <h:panelGroup>
+                                        <h:outputText id="idCodec" value="#{tablaLogicaAdmController.selected.idCodec}" />
+                                        <p:tooltip for="idCodec" value="#{tablaLogicaAdmController.getComponentMessages('idCodec', msg_adm.EditTablaLogicaAdmHelpText_idCodec)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_tipotabla}" for="tipotabla" />
+                                    <h:panelGroup>
+                                        <p:inputText id="tipotabla" value="#{tablaLogicaAdmController.selected.tipotabla}" title="#{msg_adm.EditTablaLogicaAdmTitle_tipotabla}" required="true" requiredMessage="#{msg_adm.EditTablaLogicaAdmRequiredMessage_tipotabla}" size="20" maxlength="20"/>
+                                        <p:tooltip for="tipotabla" value="#{tablaLogicaAdmController.getComponentMessages('tipotabla', msg_adm.EditTablaLogicaAdmHelpText_tipotabla)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_codePadre}" for="codePadre" />
+                                    <h:panelGroup>
+                                        <p:inputText id="codePadre" value="#{tablaLogicaAdmController.selected.codePadre}" title="#{msg_adm.EditTablaLogicaAdmTitle_codePadre}"/>
+                                        <p:tooltip for="codePadre" value="#{tablaLogicaAdmController.getComponentMessages('codePadre', msg_adm.EditTablaLogicaAdmHelpText_codePadre)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_nombreCorto}" for="nombreCorto" />
+                                    <h:panelGroup>
+                                        <p:inputText id="nombreCorto" value="#{tablaLogicaAdmController.selected.nombreCorto}" title="#{msg_adm.EditTablaLogicaAdmTitle_nombreCorto}" required="true" requiredMessage="#{msg_adm.EditTablaLogicaAdmRequiredMessage_nombreCorto}" size="45" maxlength="45"/>
+                                        <p:tooltip for="nombreCorto" value="#{tablaLogicaAdmController.getComponentMessages('nombreCorto', msg_adm.EditTablaLogicaAdmHelpText_nombreCorto)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_nombreLargo}" for="nombreLargo" />
+                                    <h:panelGroup>
+                                        <p:inputText id="nombreLargo" value="#{tablaLogicaAdmController.selected.nombreLargo}" title="#{msg_adm.EditTablaLogicaAdmTitle_nombreLargo}" required="true" requiredMessage="#{msg_adm.EditTablaLogicaAdmRequiredMessage_nombreLargo}" size="45" maxlength="45"/>
+                                        <p:tooltip for="nombreLargo" value="#{tablaLogicaAdmController.getComponentMessages('nombreLargo', msg_adm.EditTablaLogicaAdmHelpText_nombreLargo)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_codelang}" for="codelang" />
+                                    <h:panelGroup>
+                                        <p:inputText id="codelang" value="#{tablaLogicaAdmController.selected.codelang}" title="#{msg_adm.EditTablaLogicaAdmTitle_codelang}" size="45" maxlength="45"/>
+                                        <p:tooltip for="codelang" value="#{tablaLogicaAdmController.getComponentMessages('codelang', msg_adm.EditTablaLogicaAdmHelpText_codelang)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_estado}" for="estado" />
+                                    <h:panelGroup>
+                                        <p:inputText id="estado" value="#{tablaLogicaAdmController.selected.estado}" title="#{msg_adm.EditTablaLogicaAdmTitle_estado}" size="1" maxlength="1"/>
+                                        <p:tooltip for="estado" value="#{tablaLogicaAdmController.getComponentMessages('estado', msg_adm.EditTablaLogicaAdmHelpText_estado)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_descripcion}" for="descripcion" />
+                                    <h:panelGroup>
+                                        <p:inputText id="descripcion" value="#{tablaLogicaAdmController.selected.descripcion}" title="#{msg_adm.EditTablaLogicaAdmTitle_descripcion}" size="255" maxlength="255"/>
+                                        <p:tooltip for="descripcion" value="#{tablaLogicaAdmController.getComponentMessages('descripcion', msg_adm.EditTablaLogicaAdmHelpText_descripcion)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_fechaRegistro}" for="fechaRegistro" />
+                                    <h:panelGroup>
+                                        <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{tablaLogicaAdmController.selected.fechaRegistro}" title="#{msg_adm.EditTablaLogicaAdmTitle_fechaRegistro}"  showOn="button"/>
+                                        <p:tooltip for="fechaRegistro" value="#{tablaLogicaAdmController.getComponentMessages('fechaRegistro', msg_adm.EditTablaLogicaAdmHelpText_fechaRegistro)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_fechaModificacion}" for="fechaModificacion" />
+                                    <h:panelGroup>
+                                        <p:calendar id="fechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{tablaLogicaAdmController.selected.fechaModificacion}" title="#{msg_adm.EditTablaLogicaAdmTitle_fechaModificacion}"  showOn="button"/>
+                                        <p:tooltip for="fechaModificacion" value="#{tablaLogicaAdmController.getComponentMessages('fechaModificacion', msg_adm.EditTablaLogicaAdmHelpText_fechaModificacion)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_userRegistro}" for="userRegistro" />
+                                    <h:panelGroup>
+                                        <p:inputText id="userRegistro" value="#{tablaLogicaAdmController.selected.userRegistro}" title="#{msg_adm.EditTablaLogicaAdmTitle_userRegistro}"/>
+                                        <p:tooltip for="userRegistro" value="#{tablaLogicaAdmController.getComponentMessages('userRegistro', msg_adm.EditTablaLogicaAdmHelpText_userRegistro)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{msg_adm.EditTablaLogicaAdmLabel_userModificion}" for="userModificion" />
+                                    <h:panelGroup>
+                                        <p:inputText id="userModificion" value="#{tablaLogicaAdmController.selected.userModificion}" title="#{msg_adm.EditTablaLogicaAdmTitle_userModificion}"/>
+                                        <p:tooltip for="userModificion" value="#{tablaLogicaAdmController.getComponentMessages('userModificion', msg_adm.EditTablaLogicaAdmHelpText_userModificion)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+                            </p:outputPanel>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton actionListener="#{tablaLogicaAdmController.save}" value="#{msg_adm.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:TablaLogicaAdmListPage:TablaLogicaAdmListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:TablaLogicaAdmListPage')}">
+                        <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

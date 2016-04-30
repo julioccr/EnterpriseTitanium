@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DireccionResidencialViewPage" lazy="true">
+        <pm:header title="#{msg_adm.ViewDireccionResidencialTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_adm.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DireccionResidencialListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DireccionResidencialViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{direccionResidencialController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_idDireccion}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.idDireccion}" title="#{msg_adm.ViewDireccionResidencialTitle_idDireccion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_calle}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.calle}" title="#{msg_adm.ViewDireccionResidencialTitle_calle}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_numero}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.numero}" title="#{msg_adm.ViewDireccionResidencialTitle_numero}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_nivel}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.nivel}" title="#{msg_adm.ViewDireccionResidencialTitle_nivel}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_referencia}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.referencia}" title="#{msg_adm.ViewDireccionResidencialTitle_referencia}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_fechaRegistro}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.fechaRegistro}" title="#{msg_adm.ViewDireccionResidencialTitle_fechaRegistro}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_estado}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.estado}" title="#{msg_adm.ViewDireccionResidencialTitle_estado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_ciudad}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.ciudad.nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_idEntidad}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.idEntidad.nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_lugar}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.lugar.nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_pais}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.pais.nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_sector}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.sector.nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionResidencialLabel_urbanizacion}"/>
+                            <h:outputText value="#{direccionResidencialController.selected.urbanizacion.nombreCorto}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DireccionElectronicaViewDlg" widgetVar="DireccionElectronicaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_adm.ViewDireccionElectronicaTitle}" closeOnEscape="true">
+
+            <h:form id="DireccionElectronicaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{direccionElectronicaController.selected != null}">
+
+                        <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_idDireccionDigital}"/>
+                        <h:outputText value="#{direccionElectronicaController.selected.idDireccionDigital}" title="#{msg_adm.ViewDireccionElectronicaTitle_idDireccionDigital}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_direccion}"/>
+                        <h:outputText value="#{direccionElectronicaController.selected.direccion}" title="#{msg_adm.ViewDireccionElectronicaTitle_direccion}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_estadoDireccion}"/>
+                        <h:outputText value="#{direccionElectronicaController.selected.estadoDireccion}" title="#{msg_adm.ViewDireccionElectronicaTitle_estadoDireccion}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_idEntidad}"/>
+                        <h:outputText value="#{direccionElectronicaController.selected.idEntidad.nombre}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_lugar}"/>
+                        <h:outputText value="#{direccionElectronicaController.selected.lugar.nombreCorto}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_tipoCorreo}"/>
+                        <h:outputText value="#{direccionElectronicaController.selected.tipoCorreo.nombreCorto}"/>
+
+                        <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_tipoUrl}"/>
+                        <h:outputText value="#{direccionElectronicaController.selected.tipoUrl.nombreCorto}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_adm.Close}" onclick="PF('DireccionElectronicaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

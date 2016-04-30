@@ -23,8 +23,17 @@
                     <p:menuitem value="#{msg_security.SegAccesoModuloHeading}..." outcome="/core/securitymaneger/views/segAccesoModulo/index" />
                     <p:menuitem value="#{msg_security.TablaLogicaHeading}..." outcome="/core/securitymaneger/views/tablaLogica/index" />
                     <p:menuitem value="#{msg_security.TransaccionHeading}..." outcome="/core/securitymaneger/views/transaccion/index" />
+                </p:submenu> 
+                <p:submenu label="#{msg_adm.Maintenance}">
+                     <p:menuitem value="#{msg_adm.DireccionElectronicaHeading}..." outcome="/core/administration/views/direccionElectronica/index" />
+                    <p:menuitem value="#{msg_adm.DireccionResidencialHeading}..." outcome="/core/administration/views/direccionResidencial/index" />
+                    <p:menuitem value="#{msg_adm.EntidadAdmHeading}..." outcome="/core/administration/views/entidades/index" />
+                    <p:menuitem value="#{msg_adm.TablaLogicaAdmHeading}..." outcome="/core/administration/views/propiedades/index" />
+                    <p:menuitem value="#{msg_adm.TelefoninoHeading}..." outcome="/core/administration/views/contactmoviles/index" />
+                    
                 </p:submenu>
                 <p:menuitem value="#{msg_security.Mobile}" outcome="/core/securitymaneger/views/m/index" icon="ui-icon-signal"/>
+                 <p:menuitem value="#{msg_adm.Mobile}" outcome="/core/administration/views/m/index" icon="ui-icon-signal"/>
             </p:menubar>
         </h:form>
     </ui:composition>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TelefoninoViewPage" lazy="true">
+        <pm:header title="#{msg_adm.ViewTelefoninoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_adm.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TelefoninoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TelefoninoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{telefoninoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewTelefoninoLabel_idDireccionTelefonica}"/>
+                            <h:outputText value="#{telefoninoController.selected.idDireccionTelefonica}" title="#{msg_adm.ViewTelefoninoTitle_idDireccionTelefonica}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewTelefoninoLabel_codigoPais}"/>
+                            <h:outputText value="#{telefoninoController.selected.codigoPais}" title="#{msg_adm.ViewTelefoninoTitle_codigoPais}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewTelefoninoLabel_numTelefonico}"/>
+                            <h:outputText value="#{telefoninoController.selected.numTelefonico}" title="#{msg_adm.ViewTelefoninoTitle_numTelefonico}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewTelefoninoLabel_estadoTele}"/>
+                            <h:outputText value="#{telefoninoController.selected.estadoTele}" title="#{msg_adm.ViewTelefoninoTitle_estadoTele}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewTelefoninoLabel_idEntidad}"/>
+                            <h:outputText value="#{telefoninoController.selected.idEntidad.nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewTelefoninoLabel_lugar}"/>
+                            <h:outputText value="#{telefoninoController.selected.lugar.nombreCorto}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

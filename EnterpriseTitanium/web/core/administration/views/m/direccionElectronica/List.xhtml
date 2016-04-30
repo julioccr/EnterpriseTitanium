@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DireccionElectronicaListPage">
+        <pm:header title="#{msg_adm.ListDireccionElectronicaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/administration/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_adm.Create}" update=":DireccionElectronicaCreatePage:DireccionElectronicaCreateForm" actionListener="#{direccionElectronicaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:DireccionElectronicaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DireccionElectronicaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{direccionElectronicaController.items}"
+                             var="item"
+                             rowKey="#{item.idDireccionDigital}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{direccionElectronicaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{direccionElectronicaController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{direccionElectronicaController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('DireccionElectronicaListPage:DireccionElectronicaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('DireccionElectronicaListPage:DireccionElectronicaListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('DireccionElectronicaListPage:DireccionElectronicaListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idDireccionDigital}" filterBy="#{item.idDireccionDigital}" headerText="#{msg_adm.ListDireccionElectronicaTitle_idDireccionDigital}">
+                        <h:outputText value="#{item.idDireccionDigital}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}" headerText="#{msg_adm.ListDireccionElectronicaTitle_direccion}">
+                        <h:outputText value="#{item.direccion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.estadoDireccion}" filterBy="#{item.estadoDireccion}" headerText="#{msg_adm.ListDireccionElectronicaTitle_estadoDireccion}">
+                        <h:outputText value="#{item.estadoDireccion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idEntidad.nombre}" filterBy="#{item.idEntidad.nombre}" headerText="#{msg_adm.ListDireccionElectronicaTitle_idEntidad}">
+                        <h:outputText value="#{item.idEntidad.nombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.lugar.nombreCorto}" filterBy="#{item.lugar.nombreCorto}" headerText="#{msg_adm.ListDireccionElectronicaTitle_lugar}">
+                        <h:outputText value="#{item.lugar.nombreCorto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.tipoCorreo.nombreCorto}" filterBy="#{item.tipoCorreo.nombreCorto}" headerText="#{msg_adm.ListDireccionElectronicaTitle_tipoCorreo}">
+                        <h:outputText value="#{item.tipoCorreo.nombreCorto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.tipoUrl.nombreCorto}" filterBy="#{item.tipoUrl.nombreCorto}" headerText="#{msg_adm.ListDireccionElectronicaTitle_tipoUrl}">
+                        <h:outputText value="#{item.tipoUrl.nombreCorto}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_adm.Edit}" update=":DireccionElectronicaEditPage:DireccionElectronicaEditForm" disabled="#{empty direccionElectronicaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:DireccionElectronicaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_adm.Delete}" actionListener="#{direccionElectronicaController.delete}" update=":growl,datalist" disabled="#{empty direccionElectronicaController.selected}">
+                    <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_adm.Menu}" disabled="#{empty direccionElectronicaController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_adm.DireccionElectronicaHeading} #{msg_adm.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_adm.DireccionElectronicaMenuItem_idEntidad}" icon="ui-icon-search" update=":EntidadAdmEditPage:EntidadAdmEditForm" disabled="#{empty direccionElectronicaController.selected.idEntidad}" actionListener="#{direccionElectronicaController.prepareIdEntidad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EntidadAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.DireccionElectronicaMenuItem_lugar}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty direccionElectronicaController.selected.lugar}" actionListener="#{direccionElectronicaController.prepareLugar}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.DireccionElectronicaMenuItem_tipoCorreo}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty direccionElectronicaController.selected.tipoCorreo}" actionListener="#{direccionElectronicaController.prepareTipoCorreo}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.DireccionElectronicaMenuItem_tipoUrl}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty direccionElectronicaController.selected.tipoUrl}" actionListener="#{direccionElectronicaController.prepareTipoUrl}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

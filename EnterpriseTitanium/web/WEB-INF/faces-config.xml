@@ -5,9 +5,13 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <application>
         <resource-bundle>
-            <base-name>/msg_security</base-name>
+            <base-name>/lang/it18/security/msg_security</base-name>
             <var>msg_security</var>
         </resource-bundle>
         <navigation-handler>org.primefaces.mobile.application.MobileNavigationHandler</navigation-handler>
+        <resource-bundle>
+            <base-name>/lang/it18/administracion/msg_adm</base-name>
+            <var>msg_adm</var>
+        </resource-bundle>
     </application>
 </faces-config>

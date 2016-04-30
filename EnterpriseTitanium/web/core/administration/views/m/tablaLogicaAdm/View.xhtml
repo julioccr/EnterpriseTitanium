@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TablaLogicaAdmViewPage" lazy="true">
+        <pm:header title="#{msg_adm.ViewTablaLogicaAdmTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_adm.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TablaLogicaAdmListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TablaLogicaAdmViewForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="TablaLogicaAdmTabView">
+
+                        <p:tab id="TablaLogicaAdmTab1" title="#{msg_adm.TabHeaderPrefix} 1">
+                            <p:outputPanel rendered="#{tablaLogicaAdmController.selected != null}">
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_idCodec}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.idCodec}" title="#{msg_adm.ViewTablaLogicaAdmTitle_idCodec}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_tipotabla}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.tipotabla}" title="#{msg_adm.ViewTablaLogicaAdmTitle_tipotabla}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_codePadre}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.codePadre}" title="#{msg_adm.ViewTablaLogicaAdmTitle_codePadre}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_nombreCorto}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.nombreCorto}" title="#{msg_adm.ViewTablaLogicaAdmTitle_nombreCorto}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_nombreLargo}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.nombreLargo}" title="#{msg_adm.ViewTablaLogicaAdmTitle_nombreLargo}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_codelang}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.codelang}" title="#{msg_adm.ViewTablaLogicaAdmTitle_codelang}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_estado}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.estado}" title="#{msg_adm.ViewTablaLogicaAdmTitle_estado}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_descripcion}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.descripcion}" title="#{msg_adm.ViewTablaLogicaAdmTitle_descripcion}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_fechaRegistro}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.fechaRegistro}" title="#{msg_adm.ViewTablaLogicaAdmTitle_fechaRegistro}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                    </h:outputText>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_fechaModificacion}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.fechaModificacion}" title="#{msg_adm.ViewTablaLogicaAdmTitle_fechaModificacion}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                    </h:outputText>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_userRegistro}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.userRegistro}" title="#{msg_adm.ViewTablaLogicaAdmTitle_userRegistro}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_userModificion}"/>
+                                    <h:outputText value="#{tablaLogicaAdmController.selected.userModificion}" title="#{msg_adm.ViewTablaLogicaAdmTitle_userModificion}"/>
+                                </pm:field>
+                            </p:outputPanel>
+                        </p:tab>
+                    </p:tabView>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

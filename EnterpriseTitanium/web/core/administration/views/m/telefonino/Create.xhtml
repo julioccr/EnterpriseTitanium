@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TelefoninoCreatePage" lazy="true">
+        <pm:header title="#{msg_adm.CreateTelefoninoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_adm.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TelefoninoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TelefoninoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{telefoninoController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.CreateTelefoninoLabel_codigoPais}" for="codigoPais" />
+                            <h:panelGroup>
+                                <p:inputText id="codigoPais" value="#{telefoninoController.selected.codigoPais}" title="#{msg_adm.CreateTelefoninoTitle_codigoPais}" required="true" requiredMessage="#{msg_adm.CreateTelefoninoRequiredMessage_codigoPais}"/>
+                                <p:tooltip for="codigoPais" value="#{telefoninoController.getComponentMessages('codigoPais', msg_adm.CreateTelefoninoHelpText_codigoPais)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.CreateTelefoninoLabel_numTelefonico}" for="numTelefonico" />
+                            <h:panelGroup>
+                                <p:inputText id="numTelefonico" value="#{telefoninoController.selected.numTelefonico}" title="#{msg_adm.CreateTelefoninoTitle_numTelefonico}" required="true" requiredMessage="#{msg_adm.CreateTelefoninoRequiredMessage_numTelefonico}" size="13" maxlength="13"/>
+                                <p:tooltip for="numTelefonico" value="#{telefoninoController.getComponentMessages('numTelefonico', msg_adm.CreateTelefoninoHelpText_numTelefonico)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.CreateTelefoninoLabel_estadoTele}" for="estadoTele" />
+                            <h:panelGroup>
+                                <p:inputText id="estadoTele" value="#{telefoninoController.selected.estadoTele}" title="#{msg_adm.CreateTelefoninoTitle_estadoTele}" size="45" maxlength="45"/>
+                                <p:tooltip for="estadoTele" value="#{telefoninoController.getComponentMessages('estadoTele', msg_adm.CreateTelefoninoHelpText_estadoTele)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.CreateTelefoninoLabel_idEntidad}" for="idEntidad" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idEntidad" value="#{telefoninoController.selected.idEntidad}" required="true" requiredMessage="#{msg_adm.CreateTelefoninoRequiredMessage_idEntidad}" converter="entidadAdmConverter">
+                                    <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                    <f:selectItems value="#{entidadAdmController.items}"
+                                                   var="idEntidadItem"
+                                                   itemValue="#{idEntidadItem}"
+                                                   itemLabel="#{idEntidadItem.nombre.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idEntidad" value="#{telefoninoController.getComponentMessages('idEntidad', msg_adm.CreateTelefoninoHelpText_idEntidad)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.CreateTelefoninoLabel_lugar}" for="lugar" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="lugar" value="#{telefoninoController.selected.lugar}" required="true" requiredMessage="#{msg_adm.CreateTelefoninoRequiredMessage_lugar}" converter="tablaLogicaAdmConverter">
+                                    <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                                   var="lugarItem"
+                                                   itemValue="#{lugarItem}"
+                                                   itemLabel="#{lugarItem.nombreCorto.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="lugar" value="#{telefoninoController.getComponentMessages('lugar', msg_adm.CreateTelefoninoHelpText_lugar)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{telefoninoController.saveNew}" value="#{msg_adm.Save}" update="display,:TelefoninoListPage:TelefoninoListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:TelefoninoListPage')}">
+                        <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

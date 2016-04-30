@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TelefoninoListForm">
+
+        <p:panel header="#{msg_adm.ListTelefoninoTitle}">
+            <p:contextMenu id="TelefoninoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_adm.Create}" onclick="document.getElementById('TelefoninoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_adm.View}" onclick="document.getElementById('TelefoninoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_adm.Edit}" onclick="document.getElementById('TelefoninoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_adm.Delete}" onclick="document.getElementById('TelefoninoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_adm.TelefoninoMenuItem_idEntidad}" icon="ui-icon-search"  actionListener="#{telefoninoController.prepareIdEntidad}" update=":EntidadAdmViewForm" oncomplete="PF('EntidadAdmViewDialog').show()" disabled="#{empty telefoninoController.selected.idEntidad}"/>  
+                <p:menuitem value="#{msg_adm.TelefoninoMenuItem_lugar}" icon="ui-icon-search"  actionListener="#{telefoninoController.prepareLugar}" update=":TablaLogicaAdmViewForm" oncomplete="PF('TablaLogicaAdmViewDialog').show()" disabled="#{empty telefoninoController.selected.lugar}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{telefoninoController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{telefoninoController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{telefoninoController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idDireccionTelefonica}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TelefoninoDataTableContextMenu" listener="#{telefoninoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TelefoninoDataTableContextMenu" listener="#{telefoninoController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{telefoninoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TelefoninoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idDireccionTelefonica}" filterBy="#{item.idDireccionTelefonica}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListTelefoninoTitle_idDireccionTelefonica}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idDireccionTelefonica}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.codigoPais}" filterBy="#{item.codigoPais}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListTelefoninoTitle_codigoPais}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codigoPais}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numTelefonico}" filterBy="#{item.numTelefonico}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListTelefoninoTitle_numTelefonico}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numTelefonico}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estadoTele}" filterBy="#{item.estadoTele}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListTelefoninoTitle_estadoTele}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estadoTele}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idEntidad.nombre}" filterBy="#{item.idEntidad.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListTelefoninoTitle_idEntidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEntidad.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.lugar.nombreCorto}" filterBy="#{item.lugar.nombreCorto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListTelefoninoTitle_lugar}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.lugar.nombreCorto}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_adm.Create}" actionListener="#{telefoninoController.prepareCreate}" update=":TelefoninoCreateForm" oncomplete="PF('TelefoninoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_adm.View}" update=":TelefoninoViewForm" oncomplete="PF('TelefoninoViewDialog').show()" disabled="#{empty telefoninoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_adm.Edit}" update=":TelefoninoEditForm" oncomplete="PF('TelefoninoEditDialog').show()" disabled="#{empty telefoninoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_adm.Delete}" actionListener="#{telefoninoController.delete}" update=":growl,datalist" disabled="#{empty telefoninoController.selected}">
+                <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/administration/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

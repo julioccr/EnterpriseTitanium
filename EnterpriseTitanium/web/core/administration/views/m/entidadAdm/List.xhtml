@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EntidadAdmListPage">
+        <pm:header title="#{msg_adm.ListEntidadAdmTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/administration/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_adm.Create}" update=":EntidadAdmCreatePage:EntidadAdmCreateForm" actionListener="#{entidadAdmController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:EntidadAdmCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EntidadAdmListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{entidadAdmController.items}"
+                             var="item"
+                             rowKey="#{item.idEntidad}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{entidadAdmController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{entidadAdmController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{entidadAdmController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('EntidadAdmListPage:EntidadAdmListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('EntidadAdmListPage:EntidadAdmListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('EntidadAdmListPage:EntidadAdmListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idEntidad}" filterBy="#{item.idEntidad}" headerText="#{msg_adm.ListEntidadAdmTitle_idEntidad}">
+                        <h:outputText value="#{item.idEntidad}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.tipoEmpresa}" filterBy="#{item.tipoEmpresa}" headerText="#{msg_adm.ListEntidadAdmTitle_tipoEmpresa}">
+                        <h:outputText value="#{item.tipoEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.dni}" filterBy="#{item.dni}" headerText="#{msg_adm.ListEntidadAdmTitle_dni}">
+                        <h:outputText value="#{item.dni}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}" headerText="#{msg_adm.ListEntidadAdmTitle_nombre}">
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.apellido}" filterBy="#{item.apellido}" headerText="#{msg_adm.ListEntidadAdmTitle_apellido}">
+                        <h:outputText value="#{item.apellido}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.senalUsuario}" filterBy="#{item.senalUsuario}" headerText="#{msg_adm.ListEntidadAdmTitle_senalUsuario}">
+                        <h:selectBooleanCheckbox id="senalUsuario" value="#{item.senalUsuario}" title="#{msg_adm.EditEntidadAdmTitle_senalUsuario}"  disabled="true"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.ciudad.nombreCorto}" filterBy="#{item.ciudad.nombreCorto}" headerText="#{msg_adm.ListEntidadAdmTitle_ciudad}">
+                        <h:outputText value="#{item.ciudad.nombreCorto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.genero.nombreCorto}" filterBy="#{item.genero.nombreCorto}" headerText="#{msg_adm.ListEntidadAdmTitle_genero}">
+                        <h:outputText value="#{item.genero.nombreCorto}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.nacionalidad.nombreCorto}" filterBy="#{item.nacionalidad.nombreCorto}" headerText="#{msg_adm.ListEntidadAdmTitle_nacionalidad}">
+                                            <h:outputText value="#{item.nacionalidad.nombreCorto}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.tipoidentificacion.nombreCorto}" filterBy="#{item.tipoidentificacion.nombreCorto}" headerText="#{msg_adm.ListEntidadAdmTitle_tipoidentificacion}">
+                                            <h:outputText value="#{item.tipoidentificacion.nombreCorto}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_adm.Edit}" update=":EntidadAdmEditPage:EntidadAdmEditForm" disabled="#{empty entidadAdmController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:EntidadAdmEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_adm.Delete}" actionListener="#{entidadAdmController.delete}" update=":growl,datalist" disabled="#{empty entidadAdmController.selected}">
+                    <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_adm.Menu}" disabled="#{empty entidadAdmController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_adm.EntidadAdmHeading} #{msg_adm.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_adm.EntidadAdmMenuItem_telefoninoCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty entidadAdmController.selected.telefoninoCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{entidadAdmController.navigateTelefoninoCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_adm.EntidadAdmMenuItem_direccionElectronicaCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty entidadAdmController.selected.direccionElectronicaCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{entidadAdmController.navigateDireccionElectronicaCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_adm.EntidadAdmMenuItem_direccionResidencialCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty entidadAdmController.selected.direccionResidencialCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{entidadAdmController.navigateDireccionResidencialCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_adm.EntidadAdmMenuItem_ciudad}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty entidadAdmController.selected.ciudad}" actionListener="#{entidadAdmController.prepareCiudad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.EntidadAdmMenuItem_genero}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty entidadAdmController.selected.genero}" actionListener="#{entidadAdmController.prepareGenero}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.EntidadAdmMenuItem_nacionalidad}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty entidadAdmController.selected.nacionalidad}" actionListener="#{entidadAdmController.prepareNacionalidad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.EntidadAdmMenuItem_tipoidentificacion}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty entidadAdmController.selected.tipoidentificacion}" actionListener="#{entidadAdmController.prepareTipoidentificacion}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

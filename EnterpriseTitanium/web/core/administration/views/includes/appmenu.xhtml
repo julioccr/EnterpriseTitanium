@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="menuForm">
+            <p:menubar>
+                <p:menuitem value="#{msg_adm.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:submenu label="#{msg_adm.Maintenance}">
+                    <p:menuitem value="#{msg_adm.DireccionElectronicaHeading}..." outcome="/core/administration/views/direccionElectronica/index" />
+                    <p:menuitem value="#{msg_adm.DireccionResidencialHeading}..." outcome="/core/administration/views/direccionResidencial/index" />
+                    <p:menuitem value="#{msg_adm.EntidadAdmHeading}..." outcome="/core/administration/views/entidades/index" />
+                    <p:menuitem value="#{msg_adm.TablaLogicaAdmHeading}..." outcome="/core/administration/views/propiedades/index" />
+                    <p:menuitem value="#{msg_adm.TelefoninoHeading}..." outcome="/core/administration/views/contactmoviles/index" />
+                </p:submenu>
+                <p:menuitem value="#{msg_adm.Mobile}" outcome="/core/administration/views/m/index" icon="ui-icon-signal"/>
+            </p:menubar>
+        </h:form>
+    </ui:composition>
+
+</html>

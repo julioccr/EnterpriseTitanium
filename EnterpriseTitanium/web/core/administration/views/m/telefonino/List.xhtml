@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TelefoninoListPage">
+        <pm:header title="#{msg_adm.ListTelefoninoTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/administration/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_adm.Create}" update=":TelefoninoCreatePage:TelefoninoCreateForm" actionListener="#{telefoninoController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:TelefoninoCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TelefoninoListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{telefoninoController.items}"
+                             var="item"
+                             rowKey="#{item.idDireccionTelefonica}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{telefoninoController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{telefoninoController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{telefoninoController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TelefoninoListPage:TelefoninoListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TelefoninoListPage:TelefoninoListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('TelefoninoListPage:TelefoninoListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idDireccionTelefonica}" filterBy="#{item.idDireccionTelefonica}" headerText="#{msg_adm.ListTelefoninoTitle_idDireccionTelefonica}">
+                        <h:outputText value="#{item.idDireccionTelefonica}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.codigoPais}" filterBy="#{item.codigoPais}" headerText="#{msg_adm.ListTelefoninoTitle_codigoPais}">
+                        <h:outputText value="#{item.codigoPais}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numTelefonico}" filterBy="#{item.numTelefonico}" headerText="#{msg_adm.ListTelefoninoTitle_numTelefonico}">
+                        <h:outputText value="#{item.numTelefonico}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.estadoTele}" filterBy="#{item.estadoTele}" headerText="#{msg_adm.ListTelefoninoTitle_estadoTele}">
+                        <h:outputText value="#{item.estadoTele}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idEntidad.nombre}" filterBy="#{item.idEntidad.nombre}" headerText="#{msg_adm.ListTelefoninoTitle_idEntidad}">
+                        <h:outputText value="#{item.idEntidad.nombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.lugar.nombreCorto}" filterBy="#{item.lugar.nombreCorto}" headerText="#{msg_adm.ListTelefoninoTitle_lugar}">
+                        <h:outputText value="#{item.lugar.nombreCorto}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_adm.Edit}" update=":TelefoninoEditPage:TelefoninoEditForm" disabled="#{empty telefoninoController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:TelefoninoEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_adm.Delete}" actionListener="#{telefoninoController.delete}" update=":growl,datalist" disabled="#{empty telefoninoController.selected}">
+                    <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_adm.Menu}" disabled="#{empty telefoninoController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_adm.TelefoninoHeading} #{msg_adm.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_adm.TelefoninoMenuItem_idEntidad}" icon="ui-icon-search" update=":EntidadAdmEditPage:EntidadAdmEditForm" disabled="#{empty telefoninoController.selected.idEntidad}" actionListener="#{telefoninoController.prepareIdEntidad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EntidadAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.TelefoninoMenuItem_lugar}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty telefoninoController.selected.lugar}" actionListener="#{telefoninoController.prepareLugar}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TablaLogicaAdmViewDlg" widgetVar="TablaLogicaAdmViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_adm.ViewTablaLogicaAdmTitle}" closeOnEscape="true">
+
+            <h:form id="TablaLogicaAdmViewForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="TablaLogicaAdmTabView">
+
+                        <p:tab id="TablaLogicaAdmTab1" title="#{msg_adm.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{tablaLogicaAdmController.selected != null}">
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_idCodec}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.idCodec}" title="#{msg_adm.ViewTablaLogicaAdmTitle_idCodec}"/>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_tipotabla}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.tipotabla}" title="#{msg_adm.ViewTablaLogicaAdmTitle_tipotabla}"/>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_codePadre}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.codePadre}" title="#{msg_adm.ViewTablaLogicaAdmTitle_codePadre}"/>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_nombreCorto}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.nombreCorto}" title="#{msg_adm.ViewTablaLogicaAdmTitle_nombreCorto}"/>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_nombreLargo}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.nombreLargo}" title="#{msg_adm.ViewTablaLogicaAdmTitle_nombreLargo}"/>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_codelang}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.codelang}" title="#{msg_adm.ViewTablaLogicaAdmTitle_codelang}"/>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_estado}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.estado}" title="#{msg_adm.ViewTablaLogicaAdmTitle_estado}"/>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_descripcion}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.descripcion}" title="#{msg_adm.ViewTablaLogicaAdmTitle_descripcion}"/>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_fechaRegistro}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.fechaRegistro}" title="#{msg_adm.ViewTablaLogicaAdmTitle_fechaRegistro}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_fechaModificacion}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.fechaModificacion}" title="#{msg_adm.ViewTablaLogicaAdmTitle_fechaModificacion}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_userRegistro}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.userRegistro}" title="#{msg_adm.ViewTablaLogicaAdmTitle_userRegistro}"/>
+
+                                <h:outputText value="#{msg_adm.ViewTablaLogicaAdmLabel_userModificion}"/>
+                                <h:outputText value="#{tablaLogicaAdmController.selected.userModificion}" title="#{msg_adm.ViewTablaLogicaAdmTitle_userModificion}"/>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton value="#{msg_adm.Close}" onclick="PF('TablaLogicaAdmViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

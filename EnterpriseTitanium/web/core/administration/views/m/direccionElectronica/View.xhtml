@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DireccionElectronicaViewPage" lazy="true">
+        <pm:header title="#{msg_adm.ViewDireccionElectronicaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_adm.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DireccionElectronicaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DireccionElectronicaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{direccionElectronicaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_idDireccionDigital}"/>
+                            <h:outputText value="#{direccionElectronicaController.selected.idDireccionDigital}" title="#{msg_adm.ViewDireccionElectronicaTitle_idDireccionDigital}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_direccion}"/>
+                            <h:outputText value="#{direccionElectronicaController.selected.direccion}" title="#{msg_adm.ViewDireccionElectronicaTitle_direccion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_estadoDireccion}"/>
+                            <h:outputText value="#{direccionElectronicaController.selected.estadoDireccion}" title="#{msg_adm.ViewDireccionElectronicaTitle_estadoDireccion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_idEntidad}"/>
+                            <h:outputText value="#{direccionElectronicaController.selected.idEntidad.nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_lugar}"/>
+                            <h:outputText value="#{direccionElectronicaController.selected.lugar.nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_tipoCorreo}"/>
+                            <h:outputText value="#{direccionElectronicaController.selected.tipoCorreo.nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewDireccionElectronicaLabel_tipoUrl}"/>
+                            <h:outputText value="#{direccionElectronicaController.selected.tipoUrl.nombreCorto}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

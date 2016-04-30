@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DireccionElectronicaEditDlg" widgetVar="DireccionElectronicaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_adm.EditDireccionElectronicaTitle}" closeOnEscape="true">
+
+            <h:form id="DireccionElectronicaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{direccionElectronicaController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg_adm.EditDireccionElectronicaLabel_idDireccionDigital}" for="idDireccionDigital" />
+                        <h:panelGroup>
+                            <h:outputText id="idDireccionDigital" value="#{direccionElectronicaController.selected.idDireccionDigital}" />
+                            <p:tooltip for="idDireccionDigital" value="#{direccionElectronicaController.getComponentMessages('idDireccionDigital', msg_adm.EditDireccionElectronicaHelpText_idDireccionDigital)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditDireccionElectronicaLabel_direccion}" for="direccion" />
+                        <h:panelGroup>
+                            <p:inputText id="direccion" value="#{direccionElectronicaController.selected.direccion}" title="#{msg_adm.EditDireccionElectronicaTitle_direccion}" required="true" requiredMessage="#{msg_adm.EditDireccionElectronicaRequiredMessage_direccion}" size="60" maxlength="60"/>
+                            <p:tooltip for="direccion" value="#{direccionElectronicaController.getComponentMessages('direccion', msg_adm.EditDireccionElectronicaHelpText_direccion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditDireccionElectronicaLabel_estadoDireccion}" for="estadoDireccion" />
+                        <h:panelGroup>
+                            <p:inputText id="estadoDireccion" value="#{direccionElectronicaController.selected.estadoDireccion}" title="#{msg_adm.EditDireccionElectronicaTitle_estadoDireccion}" size="45" maxlength="45"/>
+                            <p:tooltip for="estadoDireccion" value="#{direccionElectronicaController.getComponentMessages('estadoDireccion', msg_adm.EditDireccionElectronicaHelpText_estadoDireccion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditDireccionElectronicaLabel_idEntidad}" for="idEntidad" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idEntidad" value="#{direccionElectronicaController.selected.idEntidad}" required="true" requiredMessage="#{msg_adm.EditDireccionElectronicaRequiredMessage_idEntidad}" converter="entidadAdmConverter">
+                                <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                <f:selectItems value="#{entidadAdmController.items}"
+                                               var="idEntidadItem"
+                                               itemValue="#{idEntidadItem}"
+                                               itemLabel="#{idEntidadItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idEntidad" value="#{direccionElectronicaController.getComponentMessages('idEntidad', msg_adm.EditDireccionElectronicaHelpText_idEntidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditDireccionElectronicaLabel_lugar}" for="lugar" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="lugar" value="#{direccionElectronicaController.selected.lugar}" required="true" requiredMessage="#{msg_adm.EditDireccionElectronicaRequiredMessage_lugar}" converter="tablaLogicaAdmConverter">
+                                <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                               var="lugarItem"
+                                               itemValue="#{lugarItem}"
+                                               itemLabel="#{lugarItem.nombreCorto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="lugar" value="#{direccionElectronicaController.getComponentMessages('lugar', msg_adm.EditDireccionElectronicaHelpText_lugar)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditDireccionElectronicaLabel_tipoCorreo}" for="tipoCorreo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipoCorreo" value="#{direccionElectronicaController.selected.tipoCorreo}"  converter="tablaLogicaAdmConverter">
+                                <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                               var="tipoCorreoItem"
+                                               itemValue="#{tipoCorreoItem}"
+                                               itemLabel="#{tipoCorreoItem.nombreCorto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="tipoCorreo" value="#{direccionElectronicaController.getComponentMessages('tipoCorreo', msg_adm.EditDireccionElectronicaHelpText_tipoCorreo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditDireccionElectronicaLabel_tipoUrl}" for="tipoUrl" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipoUrl" value="#{direccionElectronicaController.selected.tipoUrl}"  converter="tablaLogicaAdmConverter">
+                                <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                               var="tipoUrlItem"
+                                               itemValue="#{tipoUrlItem}"
+                                               itemLabel="#{tipoUrlItem.nombreCorto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="tipoUrl" value="#{direccionElectronicaController.getComponentMessages('tipoUrl', msg_adm.EditDireccionElectronicaHelpText_tipoUrl)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{direccionElectronicaController.save}" value="#{msg_adm.Save}" update="display,:DireccionElectronicaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DireccionElectronicaEditDialog'));">
+                        <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg_adm.Cancel}" oncomplete="PF('DireccionElectronicaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

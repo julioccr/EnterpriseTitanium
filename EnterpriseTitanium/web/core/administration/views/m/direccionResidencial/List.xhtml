@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DireccionResidencialListPage">
+        <pm:header title="#{msg_adm.ListDireccionResidencialTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/administration/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_adm.Create}" update=":DireccionResidencialCreatePage:DireccionResidencialCreateForm" actionListener="#{direccionResidencialController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:DireccionResidencialCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DireccionResidencialListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{direccionResidencialController.items}"
+                             var="item"
+                             rowKey="#{item.idDireccion}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{direccionResidencialController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{direccionResidencialController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{direccionResidencialController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('DireccionResidencialListPage:DireccionResidencialListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('DireccionResidencialListPage:DireccionResidencialListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('DireccionResidencialListPage:DireccionResidencialListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idDireccion}" filterBy="#{item.idDireccion}" headerText="#{msg_adm.ListDireccionResidencialTitle_idDireccion}">
+                        <h:outputText value="#{item.idDireccion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.calle}" filterBy="#{item.calle}" headerText="#{msg_adm.ListDireccionResidencialTitle_calle}">
+                        <h:outputText value="#{item.calle}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numero}" filterBy="#{item.numero}" headerText="#{msg_adm.ListDireccionResidencialTitle_numero}">
+                        <h:outputText value="#{item.numero}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nivel}" filterBy="#{item.nivel}" headerText="#{msg_adm.ListDireccionResidencialTitle_nivel}">
+                        <h:outputText value="#{item.nivel}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.referencia}" filterBy="#{item.referencia}" headerText="#{msg_adm.ListDireccionResidencialTitle_referencia}">
+                        <h:outputText value="#{item.referencia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaRegistro}" filterBy="#{item.fechaRegistro}" headerText="#{msg_adm.ListDireccionResidencialTitle_fechaRegistro}">
+                        <h:outputText value="#{item.fechaRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}" headerText="#{msg_adm.ListDireccionResidencialTitle_estado}">
+                        <h:outputText value="#{item.estado}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.ciudad.nombreCorto}" filterBy="#{item.ciudad.nombreCorto}" headerText="#{msg_adm.ListDireccionResidencialTitle_ciudad}">
+                        <h:outputText value="#{item.ciudad.nombreCorto}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.idEntidad.nombre}" filterBy="#{item.idEntidad.nombre}" headerText="#{msg_adm.ListDireccionResidencialTitle_idEntidad}">
+                                            <h:outputText value="#{item.idEntidad.nombre}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.lugar.nombreCorto}" filterBy="#{item.lugar.nombreCorto}" headerText="#{msg_adm.ListDireccionResidencialTitle_lugar}">
+                                            <h:outputText value="#{item.lugar.nombreCorto}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.pais.nombreCorto}" filterBy="#{item.pais.nombreCorto}" headerText="#{msg_adm.ListDireccionResidencialTitle_pais}">
+                                            <h:outputText value="#{item.pais.nombreCorto}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.sector.nombreCorto}" filterBy="#{item.sector.nombreCorto}" headerText="#{msg_adm.ListDireccionResidencialTitle_sector}">
+                                            <h:outputText value="#{item.sector.nombreCorto}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.urbanizacion.nombreCorto}" filterBy="#{item.urbanizacion.nombreCorto}" headerText="#{msg_adm.ListDireccionResidencialTitle_urbanizacion}">
+                                            <h:outputText value="#{item.urbanizacion.nombreCorto}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_adm.Edit}" update=":DireccionResidencialEditPage:DireccionResidencialEditForm" disabled="#{empty direccionResidencialController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:DireccionResidencialEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_adm.Delete}" actionListener="#{direccionResidencialController.delete}" update=":growl,datalist" disabled="#{empty direccionResidencialController.selected}">
+                    <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_adm.Menu}" disabled="#{empty direccionResidencialController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_adm.DireccionResidencialHeading} #{msg_adm.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_ciudad}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty direccionResidencialController.selected.ciudad}" actionListener="#{direccionResidencialController.prepareCiudad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_idEntidad}" icon="ui-icon-search" update=":EntidadAdmEditPage:EntidadAdmEditForm" disabled="#{empty direccionResidencialController.selected.idEntidad}" actionListener="#{direccionResidencialController.prepareIdEntidad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EntidadAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_lugar}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty direccionResidencialController.selected.lugar}" actionListener="#{direccionResidencialController.prepareLugar}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_pais}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty direccionResidencialController.selected.pais}" actionListener="#{direccionResidencialController.preparePais}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_sector}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty direccionResidencialController.selected.sector}" actionListener="#{direccionResidencialController.prepareSector}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_adm.DireccionResidencialMenuItem_urbanizacion}" icon="ui-icon-search" update=":TablaLogicaAdmEditPage:TablaLogicaAdmEditForm" disabled="#{empty direccionResidencialController.selected.urbanizacion}" actionListener="#{direccionResidencialController.prepareUrbanizacion}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerAdm}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaAdmEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

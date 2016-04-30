@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DireccionResidencialEditPage" lazy="true">
+        <pm:header title="#{msg_adm.EditDireccionResidencialTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_adm.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DireccionResidencialListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DireccionResidencialEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{direccionResidencialController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_idDireccion}" for="idDireccion" />
+                            <h:panelGroup>
+                                <h:outputText id="idDireccion" value="#{direccionResidencialController.selected.idDireccion}" />
+                                <p:tooltip for="idDireccion" value="#{direccionResidencialController.getComponentMessages('idDireccion', msg_adm.EditDireccionResidencialHelpText_idDireccion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_calle}" for="calle" />
+                            <h:panelGroup>
+                                <p:inputText id="calle" value="#{direccionResidencialController.selected.calle}" title="#{msg_adm.EditDireccionResidencialTitle_calle}" required="true" requiredMessage="#{msg_adm.EditDireccionResidencialRequiredMessage_calle}" size="255" maxlength="255"/>
+                                <p:tooltip for="calle" value="#{direccionResidencialController.getComponentMessages('calle', msg_adm.EditDireccionResidencialHelpText_calle)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_numero}" for="numero" />
+                            <h:panelGroup>
+                                <p:inputText id="numero" value="#{direccionResidencialController.selected.numero}" title="#{msg_adm.EditDireccionResidencialTitle_numero}" required="true" requiredMessage="#{msg_adm.EditDireccionResidencialRequiredMessage_numero}"/>
+                                <p:tooltip for="numero" value="#{direccionResidencialController.getComponentMessages('numero', msg_adm.EditDireccionResidencialHelpText_numero)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_nivel}" for="nivel" />
+                            <h:panelGroup>
+                                <p:inputText id="nivel" value="#{direccionResidencialController.selected.nivel}" title="#{msg_adm.EditDireccionResidencialTitle_nivel}"/>
+                                <p:tooltip for="nivel" value="#{direccionResidencialController.getComponentMessages('nivel', msg_adm.EditDireccionResidencialHelpText_nivel)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_referencia}" for="referencia" />
+                            <h:panelGroup>
+                                <p:inputText id="referencia" value="#{direccionResidencialController.selected.referencia}" title="#{msg_adm.EditDireccionResidencialTitle_referencia}" required="true" requiredMessage="#{msg_adm.EditDireccionResidencialRequiredMessage_referencia}" size="50" maxlength="50"/>
+                                <p:tooltip for="referencia" value="#{direccionResidencialController.getComponentMessages('referencia', msg_adm.EditDireccionResidencialHelpText_referencia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_fechaRegistro}" for="fechaRegistro" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{direccionResidencialController.selected.fechaRegistro}" title="#{msg_adm.EditDireccionResidencialTitle_fechaRegistro}"  showOn="button"/>
+                                <p:tooltip for="fechaRegistro" value="#{direccionResidencialController.getComponentMessages('fechaRegistro', msg_adm.EditDireccionResidencialHelpText_fechaRegistro)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_estado}" for="estado" />
+                            <h:panelGroup>
+                                <p:inputText id="estado" value="#{direccionResidencialController.selected.estado}" title="#{msg_adm.EditDireccionResidencialTitle_estado}" size="1" maxlength="1"/>
+                                <p:tooltip for="estado" value="#{direccionResidencialController.getComponentMessages('estado', msg_adm.EditDireccionResidencialHelpText_estado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_ciudad}" for="ciudad" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="ciudad" value="#{direccionResidencialController.selected.ciudad}" required="true" requiredMessage="#{msg_adm.EditDireccionResidencialRequiredMessage_ciudad}" converter="tablaLogicaAdmConverter">
+                                    <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                                   var="ciudadItem"
+                                                   itemValue="#{ciudadItem}"
+                                                   itemLabel="#{ciudadItem.nombreCorto.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="ciudad" value="#{direccionResidencialController.getComponentMessages('ciudad', msg_adm.EditDireccionResidencialHelpText_ciudad)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_idEntidad}" for="idEntidad" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idEntidad" value="#{direccionResidencialController.selected.idEntidad}" required="true" requiredMessage="#{msg_adm.EditDireccionResidencialRequiredMessage_idEntidad}" converter="entidadAdmConverter">
+                                    <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                    <f:selectItems value="#{entidadAdmController.items}"
+                                                   var="idEntidadItem"
+                                                   itemValue="#{idEntidadItem}"
+                                                   itemLabel="#{idEntidadItem.nombre.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idEntidad" value="#{direccionResidencialController.getComponentMessages('idEntidad', msg_adm.EditDireccionResidencialHelpText_idEntidad)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_lugar}" for="lugar" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="lugar" value="#{direccionResidencialController.selected.lugar}" required="true" requiredMessage="#{msg_adm.EditDireccionResidencialRequiredMessage_lugar}" converter="tablaLogicaAdmConverter">
+                                    <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                                   var="lugarItem"
+                                                   itemValue="#{lugarItem}"
+                                                   itemLabel="#{lugarItem.nombreCorto.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="lugar" value="#{direccionResidencialController.getComponentMessages('lugar', msg_adm.EditDireccionResidencialHelpText_lugar)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_pais}" for="pais" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="pais" value="#{direccionResidencialController.selected.pais}" required="true" requiredMessage="#{msg_adm.EditDireccionResidencialRequiredMessage_pais}" converter="tablaLogicaAdmConverter">
+                                    <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                                   var="paisItem"
+                                                   itemValue="#{paisItem}"
+                                                   itemLabel="#{paisItem.nombreCorto.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="pais" value="#{direccionResidencialController.getComponentMessages('pais', msg_adm.EditDireccionResidencialHelpText_pais)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_sector}" for="sector" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="sector" value="#{direccionResidencialController.selected.sector}" required="true" requiredMessage="#{msg_adm.EditDireccionResidencialRequiredMessage_sector}" converter="tablaLogicaAdmConverter">
+                                    <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                                   var="sectorItem"
+                                                   itemValue="#{sectorItem}"
+                                                   itemLabel="#{sectorItem.nombreCorto.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="sector" value="#{direccionResidencialController.getComponentMessages('sector', msg_adm.EditDireccionResidencialHelpText_sector)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_adm.EditDireccionResidencialLabel_urbanizacion}" for="urbanizacion" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="urbanizacion" value="#{direccionResidencialController.selected.urbanizacion}" required="true" requiredMessage="#{msg_adm.EditDireccionResidencialRequiredMessage_urbanizacion}" converter="tablaLogicaAdmConverter">
+                                    <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                                   var="urbanizacionItem"
+                                                   itemValue="#{urbanizacionItem}"
+                                                   itemLabel="#{urbanizacionItem.nombreCorto.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="urbanizacion" value="#{direccionResidencialController.getComponentMessages('urbanizacion', msg_adm.EditDireccionResidencialHelpText_urbanizacion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{direccionResidencialController.save}" value="#{msg_adm.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:DireccionResidencialListPage:DireccionResidencialListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:DireccionResidencialListPage')}">
+                        <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

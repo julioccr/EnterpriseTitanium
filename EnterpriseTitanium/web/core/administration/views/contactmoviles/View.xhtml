@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TelefoninoViewDlg" widgetVar="TelefoninoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_adm.ViewTelefoninoTitle}" closeOnEscape="true">
+
+            <h:form id="TelefoninoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{telefoninoController.selected != null}">
+
+                        <h:outputText value="#{msg_adm.ViewTelefoninoLabel_idDireccionTelefonica}"/>
+                        <h:outputText value="#{telefoninoController.selected.idDireccionTelefonica}" title="#{msg_adm.ViewTelefoninoTitle_idDireccionTelefonica}"/>
+
+                        <h:outputText value="#{msg_adm.ViewTelefoninoLabel_codigoPais}"/>
+                        <h:outputText value="#{telefoninoController.selected.codigoPais}" title="#{msg_adm.ViewTelefoninoTitle_codigoPais}"/>
+
+                        <h:outputText value="#{msg_adm.ViewTelefoninoLabel_numTelefonico}"/>
+                        <h:outputText value="#{telefoninoController.selected.numTelefonico}" title="#{msg_adm.ViewTelefoninoTitle_numTelefonico}"/>
+
+                        <h:outputText value="#{msg_adm.ViewTelefoninoLabel_estadoTele}"/>
+                        <h:outputText value="#{telefoninoController.selected.estadoTele}" title="#{msg_adm.ViewTelefoninoTitle_estadoTele}"/>
+
+                        <h:outputText value="#{msg_adm.ViewTelefoninoLabel_idEntidad}"/>
+                        <h:outputText value="#{telefoninoController.selected.idEntidad.nombre}"/>
+
+                        <h:outputText value="#{msg_adm.ViewTelefoninoLabel_lugar}"/>
+                        <h:outputText value="#{telefoninoController.selected.lugar.nombreCorto}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_adm.Close}" onclick="PF('TelefoninoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

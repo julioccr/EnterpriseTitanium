@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EntidadAdmViewPage" lazy="true">
+        <pm:header title="#{msg_adm.ViewEntidadAdmTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_adm.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EntidadAdmListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EntidadAdmViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{entidadAdmController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_idEntidad}"/>
+                            <h:outputText value="#{entidadAdmController.selected.idEntidad}" title="#{msg_adm.ViewEntidadAdmTitle_idEntidad}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_tipoEmpresa}"/>
+                            <h:outputText value="#{entidadAdmController.selected.tipoEmpresa}" title="#{msg_adm.ViewEntidadAdmTitle_tipoEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_dni}"/>
+                            <h:outputText value="#{entidadAdmController.selected.dni}" title="#{msg_adm.ViewEntidadAdmTitle_dni}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_nombre}"/>
+                            <h:outputText value="#{entidadAdmController.selected.nombre}" title="#{msg_adm.ViewEntidadAdmTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_apellido}"/>
+                            <h:outputText value="#{entidadAdmController.selected.apellido}" title="#{msg_adm.ViewEntidadAdmTitle_apellido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_senalUsuario}"/>
+                            <h:selectBooleanCheckbox id="senalUsuario" value="#{entidadAdmController.selected.senalUsuario}" title="#{msg_adm.EditEntidadAdmTitle_senalUsuario}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_ciudad}"/>
+                            <h:outputText value="#{entidadAdmController.selected.ciudad.nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_genero}"/>
+                            <h:outputText value="#{entidadAdmController.selected.genero.nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_nacionalidad}"/>
+                            <h:outputText value="#{entidadAdmController.selected.nacionalidad.nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_adm.ViewEntidadAdmLabel_tipoidentificacion}"/>
+                            <h:outputText value="#{entidadAdmController.selected.tipoidentificacion.nombreCorto}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

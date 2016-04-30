@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TelefoninoEditDlg" widgetVar="TelefoninoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_adm.EditTelefoninoTitle}" closeOnEscape="true">
+
+            <h:form id="TelefoninoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{telefoninoController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg_adm.EditTelefoninoLabel_idDireccionTelefonica}" for="idDireccionTelefonica" />
+                        <h:panelGroup>
+                            <h:outputText id="idDireccionTelefonica" value="#{telefoninoController.selected.idDireccionTelefonica}" />
+                            <p:tooltip for="idDireccionTelefonica" value="#{telefoninoController.getComponentMessages('idDireccionTelefonica', msg_adm.EditTelefoninoHelpText_idDireccionTelefonica)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditTelefoninoLabel_codigoPais}" for="codigoPais" />
+                        <h:panelGroup>
+                            <p:inputText id="codigoPais" value="#{telefoninoController.selected.codigoPais}" title="#{msg_adm.EditTelefoninoTitle_codigoPais}" required="true" requiredMessage="#{msg_adm.EditTelefoninoRequiredMessage_codigoPais}"/>
+                            <p:tooltip for="codigoPais" value="#{telefoninoController.getComponentMessages('codigoPais', msg_adm.EditTelefoninoHelpText_codigoPais)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditTelefoninoLabel_numTelefonico}" for="numTelefonico" />
+                        <h:panelGroup>
+                            <p:inputText id="numTelefonico" value="#{telefoninoController.selected.numTelefonico}" title="#{msg_adm.EditTelefoninoTitle_numTelefonico}" required="true" requiredMessage="#{msg_adm.EditTelefoninoRequiredMessage_numTelefonico}" size="13" maxlength="13"/>
+                            <p:tooltip for="numTelefonico" value="#{telefoninoController.getComponentMessages('numTelefonico', msg_adm.EditTelefoninoHelpText_numTelefonico)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditTelefoninoLabel_estadoTele}" for="estadoTele" />
+                        <h:panelGroup>
+                            <p:inputText id="estadoTele" value="#{telefoninoController.selected.estadoTele}" title="#{msg_adm.EditTelefoninoTitle_estadoTele}" size="45" maxlength="45"/>
+                            <p:tooltip for="estadoTele" value="#{telefoninoController.getComponentMessages('estadoTele', msg_adm.EditTelefoninoHelpText_estadoTele)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditTelefoninoLabel_idEntidad}" for="idEntidad" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idEntidad" value="#{telefoninoController.selected.idEntidad}" required="true" requiredMessage="#{msg_adm.EditTelefoninoRequiredMessage_idEntidad}" converter="entidadAdmConverter">
+                                <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                <f:selectItems value="#{entidadAdmController.items}"
+                                               var="idEntidadItem"
+                                               itemValue="#{idEntidadItem}"
+                                               itemLabel="#{idEntidadItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idEntidad" value="#{telefoninoController.getComponentMessages('idEntidad', msg_adm.EditTelefoninoHelpText_idEntidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_adm.EditTelefoninoLabel_lugar}" for="lugar" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="lugar" value="#{telefoninoController.selected.lugar}" required="true" requiredMessage="#{msg_adm.EditTelefoninoRequiredMessage_lugar}" converter="tablaLogicaAdmConverter">
+                                <f:selectItem itemLabel="#{msg_adm.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaAdmController.items}"
+                                               var="lugarItem"
+                                               itemValue="#{lugarItem}"
+                                               itemLabel="#{lugarItem.nombreCorto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="lugar" value="#{telefoninoController.getComponentMessages('lugar', msg_adm.EditTelefoninoHelpText_lugar)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{telefoninoController.save}" value="#{msg_adm.Save}" update="display,:TelefoninoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TelefoninoEditDialog'));">
+                        <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg_adm.Cancel}" oncomplete="PF('TelefoninoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

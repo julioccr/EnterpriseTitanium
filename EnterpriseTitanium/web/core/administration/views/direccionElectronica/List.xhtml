@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DireccionElectronicaListForm">
+
+        <p:panel header="#{msg_adm.ListDireccionElectronicaTitle}">
+            <p:contextMenu id="DireccionElectronicaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_adm.Create}" onclick="document.getElementById('DireccionElectronicaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_adm.View}" onclick="document.getElementById('DireccionElectronicaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_adm.Edit}" onclick="document.getElementById('DireccionElectronicaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_adm.Delete}" onclick="document.getElementById('DireccionElectronicaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_adm.DireccionElectronicaMenuItem_idEntidad}" icon="ui-icon-search"  actionListener="#{direccionElectronicaController.prepareIdEntidad}" update=":EntidadAdmViewForm" oncomplete="PF('EntidadAdmViewDialog').show()" disabled="#{empty direccionElectronicaController.selected.idEntidad}"/>  
+                <p:menuitem value="#{msg_adm.DireccionElectronicaMenuItem_lugar}" icon="ui-icon-search"  actionListener="#{direccionElectronicaController.prepareLugar}" update=":TablaLogicaAdmViewForm" oncomplete="PF('TablaLogicaAdmViewDialog').show()" disabled="#{empty direccionElectronicaController.selected.lugar}"/>  
+                <p:menuitem value="#{msg_adm.DireccionElectronicaMenuItem_tipoCorreo}" icon="ui-icon-search"  actionListener="#{direccionElectronicaController.prepareTipoCorreo}" update=":TablaLogicaAdmViewForm" oncomplete="PF('TablaLogicaAdmViewDialog').show()" disabled="#{empty direccionElectronicaController.selected.tipoCorreo}"/>  
+                <p:menuitem value="#{msg_adm.DireccionElectronicaMenuItem_tipoUrl}" icon="ui-icon-search"  actionListener="#{direccionElectronicaController.prepareTipoUrl}" update=":TablaLogicaAdmViewForm" oncomplete="PF('TablaLogicaAdmViewDialog').show()" disabled="#{empty direccionElectronicaController.selected.tipoUrl}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{direccionElectronicaController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{direccionElectronicaController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{direccionElectronicaController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idDireccionDigital}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DireccionElectronicaDataTableContextMenu" listener="#{direccionElectronicaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DireccionElectronicaDataTableContextMenu" listener="#{direccionElectronicaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{direccionElectronicaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DireccionElectronicaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idDireccionDigital}" filterBy="#{item.idDireccionDigital}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionElectronicaTitle_idDireccionDigital}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idDireccionDigital}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionElectronicaTitle_direccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estadoDireccion}" filterBy="#{item.estadoDireccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionElectronicaTitle_estadoDireccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estadoDireccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idEntidad.nombre}" filterBy="#{item.idEntidad.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionElectronicaTitle_idEntidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEntidad.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.lugar.nombreCorto}" filterBy="#{item.lugar.nombreCorto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionElectronicaTitle_lugar}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.lugar.nombreCorto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoCorreo.nombreCorto}" filterBy="#{item.tipoCorreo.nombreCorto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionElectronicaTitle_tipoCorreo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoCorreo.nombreCorto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoUrl.nombreCorto}" filterBy="#{item.tipoUrl.nombreCorto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_adm.ListDireccionElectronicaTitle_tipoUrl}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoUrl.nombreCorto}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_adm.Create}" actionListener="#{direccionElectronicaController.prepareCreate}" update=":DireccionElectronicaCreateForm" oncomplete="PF('DireccionElectronicaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_adm.View}" update=":DireccionElectronicaViewForm" oncomplete="PF('DireccionElectronicaViewDialog').show()" disabled="#{empty direccionElectronicaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_adm.Edit}" update=":DireccionElectronicaEditForm" oncomplete="PF('DireccionElectronicaEditDialog').show()" disabled="#{empty direccionElectronicaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_adm.Delete}" actionListener="#{direccionElectronicaController.delete}" update=":growl,datalist" disabled="#{empty direccionElectronicaController.selected}">
+                <p:confirm header="#{msg_adm.ConfirmationHeader}" message="#{msg_adm.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/administration/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>
