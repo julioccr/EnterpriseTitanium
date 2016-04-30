@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TransaccionCreateDlg" widgetVar="TransaccionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg_security.CreateTransaccionTitle}" closeOnEscape="true">
+
+            <h:form id="TransaccionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{transaccionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg_security.CreateTransaccionLabel_nombreTrans}" for="nombreTrans" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreTrans" value="#{transaccionController.selected.nombreTrans}" title="#{msg_security.CreateTransaccionTitle_nombreTrans}" required="true" requiredMessage="#{msg_security.CreateTransaccionRequiredMessage_nombreTrans}" size="60" maxlength="60"/>
+                            <p:tooltip for="nombreTrans" value="#{transaccionController.getComponentMessages('nombreTrans', msg_security.CreateTransaccionHelpText_nombreTrans)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateTransaccionLabel_descripcionTrans}" for="descripcionTrans" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcionTrans" value="#{transaccionController.selected.descripcionTrans}" title="#{msg_security.CreateTransaccionTitle_descripcionTrans}" required="true" requiredMessage="#{msg_security.CreateTransaccionRequiredMessage_descripcionTrans}" size="250" maxlength="250"/>
+                            <p:tooltip for="descripcionTrans" value="#{transaccionController.getComponentMessages('descripcionTrans', msg_security.CreateTransaccionHelpText_descripcionTrans)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateTransaccionLabel_estadoTransf}" for="estadoTransf" />
+                        <h:panelGroup>
+                            <p:inputText id="estadoTransf" value="#{transaccionController.selected.estadoTransf}" title="#{msg_security.CreateTransaccionTitle_estadoTransf}" required="true" requiredMessage="#{msg_security.CreateTransaccionRequiredMessage_estadoTransf}" size="1" maxlength="1"/>
+                            <p:tooltip for="estadoTransf" value="#{transaccionController.getComponentMessages('estadoTransf', msg_security.CreateTransaccionHelpText_estadoTransf)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateTransaccionLabel_appModuloCodModulo}" for="appModuloCodModulo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="appModuloCodModulo" value="#{transaccionController.selected.appModuloCodModulo}" required="true" requiredMessage="#{msg_security.CreateTransaccionRequiredMessage_appModuloCodModulo}" converter="moduloConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{moduloController.items}"
+                                               var="appModuloCodModuloItem"
+                                               itemValue="#{appModuloCodModuloItem}"
+                                               itemLabel="#{appModuloCodModuloItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="appModuloCodModulo" value="#{transaccionController.getComponentMessages('appModuloCodModulo', msg_security.CreateTransaccionHelpText_appModuloCodModulo)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{transaccionController.saveNew}" value="#{msg_security.Save}" update="display,:TransaccionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TransaccionCreateDialog'));">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg_security.Cancel}" oncomplete="PF('TransaccionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

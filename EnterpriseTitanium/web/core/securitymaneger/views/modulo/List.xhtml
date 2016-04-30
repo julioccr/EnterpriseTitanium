@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ModuloListForm">
+
+        <p:panel header="#{msg_security.ListModuloTitle}">
+            <p:contextMenu id="ModuloDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('ModuloListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('ModuloListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('ModuloListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('ModuloListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.ModuloMenuItem_transaccionCollection}" icon="ui-icon-search"  action="#{moduloController.navigateTransaccionCollection}" disabled="#{empty moduloController.selected.transaccionCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.ModuloMenuItem_segAccesoModuloCollection}" icon="ui-icon-search"  action="#{moduloController.navigateSegAccesoModuloCollection}" disabled="#{empty moduloController.selected.segAccesoModuloCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.ModuloMenuItem_idAplicativo}" icon="ui-icon-search"  actionListener="#{moduloController.prepareIdAplicativo}" update=":AplicacionViewForm" oncomplete="PF('AplicacionViewDialog').show()" disabled="#{empty moduloController.selected.idAplicativo}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{moduloController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{moduloController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{moduloController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.codModulo}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ModuloDataTableContextMenu" listener="#{moduloController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ModuloDataTableContextMenu" listener="#{moduloController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{moduloController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ModuloListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.codModulo}" filterBy="#{item.codModulo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListModuloTitle_codModulo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codModulo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListModuloTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListModuloTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListModuloTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idAplicativo.descripcion}" filterBy="#{item.idAplicativo.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListModuloTitle_idAplicativo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idAplicativo.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{moduloController.prepareCreate}" update=":ModuloCreateForm" oncomplete="PF('ModuloCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":ModuloViewForm" oncomplete="PF('ModuloViewDialog').show()" disabled="#{empty moduloController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":ModuloEditForm" oncomplete="PF('ModuloEditDialog').show()" disabled="#{empty moduloController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{moduloController.delete}" update=":growl,datalist" disabled="#{empty moduloController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

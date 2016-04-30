@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TablaLogicaViewPage" lazy="true">
+        <pm:header title="#{msg_security.ViewTablaLogicaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TablaLogicaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TablaLogicaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tablaLogicaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_idCodec}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.idCodec}" title="#{msg_security.ViewTablaLogicaTitle_idCodec}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_tipotabla}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.tipotabla}" title="#{msg_security.ViewTablaLogicaTitle_tipotabla}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_codePadre}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.codePadre}" title="#{msg_security.ViewTablaLogicaTitle_codePadre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_nombreCorto}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.nombreCorto}" title="#{msg_security.ViewTablaLogicaTitle_nombreCorto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_nombreLargo}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.nombreLargo}" title="#{msg_security.ViewTablaLogicaTitle_nombreLargo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_codelang}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.codelang}" title="#{msg_security.ViewTablaLogicaTitle_codelang}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_estado}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.estado}" title="#{msg_security.ViewTablaLogicaTitle_estado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_descripcion}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.descripcion}" title="#{msg_security.ViewTablaLogicaTitle_descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_fechaRegistro}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.fechaRegistro}" title="#{msg_security.ViewTablaLogicaTitle_fechaRegistro}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_fechaModificacion}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.fechaModificacion}" title="#{msg_security.ViewTablaLogicaTitle_fechaModificacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_userRegistro}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.userRegistro}" title="#{msg_security.ViewTablaLogicaTitle_userRegistro}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewTablaLogicaLabel_userModificion}"/>
+                            <h:outputText value="#{tablaLogicaController.selected.userModificion}" title="#{msg_security.ViewTablaLogicaTitle_userModificion}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

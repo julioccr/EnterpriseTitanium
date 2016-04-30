@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ModuloViewPage" lazy="true">
+        <pm:header title="#{msg_security.ViewModuloTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ModuloListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ModuloViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{moduloController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewModuloLabel_codModulo}"/>
+                            <h:outputText value="#{moduloController.selected.codModulo}" title="#{msg_security.ViewModuloTitle_codModulo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewModuloLabel_nombre}"/>
+                            <h:outputText value="#{moduloController.selected.nombre}" title="#{msg_security.ViewModuloTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewModuloLabel_descripcion}"/>
+                            <h:outputText value="#{moduloController.selected.descripcion}" title="#{msg_security.ViewModuloTitle_descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewModuloLabel_estado}"/>
+                            <h:outputText value="#{moduloController.selected.estado}" title="#{msg_security.ViewModuloTitle_estado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewModuloLabel_idAplicativo}"/>
+                            <h:outputText value="#{moduloController.selected.idAplicativo.descripcion}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

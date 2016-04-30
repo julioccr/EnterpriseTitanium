@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ModuloEditPage" lazy="true">
+        <pm:header title="#{msg_security.EditModuloTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ModuloListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ModuloEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{moduloController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{msg_security.EditModuloLabel_codModulo}" for="codModulo" />
+                            <h:panelGroup>
+                                <h:outputText id="codModulo" value="#{moduloController.selected.codModulo}" />
+                                <p:tooltip for="codModulo" value="#{moduloController.getComponentMessages('codModulo', msg_security.EditModuloHelpText_codModulo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.EditModuloLabel_nombre}" for="nombre" />
+                            <h:panelGroup>
+                                <p:inputText id="nombre" value="#{moduloController.selected.nombre}" title="#{msg_security.EditModuloTitle_nombre}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombre" value="#{moduloController.getComponentMessages('nombre', msg_security.EditModuloHelpText_nombre)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.EditModuloLabel_descripcion}" for="descripcion" />
+                            <h:panelGroup>
+                                <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{moduloController.selected.descripcion}" title="#{msg_security.EditModuloTitle_descripcion}" />
+                                <p:tooltip for="descripcion" value="#{moduloController.getComponentMessages('descripcion', msg_security.EditModuloHelpText_descripcion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.EditModuloLabel_estado}" for="estado" />
+                            <h:panelGroup>
+                                <p:inputText id="estado" value="#{moduloController.selected.estado}" title="#{msg_security.EditModuloTitle_estado}" size="1" maxlength="1"/>
+                                <p:tooltip for="estado" value="#{moduloController.getComponentMessages('estado', msg_security.EditModuloHelpText_estado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.EditModuloLabel_idAplicativo}" for="idAplicativo" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idAplicativo" value="#{moduloController.selected.idAplicativo}"  converter="aplicacionConverter">
+                                    <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                    <f:selectItems value="#{aplicacionController.items}"
+                                                   var="idAplicativoItem"
+                                                   itemValue="#{idAplicativoItem}"
+                                                   itemLabel="#{idAplicativoItem.descripcion.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idAplicativo" value="#{moduloController.getComponentMessages('idAplicativo', msg_security.EditModuloHelpText_idAplicativo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{moduloController.save}" value="#{msg_security.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:ModuloListPage:ModuloListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:ModuloListPage')}">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

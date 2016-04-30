@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="SegAccesoModuloListForm">
+
+        <p:panel header="#{msg_security.ListSegAccesoModuloTitle}">
+            <p:contextMenu id="SegAccesoModuloDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('SegAccesoModuloListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('SegAccesoModuloListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('SegAccesoModuloListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('SegAccesoModuloListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.SegAccesoModuloMenuItem_idAppModulo}" icon="ui-icon-search"  actionListener="#{segAccesoModuloController.prepareIdAppModulo}" update=":ModuloViewForm" oncomplete="PF('ModuloViewDialog').show()" disabled="#{empty segAccesoModuloController.selected.idAppModulo}"/>  
+                <p:menuitem value="#{msg_security.SegAccesoModuloMenuItem_idCuenta}" icon="ui-icon-search"  actionListener="#{segAccesoModuloController.prepareIdCuenta}" update=":CuentaUsuarioViewForm" oncomplete="PF('CuentaUsuarioViewDialog').show()" disabled="#{empty segAccesoModuloController.selected.idCuenta}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{segAccesoModuloController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{segAccesoModuloController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{segAccesoModuloController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idSegAccesoModulo}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SegAccesoModuloDataTableContextMenu" listener="#{segAccesoModuloController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SegAccesoModuloDataTableContextMenu" listener="#{segAccesoModuloController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{segAccesoModuloController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SegAccesoModuloListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idSegAccesoModulo}" filterBy="#{item.idSegAccesoModulo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListSegAccesoModuloTitle_idSegAccesoModulo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idSegAccesoModulo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListSegAccesoModuloTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idAppModulo.descripcion}" filterBy="#{item.idAppModulo.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListSegAccesoModuloTitle_idAppModulo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idAppModulo.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idCuenta.cuentaId}" filterBy="#{item.idCuenta.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListSegAccesoModuloTitle_idCuenta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idCuenta.cuentaId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{segAccesoModuloController.prepareCreate}" update=":SegAccesoModuloCreateForm" oncomplete="PF('SegAccesoModuloCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":SegAccesoModuloViewForm" oncomplete="PF('SegAccesoModuloViewDialog').show()" disabled="#{empty segAccesoModuloController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":SegAccesoModuloEditForm" oncomplete="PF('SegAccesoModuloEditDialog').show()" disabled="#{empty segAccesoModuloController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{segAccesoModuloController.delete}" update=":growl,datalist" disabled="#{empty segAccesoModuloController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

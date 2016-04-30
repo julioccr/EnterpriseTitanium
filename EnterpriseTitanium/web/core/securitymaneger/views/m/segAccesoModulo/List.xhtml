@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="SegAccesoModuloListPage">
+        <pm:header title="#{msg_security.ListSegAccesoModuloTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/securitymaneger/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_security.Create}" update=":SegAccesoModuloCreatePage:SegAccesoModuloCreateForm" actionListener="#{segAccesoModuloController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:SegAccesoModuloCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="SegAccesoModuloListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{segAccesoModuloController.items}"
+                             var="item"
+                             rowKey="#{item.idSegAccesoModulo}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{segAccesoModuloController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{segAccesoModuloController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{segAccesoModuloController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('SegAccesoModuloListPage:SegAccesoModuloListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('SegAccesoModuloListPage:SegAccesoModuloListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('SegAccesoModuloListPage:SegAccesoModuloListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idSegAccesoModulo}" filterBy="#{item.idSegAccesoModulo}" headerText="#{msg_security.ListSegAccesoModuloTitle_idSegAccesoModulo}">
+                        <h:outputText value="#{item.idSegAccesoModulo}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}" headerText="#{msg_security.ListSegAccesoModuloTitle_estado}">
+                        <h:outputText value="#{item.estado}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idAppModulo.descripcion}" filterBy="#{item.idAppModulo.descripcion}" headerText="#{msg_security.ListSegAccesoModuloTitle_idAppModulo}">
+                        <h:outputText value="#{item.idAppModulo.descripcion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idCuenta.cuentaId}" filterBy="#{item.idCuenta.cuentaId}" headerText="#{msg_security.ListSegAccesoModuloTitle_idCuenta}">
+                        <h:outputText value="#{item.idCuenta.cuentaId}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":SegAccesoModuloEditPage:SegAccesoModuloEditForm" disabled="#{empty segAccesoModuloController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:SegAccesoModuloEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{segAccesoModuloController.delete}" update=":growl,datalist" disabled="#{empty segAccesoModuloController.selected}">
+                    <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_security.Menu}" disabled="#{empty segAccesoModuloController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_security.SegAccesoModuloHeading} #{msg_security.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_security.SegAccesoModuloMenuItem_idAppModulo}" icon="ui-icon-search" update=":ModuloEditPage:ModuloEditForm" disabled="#{empty segAccesoModuloController.selected.idAppModulo}" actionListener="#{segAccesoModuloController.prepareIdAppModulo}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:ModuloEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_security.SegAccesoModuloMenuItem_idCuenta}" icon="ui-icon-search" update=":CuentaUsuarioEditPage:CuentaUsuarioEditForm" disabled="#{empty segAccesoModuloController.selected.idCuenta}" actionListener="#{segAccesoModuloController.prepareIdCuenta}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:CuentaUsuarioEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CuentaUsuarioCreatePage" lazy="true">
+        <pm:header title="#{msg_security.CreateCuentaUsuarioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CuentaUsuarioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CuentaUsuarioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{cuentaUsuarioController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_password}" for="password" />
+                            <h:panelGroup>
+                                <p:inputText id="password" value="#{cuentaUsuarioController.selected.password}" title="#{msg_security.CreateCuentaUsuarioTitle_password}" required="true" requiredMessage="#{msg_security.CreateCuentaUsuarioRequiredMessage_password}" size="120" maxlength="120"/>
+                                <p:tooltip for="password" value="#{cuentaUsuarioController.getComponentMessages('password', msg_security.CreateCuentaUsuarioHelpText_password)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_grupos}" for="grupos" />
+                            <h:panelGroup>
+                                <p:inputText id="grupos" value="#{cuentaUsuarioController.selected.grupos}" title="#{msg_security.CreateCuentaUsuarioTitle_grupos}"/>
+                                <p:tooltip for="grupos" value="#{cuentaUsuarioController.getComponentMessages('grupos', msg_security.CreateCuentaUsuarioHelpText_grupos)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_fechaRegistro}" for="fechaRegistro" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{cuentaUsuarioController.selected.fechaRegistro}" title="#{msg_security.CreateCuentaUsuarioTitle_fechaRegistro}"  showOn="button"/>
+                                <p:tooltip for="fechaRegistro" value="#{cuentaUsuarioController.getComponentMessages('fechaRegistro', msg_security.CreateCuentaUsuarioHelpText_fechaRegistro)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_cantidadIntentos}" for="cantidadIntentos" />
+                            <h:panelGroup>
+                                <p:inputText id="cantidadIntentos" value="#{cuentaUsuarioController.selected.cantidadIntentos}" title="#{msg_security.CreateCuentaUsuarioTitle_cantidadIntentos}" size="45" maxlength="45"/>
+                                <p:tooltip for="cantidadIntentos" value="#{cuentaUsuarioController.getComponentMessages('cantidadIntentos', msg_security.CreateCuentaUsuarioHelpText_cantidadIntentos)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_codigoVerificacion}" for="codigoVerificacion" />
+                            <h:panelGroup>
+                                <p:inputText id="codigoVerificacion" value="#{cuentaUsuarioController.selected.codigoVerificacion}" title="#{msg_security.CreateCuentaUsuarioTitle_codigoVerificacion}" required="true" requiredMessage="#{msg_security.CreateCuentaUsuarioRequiredMessage_codigoVerificacion}" size="45" maxlength="45"/>
+                                <p:tooltip for="codigoVerificacion" value="#{cuentaUsuarioController.getComponentMessages('codigoVerificacion', msg_security.CreateCuentaUsuarioHelpText_codigoVerificacion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_accEmail}" for="accEmail" />
+                            <h:panelGroup>
+                                <p:inputText id="accEmail" value="#{cuentaUsuarioController.selected.accEmail}" title="#{msg_security.CreateCuentaUsuarioTitle_accEmail}"/>
+                                <p:tooltip for="accEmail" value="#{cuentaUsuarioController.getComponentMessages('accEmail', msg_security.CreateCuentaUsuarioHelpText_accEmail)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_accTmovil}" for="accTmovil" />
+                            <h:panelGroup>
+                                <p:inputText id="accTmovil" value="#{cuentaUsuarioController.selected.accTmovil}" title="#{msg_security.CreateCuentaUsuarioTitle_accTmovil}"/>
+                                <p:tooltip for="accTmovil" value="#{cuentaUsuarioController.getComponentMessages('accTmovil', msg_security.CreateCuentaUsuarioHelpText_accTmovil)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_accNid}" for="accNid" />
+                            <h:panelGroup>
+                                <p:inputText id="accNid" value="#{cuentaUsuarioController.selected.accNid}" title="#{msg_security.CreateCuentaUsuarioTitle_accNid}"/>
+                                <p:tooltip for="accNid" value="#{cuentaUsuarioController.getComponentMessages('accNid', msg_security.CreateCuentaUsuarioHelpText_accNid)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_accUrl}" for="accUrl" />
+                            <h:panelGroup>
+                                <p:inputText id="accUrl" value="#{cuentaUsuarioController.selected.accUrl}" title="#{msg_security.CreateCuentaUsuarioTitle_accUrl}"/>
+                                <p:tooltip for="accUrl" value="#{cuentaUsuarioController.getComponentMessages('accUrl', msg_security.CreateCuentaUsuarioHelpText_accUrl)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_accCodigo}" for="accCodigo" />
+                            <h:panelGroup>
+                                <p:inputText id="accCodigo" value="#{cuentaUsuarioController.selected.accCodigo}" title="#{msg_security.CreateCuentaUsuarioTitle_accCodigo}"/>
+                                <p:tooltip for="accCodigo" value="#{cuentaUsuarioController.getComponentMessages('accCodigo', msg_security.CreateCuentaUsuarioHelpText_accCodigo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_estado}" for="estado" />
+                            <h:panelGroup>
+                                <p:inputText id="estado" value="#{cuentaUsuarioController.selected.estado}" title="#{msg_security.CreateCuentaUsuarioTitle_estado}" size="1" maxlength="1"/>
+                                <p:tooltip for="estado" value="#{cuentaUsuarioController.getComponentMessages('estado', msg_security.CreateCuentaUsuarioHelpText_estado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateCuentaUsuarioLabel_idEntidad}" for="idEntidad" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idEntidad" value="#{cuentaUsuarioController.selected.idEntidad}" required="true" requiredMessage="#{msg_security.CreateCuentaUsuarioRequiredMessage_idEntidad}" converter="entidadConverter">
+                                    <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                    <f:selectItems value="#{entidadController.items}"
+                                                   var="idEntidadItem"
+                                                   itemValue="#{idEntidadItem}"
+                                                   itemLabel="#{idEntidadItem.idEntidad.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idEntidad" value="#{cuentaUsuarioController.getComponentMessages('idEntidad', msg_security.CreateCuentaUsuarioHelpText_idEntidad)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{cuentaUsuarioController.saveNew}" value="#{msg_security.Save}" update="display,:CuentaUsuarioListPage:CuentaUsuarioListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:CuentaUsuarioListPage')}">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

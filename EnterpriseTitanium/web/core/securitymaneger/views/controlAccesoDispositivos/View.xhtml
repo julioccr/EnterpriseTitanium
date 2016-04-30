@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ControlAccesoDispositivosViewDlg" widgetVar="ControlAccesoDispositivosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.ViewControlAccesoDispositivosTitle}" closeOnEscape="true">
+
+            <h:form id="ControlAccesoDispositivosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{controlAccesoDispositivosController.selected != null}">
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_idSegAccesoDevice}"/>
+                        <h:outputText value="#{controlAccesoDispositivosController.selected.idSegAccesoDevice}" title="#{msg_security.ViewControlAccesoDispositivosTitle_idSegAccesoDevice}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceName}"/>
+                        <h:outputText value="#{controlAccesoDispositivosController.selected.deviceName}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceName}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceOS}"/>
+                        <h:outputText value="#{controlAccesoDispositivosController.selected.deviceOS}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceOS}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceIp}"/>
+                        <h:outputText value="#{controlAccesoDispositivosController.selected.deviceIp}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceIp}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceCode}"/>
+                        <h:outputText value="#{controlAccesoDispositivosController.selected.deviceCode}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceCode}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceEstado}"/>
+                        <h:outputText value="#{controlAccesoDispositivosController.selected.deviceEstado}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceEstado}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_segCuentaCuentaId}"/>
+                        <h:outputText value="#{controlAccesoDispositivosController.selected.segCuentaCuentaId.cuentaId}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceType}"/>
+                        <h:outputText value="#{controlAccesoDispositivosController.selected.deviceType.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_security.Close}" onclick="PF('ControlAccesoDispositivosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

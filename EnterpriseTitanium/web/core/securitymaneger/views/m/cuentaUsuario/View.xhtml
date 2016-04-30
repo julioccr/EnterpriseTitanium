@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CuentaUsuarioViewPage" lazy="true">
+        <pm:header title="#{msg_security.ViewCuentaUsuarioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CuentaUsuarioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CuentaUsuarioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{cuentaUsuarioController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_cuentaId}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.cuentaId}" title="#{msg_security.ViewCuentaUsuarioTitle_cuentaId}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_password}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.password}" title="#{msg_security.ViewCuentaUsuarioTitle_password}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_grupos}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.grupos}" title="#{msg_security.ViewCuentaUsuarioTitle_grupos}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_fechaRegistro}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.fechaRegistro}" title="#{msg_security.ViewCuentaUsuarioTitle_fechaRegistro}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_cantidadIntentos}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.cantidadIntentos}" title="#{msg_security.ViewCuentaUsuarioTitle_cantidadIntentos}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_codigoVerificacion}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.codigoVerificacion}" title="#{msg_security.ViewCuentaUsuarioTitle_codigoVerificacion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_accEmail}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.accEmail}" title="#{msg_security.ViewCuentaUsuarioTitle_accEmail}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_accTmovil}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.accTmovil}" title="#{msg_security.ViewCuentaUsuarioTitle_accTmovil}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_accNid}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.accNid}" title="#{msg_security.ViewCuentaUsuarioTitle_accNid}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_accUrl}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.accUrl}" title="#{msg_security.ViewCuentaUsuarioTitle_accUrl}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_accCodigo}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.accCodigo}" title="#{msg_security.ViewCuentaUsuarioTitle_accCodigo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_estado}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.estado}" title="#{msg_security.ViewCuentaUsuarioTitle_estado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewCuentaUsuarioLabel_idEntidad}"/>
+                            <h:outputText value="#{cuentaUsuarioController.selected.idEntidad.idEntidad}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DirectivaGrupoCreatePage" lazy="true">
+        <pm:header title="#{msg_security.CreateDirectivaGrupoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DirectivaGrupoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DirectivaGrupoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{directivaGrupoController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_idSegDirectivaGrupo}" for="idSegDirectivaGrupo" />
+                            <h:panelGroup>
+                                <p:inputText id="idSegDirectivaGrupo" value="#{directivaGrupoController.selected.idSegDirectivaGrupo}" title="#{msg_security.CreateDirectivaGrupoTitle_idSegDirectivaGrupo}" required="true" requiredMessage="#{msg_security.CreateDirectivaGrupoRequiredMessage_idSegDirectivaGrupo}"/>
+                                <p:tooltip for="idSegDirectivaGrupo" value="#{directivaGrupoController.getComponentMessages('idSegDirectivaGrupo', msg_security.CreateDirectivaGrupoHelpText_idSegDirectivaGrupo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_nombre}" for="nombre" />
+                            <h:panelGroup>
+                                <p:inputText id="nombre" value="#{directivaGrupoController.selected.nombre}" title="#{msg_security.CreateDirectivaGrupoTitle_nombre}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombre" value="#{directivaGrupoController.getComponentMessages('nombre', msg_security.CreateDirectivaGrupoHelpText_nombre)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_descripcion}" for="descripcion" />
+                            <h:panelGroup>
+                                <p:inputText id="descripcion" value="#{directivaGrupoController.selected.descripcion}" title="#{msg_security.CreateDirectivaGrupoTitle_descripcion}" size="120" maxlength="120"/>
+                                <p:tooltip for="descripcion" value="#{directivaGrupoController.getComponentMessages('descripcion', msg_security.CreateDirectivaGrupoHelpText_descripcion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_estado}" for="estado" />
+                            <h:panelGroup>
+                                <p:inputText id="estado" value="#{directivaGrupoController.selected.estado}" title="#{msg_security.CreateDirectivaGrupoTitle_estado}" size="1" maxlength="1"/>
+                                <p:tooltip for="estado" value="#{directivaGrupoController.getComponentMessages('estado', msg_security.CreateDirectivaGrupoHelpText_estado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_fechaRegistro}" for="fechaRegistro" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{directivaGrupoController.selected.fechaRegistro}" title="#{msg_security.CreateDirectivaGrupoTitle_fechaRegistro}"  showOn="button"/>
+                                <p:tooltip for="fechaRegistro" value="#{directivaGrupoController.getComponentMessages('fechaRegistro', msg_security.CreateDirectivaGrupoHelpText_fechaRegistro)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_idCuenta}" for="idCuenta" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idCuenta" value="#{directivaGrupoController.selected.idCuenta}" required="true" requiredMessage="#{msg_security.CreateDirectivaGrupoRequiredMessage_idCuenta}" converter="cuentaUsuarioConverter">
+                                    <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                    <f:selectItems value="#{cuentaUsuarioController.items}"
+                                                   var="idCuentaItem"
+                                                   itemValue="#{idCuentaItem}"
+                                                   itemLabel="#{idCuentaItem.cuentaId.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idCuenta" value="#{directivaGrupoController.getComponentMessages('idCuenta', msg_security.CreateDirectivaGrupoHelpText_idCuenta)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{directivaGrupoController.saveNew}" value="#{msg_security.Save}" update="display,:DirectivaGrupoListPage:DirectivaGrupoListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:DirectivaGrupoListPage')}">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

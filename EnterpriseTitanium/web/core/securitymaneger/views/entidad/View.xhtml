@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EntidadViewDlg" widgetVar="EntidadViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.ViewEntidadTitle}" closeOnEscape="true">
+
+            <h:form id="EntidadViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{entidadController.selected != null}">
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_idEntidad}"/>
+                        <h:outputText value="#{entidadController.selected.idEntidad}" title="#{msg_security.ViewEntidadTitle_idEntidad}"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_tipoEmpresa}"/>
+                        <h:outputText value="#{entidadController.selected.tipoEmpresa}" title="#{msg_security.ViewEntidadTitle_tipoEmpresa}"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_dni}"/>
+                        <h:outputText value="#{entidadController.selected.dni}" title="#{msg_security.ViewEntidadTitle_dni}"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_nombre}"/>
+                        <h:outputText value="#{entidadController.selected.nombre}" title="#{msg_security.ViewEntidadTitle_nombre}"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_apellido}"/>
+                        <h:outputText value="#{entidadController.selected.apellido}" title="#{msg_security.ViewEntidadTitle_apellido}"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_senalUsuario}"/>
+                        <h:selectBooleanCheckbox id="senalUsuario" value="#{entidadController.selected.senalUsuario}" title="#{msg_security.EditEntidadTitle_senalUsuario}"  disabled="true"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_cuentaUsuario}"/>
+                        <h:outputText value="#{entidadController.selected.cuentaUsuario.cuentaId}"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_ciudad}"/>
+                        <h:outputText value="#{entidadController.selected.ciudad.descripcion}"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_genero}"/>
+                        <h:outputText value="#{entidadController.selected.genero.descripcion}"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_nacionalidad}"/>
+                        <h:outputText value="#{entidadController.selected.nacionalidad.descripcion}"/>
+
+                        <h:outputText value="#{msg_security.ViewEntidadLabel_tipoidentificacion}"/>
+                        <h:outputText value="#{entidadController.selected.tipoidentificacion.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_security.Close}" onclick="PF('EntidadViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

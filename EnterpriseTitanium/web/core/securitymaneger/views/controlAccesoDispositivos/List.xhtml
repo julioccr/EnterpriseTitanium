@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ControlAccesoDispositivosListForm">
+
+        <p:panel header="#{msg_security.ListControlAccesoDispositivosTitle}">
+            <p:contextMenu id="ControlAccesoDispositivosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('ControlAccesoDispositivosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('ControlAccesoDispositivosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('ControlAccesoDispositivosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('ControlAccesoDispositivosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.ControlAccesoDispositivosMenuItem_segCuentaCuentaId}" icon="ui-icon-search"  actionListener="#{controlAccesoDispositivosController.prepareSegCuentaCuentaId}" update=":CuentaUsuarioViewForm" oncomplete="PF('CuentaUsuarioViewDialog').show()" disabled="#{empty controlAccesoDispositivosController.selected.segCuentaCuentaId}"/>  
+                <p:menuitem value="#{msg_security.ControlAccesoDispositivosMenuItem_deviceType}" icon="ui-icon-search"  actionListener="#{controlAccesoDispositivosController.prepareDeviceType}" update=":TablaLogicaViewForm" oncomplete="PF('TablaLogicaViewDialog').show()" disabled="#{empty controlAccesoDispositivosController.selected.deviceType}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{controlAccesoDispositivosController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{controlAccesoDispositivosController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{controlAccesoDispositivosController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idSegAccesoDevice}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ControlAccesoDispositivosDataTableContextMenu" listener="#{controlAccesoDispositivosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ControlAccesoDispositivosDataTableContextMenu" listener="#{controlAccesoDispositivosController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{controlAccesoDispositivosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ControlAccesoDispositivosListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idSegAccesoDevice}" filterBy="#{item.idSegAccesoDevice}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoDispositivosTitle_idSegAccesoDevice}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idSegAccesoDevice}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.deviceName}" filterBy="#{item.deviceName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoDispositivosTitle_deviceName}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deviceName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.deviceOS}" filterBy="#{item.deviceOS}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoDispositivosTitle_deviceOS}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deviceOS}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.deviceIp}" filterBy="#{item.deviceIp}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoDispositivosTitle_deviceIp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deviceIp}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.deviceCode}" filterBy="#{item.deviceCode}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoDispositivosTitle_deviceCode}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deviceCode}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.deviceEstado}" filterBy="#{item.deviceEstado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoDispositivosTitle_deviceEstado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deviceEstado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.segCuentaCuentaId.cuentaId}" filterBy="#{item.segCuentaCuentaId.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoDispositivosTitle_segCuentaCuentaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.segCuentaCuentaId.cuentaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.deviceType.descripcion}" filterBy="#{item.deviceType.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoDispositivosTitle_deviceType}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deviceType.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{controlAccesoDispositivosController.prepareCreate}" update=":ControlAccesoDispositivosCreateForm" oncomplete="PF('ControlAccesoDispositivosCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":ControlAccesoDispositivosViewForm" oncomplete="PF('ControlAccesoDispositivosViewDialog').show()" disabled="#{empty controlAccesoDispositivosController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":ControlAccesoDispositivosEditForm" oncomplete="PF('ControlAccesoDispositivosEditDialog').show()" disabled="#{empty controlAccesoDispositivosController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{controlAccesoDispositivosController.delete}" update=":growl,datalist" disabled="#{empty controlAccesoDispositivosController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

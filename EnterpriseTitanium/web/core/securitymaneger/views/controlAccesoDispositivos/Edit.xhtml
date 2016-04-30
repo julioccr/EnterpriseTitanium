@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ControlAccesoDispositivosEditDlg" widgetVar="ControlAccesoDispositivosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.EditControlAccesoDispositivosTitle}" closeOnEscape="true">
+
+            <h:form id="ControlAccesoDispositivosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{controlAccesoDispositivosController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg_security.EditControlAccesoDispositivosLabel_idSegAccesoDevice}" for="idSegAccesoDevice" />
+                        <h:panelGroup>
+                            <h:outputText id="idSegAccesoDevice" value="#{controlAccesoDispositivosController.selected.idSegAccesoDevice}" />
+                            <p:tooltip for="idSegAccesoDevice" value="#{controlAccesoDispositivosController.getComponentMessages('idSegAccesoDevice', msg_security.EditControlAccesoDispositivosHelpText_idSegAccesoDevice)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoDispositivosLabel_deviceName}" for="deviceName" />
+                        <h:panelGroup>
+                            <p:inputText id="deviceName" value="#{controlAccesoDispositivosController.selected.deviceName}" title="#{msg_security.EditControlAccesoDispositivosTitle_deviceName}" required="true" requiredMessage="#{msg_security.EditControlAccesoDispositivosRequiredMessage_deviceName}" size="45" maxlength="45"/>
+                            <p:tooltip for="deviceName" value="#{controlAccesoDispositivosController.getComponentMessages('deviceName', msg_security.EditControlAccesoDispositivosHelpText_deviceName)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoDispositivosLabel_deviceOS}" for="deviceOS" />
+                        <h:panelGroup>
+                            <p:inputText id="deviceOS" value="#{controlAccesoDispositivosController.selected.deviceOS}" title="#{msg_security.EditControlAccesoDispositivosTitle_deviceOS}" size="45" maxlength="45"/>
+                            <p:tooltip for="deviceOS" value="#{controlAccesoDispositivosController.getComponentMessages('deviceOS', msg_security.EditControlAccesoDispositivosHelpText_deviceOS)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoDispositivosLabel_deviceIp}" for="deviceIp" />
+                        <h:panelGroup>
+                            <p:inputText id="deviceIp" value="#{controlAccesoDispositivosController.selected.deviceIp}" title="#{msg_security.EditControlAccesoDispositivosTitle_deviceIp}" size="45" maxlength="45"/>
+                            <p:tooltip for="deviceIp" value="#{controlAccesoDispositivosController.getComponentMessages('deviceIp', msg_security.EditControlAccesoDispositivosHelpText_deviceIp)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoDispositivosLabel_deviceCode}" for="deviceCode" />
+                        <h:panelGroup>
+                            <p:inputText id="deviceCode" value="#{controlAccesoDispositivosController.selected.deviceCode}" title="#{msg_security.EditControlAccesoDispositivosTitle_deviceCode}"/>
+                            <p:tooltip for="deviceCode" value="#{controlAccesoDispositivosController.getComponentMessages('deviceCode', msg_security.EditControlAccesoDispositivosHelpText_deviceCode)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoDispositivosLabel_deviceEstado}" for="deviceEstado" />
+                        <h:panelGroup>
+                            <p:inputText id="deviceEstado" value="#{controlAccesoDispositivosController.selected.deviceEstado}" title="#{msg_security.EditControlAccesoDispositivosTitle_deviceEstado}" size="45" maxlength="45"/>
+                            <p:tooltip for="deviceEstado" value="#{controlAccesoDispositivosController.getComponentMessages('deviceEstado', msg_security.EditControlAccesoDispositivosHelpText_deviceEstado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoDispositivosLabel_segCuentaCuentaId}" for="segCuentaCuentaId" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="segCuentaCuentaId" value="#{controlAccesoDispositivosController.selected.segCuentaCuentaId}" required="true" requiredMessage="#{msg_security.EditControlAccesoDispositivosRequiredMessage_segCuentaCuentaId}" converter="cuentaUsuarioConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{cuentaUsuarioController.items}"
+                                               var="segCuentaCuentaIdItem"
+                                               itemValue="#{segCuentaCuentaIdItem}"
+                                               itemLabel="#{segCuentaCuentaIdItem.cuentaId.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="segCuentaCuentaId" value="#{controlAccesoDispositivosController.getComponentMessages('segCuentaCuentaId', msg_security.EditControlAccesoDispositivosHelpText_segCuentaCuentaId)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoDispositivosLabel_deviceType}" for="deviceType" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="deviceType" value="#{controlAccesoDispositivosController.selected.deviceType}"  converter="tablaLogicaConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaController.items}"
+                                               var="deviceTypeItem"
+                                               itemValue="#{deviceTypeItem}"
+                                               itemLabel="#{deviceTypeItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="deviceType" value="#{controlAccesoDispositivosController.getComponentMessages('deviceType', msg_security.EditControlAccesoDispositivosHelpText_deviceType)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{controlAccesoDispositivosController.save}" value="#{msg_security.Save}" update="display,:ControlAccesoDispositivosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ControlAccesoDispositivosEditDialog'));">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg_security.Cancel}" oncomplete="PF('ControlAccesoDispositivosEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

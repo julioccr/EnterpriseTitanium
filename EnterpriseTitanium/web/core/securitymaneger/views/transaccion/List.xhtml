@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TransaccionListForm">
+
+        <p:panel header="#{msg_security.ListTransaccionTitle}">
+            <p:contextMenu id="TransaccionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('TransaccionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('TransaccionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('TransaccionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('TransaccionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.TransaccionMenuItem_appModuloCodModulo}" icon="ui-icon-search"  actionListener="#{transaccionController.prepareAppModuloCodModulo}" update=":ModuloViewForm" oncomplete="PF('ModuloViewDialog').show()" disabled="#{empty transaccionController.selected.appModuloCodModulo}"/>  
+                <p:menuitem value="#{msg_security.TransaccionMenuItem_politicasAccesoGrupoCollection}" icon="ui-icon-search"  action="#{transaccionController.navigatePoliticasAccesoGrupoCollection}" disabled="#{empty transaccionController.selected.politicasAccesoGrupoCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.TransaccionMenuItem_politicasAccesoUsuarioCollection}" icon="ui-icon-search"  action="#{transaccionController.navigatePoliticasAccesoUsuarioCollection}" disabled="#{empty transaccionController.selected.politicasAccesoUsuarioCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{transaccionController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{transaccionController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{transaccionController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idTransaccion}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TransaccionDataTableContextMenu" listener="#{transaccionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TransaccionDataTableContextMenu" listener="#{transaccionController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{transaccionController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TransaccionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idTransaccion}" filterBy="#{item.idTransaccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTransaccionTitle_idTransaccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTransaccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreTrans}" filterBy="#{item.nombreTrans}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTransaccionTitle_nombreTrans}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreTrans}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcionTrans}" filterBy="#{item.descripcionTrans}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTransaccionTitle_descripcionTrans}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcionTrans}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estadoTransf}" filterBy="#{item.estadoTransf}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTransaccionTitle_estadoTransf}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estadoTransf}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.appModuloCodModulo.descripcion}" filterBy="#{item.appModuloCodModulo.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTransaccionTitle_appModuloCodModulo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.appModuloCodModulo.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{transaccionController.prepareCreate}" update=":TransaccionCreateForm" oncomplete="PF('TransaccionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":TransaccionViewForm" oncomplete="PF('TransaccionViewDialog').show()" disabled="#{empty transaccionController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":TransaccionEditForm" oncomplete="PF('TransaccionEditDialog').show()" disabled="#{empty transaccionController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{transaccionController.delete}" update=":growl,datalist" disabled="#{empty transaccionController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

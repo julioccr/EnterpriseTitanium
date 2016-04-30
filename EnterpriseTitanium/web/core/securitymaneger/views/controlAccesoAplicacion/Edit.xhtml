@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ControlAccesoAplicacionEditDlg" widgetVar="ControlAccesoAplicacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.EditControlAccesoAplicacionTitle}" closeOnEscape="true">
+
+            <h:form id="ControlAccesoAplicacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{controlAccesoAplicacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg_security.EditControlAccesoAplicacionLabel_accesoAppId}" for="accesoAppId" />
+                        <h:panelGroup>
+                            <h:outputText id="accesoAppId" value="#{controlAccesoAplicacionController.selected.accesoAppId}" />
+                            <p:tooltip for="accesoAppId" value="#{controlAccesoAplicacionController.getComponentMessages('accesoAppId', msg_security.EditControlAccesoAplicacionHelpText_accesoAppId)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoAplicacionLabel_tiempoSession}" for="tiempoSession" />
+                        <h:panelGroup>
+                            <p:inputText id="tiempoSession" value="#{controlAccesoAplicacionController.selected.tiempoSession}" title="#{msg_security.EditControlAccesoAplicacionTitle_tiempoSession}" required="true" requiredMessage="#{msg_security.EditControlAccesoAplicacionRequiredMessage_tiempoSession}"/>
+                            <p:tooltip for="tiempoSession" value="#{controlAccesoAplicacionController.getComponentMessages('tiempoSession', msg_security.EditControlAccesoAplicacionHelpText_tiempoSession)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoAplicacionLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:inputText id="estado" value="#{controlAccesoAplicacionController.selected.estado}" title="#{msg_security.EditControlAccesoAplicacionTitle_estado}" size="1" maxlength="1"/>
+                            <p:tooltip for="estado" value="#{controlAccesoAplicacionController.getComponentMessages('estado', msg_security.EditControlAccesoAplicacionHelpText_estado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoAplicacionLabel_idApp}" for="idApp" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idApp" value="#{controlAccesoAplicacionController.selected.idApp}" required="true" requiredMessage="#{msg_security.EditControlAccesoAplicacionRequiredMessage_idApp}" converter="aplicacionConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{aplicacionController.items}"
+                                               var="idAppItem"
+                                               itemValue="#{idAppItem}"
+                                               itemLabel="#{idAppItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idApp" value="#{controlAccesoAplicacionController.getComponentMessages('idApp', msg_security.EditControlAccesoAplicacionHelpText_idApp)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditControlAccesoAplicacionLabel_idCuenta}" for="idCuenta" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idCuenta" value="#{controlAccesoAplicacionController.selected.idCuenta}" required="true" requiredMessage="#{msg_security.EditControlAccesoAplicacionRequiredMessage_idCuenta}" converter="cuentaUsuarioConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{cuentaUsuarioController.items}"
+                                               var="idCuentaItem"
+                                               itemValue="#{idCuentaItem}"
+                                               itemLabel="#{idCuentaItem.cuentaId.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idCuenta" value="#{controlAccesoAplicacionController.getComponentMessages('idCuenta', msg_security.EditControlAccesoAplicacionHelpText_idCuenta)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{controlAccesoAplicacionController.save}" value="#{msg_security.Save}" update="display,:ControlAccesoAplicacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ControlAccesoAplicacionEditDialog'));">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg_security.Cancel}" oncomplete="PF('ControlAccesoAplicacionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

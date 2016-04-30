@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EntidadListPage">
+        <pm:header title="#{msg_security.ListEntidadTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/securitymaneger/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_security.Create}" update=":EntidadCreatePage:EntidadCreateForm" actionListener="#{entidadController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:EntidadCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EntidadListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{entidadController.items}"
+                             var="item"
+                             rowKey="#{item.idEntidad}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{entidadController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{entidadController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{entidadController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('EntidadListPage:EntidadListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('EntidadListPage:EntidadListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('EntidadListPage:EntidadListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idEntidad}" filterBy="#{item.idEntidad}" headerText="#{msg_security.ListEntidadTitle_idEntidad}">
+                        <h:outputText value="#{item.idEntidad}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.tipoEmpresa}" filterBy="#{item.tipoEmpresa}" headerText="#{msg_security.ListEntidadTitle_tipoEmpresa}">
+                        <h:outputText value="#{item.tipoEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.dni}" filterBy="#{item.dni}" headerText="#{msg_security.ListEntidadTitle_dni}">
+                        <h:outputText value="#{item.dni}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}" headerText="#{msg_security.ListEntidadTitle_nombre}">
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.apellido}" filterBy="#{item.apellido}" headerText="#{msg_security.ListEntidadTitle_apellido}">
+                        <h:outputText value="#{item.apellido}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.senalUsuario}" filterBy="#{item.senalUsuario}" headerText="#{msg_security.ListEntidadTitle_senalUsuario}">
+                        <h:selectBooleanCheckbox id="senalUsuario" value="#{item.senalUsuario}" title="#{msg_security.EditEntidadTitle_senalUsuario}"  disabled="true"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.cuentaUsuario.cuentaId}" filterBy="#{item.cuentaUsuario.cuentaId}" headerText="#{msg_security.ListEntidadTitle_cuentaUsuario}">
+                        <h:outputText value="#{item.cuentaUsuario.cuentaId}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.ciudad.descripcion}" filterBy="#{item.ciudad.descripcion}" headerText="#{msg_security.ListEntidadTitle_ciudad}">
+                        <h:outputText value="#{item.ciudad.descripcion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.genero.descripcion}" filterBy="#{item.genero.descripcion}" headerText="#{msg_security.ListEntidadTitle_genero}">
+                        <h:outputText value="#{item.genero.descripcion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nacionalidad.descripcion}" filterBy="#{item.nacionalidad.descripcion}" headerText="#{msg_security.ListEntidadTitle_nacionalidad}">
+                        <h:outputText value="#{item.nacionalidad.descripcion}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.tipoidentificacion.descripcion}" filterBy="#{item.tipoidentificacion.descripcion}" headerText="#{msg_security.ListEntidadTitle_tipoidentificacion}">
+                                            <h:outputText value="#{item.tipoidentificacion.descripcion}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":EntidadEditPage:EntidadEditForm" disabled="#{empty entidadController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:EntidadEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{entidadController.delete}" update=":growl,datalist" disabled="#{empty entidadController.selected}">
+                    <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_security.Menu}" disabled="#{empty entidadController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_security.EntidadHeading} #{msg_security.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_security.EntidadMenuItem_cuentaUsuario}" icon="ui-icon-search" update=":CuentaUsuarioEditPage:CuentaUsuarioEditForm" disabled="#{empty entidadController.selected.cuentaUsuario}" actionListener="#{entidadController.prepareCuentaUsuario}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:CuentaUsuarioEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_security.EntidadMenuItem_ciudad}" icon="ui-icon-search" update=":TablaLogicaEditPage:TablaLogicaEditForm" disabled="#{empty entidadController.selected.ciudad}" actionListener="#{entidadController.prepareCiudad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_security.EntidadMenuItem_genero}" icon="ui-icon-search" update=":TablaLogicaEditPage:TablaLogicaEditForm" disabled="#{empty entidadController.selected.genero}" actionListener="#{entidadController.prepareGenero}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_security.EntidadMenuItem_nacionalidad}" icon="ui-icon-search" update=":TablaLogicaEditPage:TablaLogicaEditForm" disabled="#{empty entidadController.selected.nacionalidad}" actionListener="#{entidadController.prepareNacionalidad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_security.EntidadMenuItem_tipoidentificacion}" icon="ui-icon-search" update=":TablaLogicaEditPage:TablaLogicaEditForm" disabled="#{empty entidadController.selected.tipoidentificacion}" actionListener="#{entidadController.prepareTipoidentificacion}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

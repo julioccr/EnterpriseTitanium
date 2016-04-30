@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EntidadListForm">
+
+        <p:panel header="#{msg_security.ListEntidadTitle}">
+            <p:contextMenu id="EntidadDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('EntidadListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('EntidadListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('EntidadListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('EntidadListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.EntidadMenuItem_cuentaUsuario}" icon="ui-icon-search"  actionListener="#{entidadController.prepareCuentaUsuario}" update=":CuentaUsuarioViewForm" oncomplete="PF('CuentaUsuarioViewDialog').show()" disabled="#{empty entidadController.selected.cuentaUsuario}"/>  
+                <p:menuitem value="#{msg_security.EntidadMenuItem_ciudad}" icon="ui-icon-search"  actionListener="#{entidadController.prepareCiudad}" update=":TablaLogicaViewForm" oncomplete="PF('TablaLogicaViewDialog').show()" disabled="#{empty entidadController.selected.ciudad}"/>  
+                <p:menuitem value="#{msg_security.EntidadMenuItem_genero}" icon="ui-icon-search"  actionListener="#{entidadController.prepareGenero}" update=":TablaLogicaViewForm" oncomplete="PF('TablaLogicaViewDialog').show()" disabled="#{empty entidadController.selected.genero}"/>  
+                <p:menuitem value="#{msg_security.EntidadMenuItem_nacionalidad}" icon="ui-icon-search"  actionListener="#{entidadController.prepareNacionalidad}" update=":TablaLogicaViewForm" oncomplete="PF('TablaLogicaViewDialog').show()" disabled="#{empty entidadController.selected.nacionalidad}"/>  
+                <p:menuitem value="#{msg_security.EntidadMenuItem_tipoidentificacion}" icon="ui-icon-search"  actionListener="#{entidadController.prepareTipoidentificacion}" update=":TablaLogicaViewForm" oncomplete="PF('TablaLogicaViewDialog').show()" disabled="#{empty entidadController.selected.tipoidentificacion}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{entidadController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{entidadController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{entidadController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idEntidad}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EntidadDataTableContextMenu" listener="#{entidadController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EntidadDataTableContextMenu" listener="#{entidadController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{entidadController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EntidadListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idEntidad}" filterBy="#{item.idEntidad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_idEntidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEntidad}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoEmpresa}" filterBy="#{item.tipoEmpresa}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_tipoEmpresa}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoEmpresa}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dni}" filterBy="#{item.dni}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_dni}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dni}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.apellido}" filterBy="#{item.apellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_apellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellido}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.senalUsuario}" filterBy="#{item.senalUsuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_senalUsuario}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="senalUsuario" value="#{item.senalUsuario}" title="#{msg_security.EditEntidadTitle_senalUsuario}"  disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaUsuario.cuentaId}" filterBy="#{item.cuentaUsuario.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_cuentaUsuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaUsuario.cuentaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ciudad.descripcion}" filterBy="#{item.ciudad.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_ciudad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ciudad.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.genero.descripcion}" filterBy="#{item.genero.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_genero}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.genero.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nacionalidad.descripcion}" filterBy="#{item.nacionalidad.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListEntidadTitle_nacionalidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nacionalidad.descripcion}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.tipoidentificacion.descripcion}" filterBy="#{item.tipoidentificacion.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListEntidadTitle_tipoidentificacion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tipoidentificacion.descripcion}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{entidadController.prepareCreate}" update=":EntidadCreateForm" oncomplete="PF('EntidadCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":EntidadViewForm" oncomplete="PF('EntidadViewDialog').show()" disabled="#{empty entidadController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":EntidadEditForm" oncomplete="PF('EntidadEditDialog').show()" disabled="#{empty entidadController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{entidadController.delete}" update=":growl,datalist" disabled="#{empty entidadController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

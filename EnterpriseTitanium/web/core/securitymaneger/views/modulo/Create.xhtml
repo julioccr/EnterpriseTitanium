@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ModuloCreateDlg" widgetVar="ModuloCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg_security.CreateModuloTitle}" closeOnEscape="true">
+
+            <h:form id="ModuloCreateForm">
+
+                <h:panelGroup id="display" rendered="#{moduloController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg_security.CreateModuloLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{moduloController.selected.nombre}" title="#{msg_security.CreateModuloTitle_nombre}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombre" value="#{moduloController.getComponentMessages('nombre', msg_security.CreateModuloHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateModuloLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{moduloController.selected.descripcion}" title="#{msg_security.CreateModuloTitle_descripcion}" />
+                            <p:tooltip for="descripcion" value="#{moduloController.getComponentMessages('descripcion', msg_security.CreateModuloHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateModuloLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:inputText id="estado" value="#{moduloController.selected.estado}" title="#{msg_security.CreateModuloTitle_estado}" size="1" maxlength="1"/>
+                            <p:tooltip for="estado" value="#{moduloController.getComponentMessages('estado', msg_security.CreateModuloHelpText_estado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateModuloLabel_idAplicativo}" for="idAplicativo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idAplicativo" value="#{moduloController.selected.idAplicativo}"  converter="aplicacionConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{aplicacionController.items}"
+                                               var="idAplicativoItem"
+                                               itemValue="#{idAplicativoItem}"
+                                               itemLabel="#{idAplicativoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idAplicativo" value="#{moduloController.getComponentMessages('idAplicativo', msg_security.CreateModuloHelpText_idAplicativo)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{moduloController.saveNew}" value="#{msg_security.Save}" update="display,:ModuloListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ModuloCreateDialog'));">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg_security.Cancel}" oncomplete="PF('ModuloCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

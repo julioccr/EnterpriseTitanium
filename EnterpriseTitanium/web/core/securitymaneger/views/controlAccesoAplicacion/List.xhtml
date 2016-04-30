@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ControlAccesoAplicacionListForm">
+
+        <p:panel header="#{msg_security.ListControlAccesoAplicacionTitle}">
+            <p:contextMenu id="ControlAccesoAplicacionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('ControlAccesoAplicacionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('ControlAccesoAplicacionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('ControlAccesoAplicacionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('ControlAccesoAplicacionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.ControlAccesoAplicacionMenuItem_idApp}" icon="ui-icon-search"  actionListener="#{controlAccesoAplicacionController.prepareIdApp}" update=":AplicacionViewForm" oncomplete="PF('AplicacionViewDialog').show()" disabled="#{empty controlAccesoAplicacionController.selected.idApp}"/>  
+                <p:menuitem value="#{msg_security.ControlAccesoAplicacionMenuItem_idCuenta}" icon="ui-icon-search"  actionListener="#{controlAccesoAplicacionController.prepareIdCuenta}" update=":CuentaUsuarioViewForm" oncomplete="PF('CuentaUsuarioViewDialog').show()" disabled="#{empty controlAccesoAplicacionController.selected.idCuenta}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{controlAccesoAplicacionController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{controlAccesoAplicacionController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{controlAccesoAplicacionController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.accesoAppId}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ControlAccesoAplicacionDataTableContextMenu" listener="#{controlAccesoAplicacionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ControlAccesoAplicacionDataTableContextMenu" listener="#{controlAccesoAplicacionController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{controlAccesoAplicacionController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ControlAccesoAplicacionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.accesoAppId}" filterBy="#{item.accesoAppId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoAplicacionTitle_accesoAppId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accesoAppId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tiempoSession}" filterBy="#{item.tiempoSession}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoAplicacionTitle_tiempoSession}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tiempoSession}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoAplicacionTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idApp.descripcion}" filterBy="#{item.idApp.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoAplicacionTitle_idApp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idApp.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idCuenta.cuentaId}" filterBy="#{item.idCuenta.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListControlAccesoAplicacionTitle_idCuenta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idCuenta.cuentaId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{controlAccesoAplicacionController.prepareCreate}" update=":ControlAccesoAplicacionCreateForm" oncomplete="PF('ControlAccesoAplicacionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":ControlAccesoAplicacionViewForm" oncomplete="PF('ControlAccesoAplicacionViewDialog').show()" disabled="#{empty controlAccesoAplicacionController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":ControlAccesoAplicacionEditForm" oncomplete="PF('ControlAccesoAplicacionEditDialog').show()" disabled="#{empty controlAccesoAplicacionController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{controlAccesoAplicacionController.delete}" update=":growl,datalist" disabled="#{empty controlAccesoAplicacionController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

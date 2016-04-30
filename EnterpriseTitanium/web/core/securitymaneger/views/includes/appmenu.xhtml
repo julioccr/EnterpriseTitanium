@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="menuForm">
+            <p:menubar>
+                <p:menuitem value="#{msg_security.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:submenu label="#{msg_security.Maintenance}">
+                    <p:menuitem value="#{msg_security.AplicacionHeading}..." outcome="/core/securitymaneger/views/aplicacion/index" />
+                    <p:menuitem value="#{msg_security.ControlAccesoAplicacionHeading}..." outcome="/core/securitymaneger/views/controlAccesoAplicacion/index" />
+                    <p:menuitem value="#{msg_security.ControlAccesoDispositivosHeading}..." outcome="/core/securitymaneger/views/controlAccesoDispositivos/index" />
+                    <p:menuitem value="#{msg_security.CuentaUsuarioHeading}..." outcome="/core/securitymaneger/views/cuentaUsuario/index" />
+                    <p:menuitem value="#{msg_security.DirectivaGrupoHeading}..." outcome="/core/securitymaneger/views/directivaGrupo/index" />
+                    <p:menuitem value="#{msg_security.EntidadHeading}..." outcome="/core/securitymaneger/views/entidad/index" />
+                    <p:menuitem value="#{msg_security.ModuloHeading}..." outcome="/core/securitymaneger/views/modulo/index" />
+                    <p:menuitem value="#{msg_security.PoliticasAccesoGrupoHeading}..." outcome="/core/securitymaneger/views/politicasAccesoGrupo/index" />
+                    <p:menuitem value="#{msg_security.PoliticasAccesoUsuarioHeading}..." outcome="/core/securitymaneger/views/politicasAccesoUsuario/index" />
+                    <p:menuitem value="#{msg_security.SegAccesoModuloHeading}..." outcome="/core/securitymaneger/views/segAccesoModulo/index" />
+                    <p:menuitem value="#{msg_security.TablaLogicaHeading}..." outcome="/core/securitymaneger/views/tablaLogica/index" />
+                    <p:menuitem value="#{msg_security.TransaccionHeading}..." outcome="/core/securitymaneger/views/transaccion/index" />
+                </p:submenu>
+                <p:menuitem value="#{msg_security.Mobile}" outcome="/core/securitymaneger/views/m/index" icon="ui-icon-signal"/>
+            </p:menubar>
+        </h:form>
+    </ui:composition>
+
+</html>

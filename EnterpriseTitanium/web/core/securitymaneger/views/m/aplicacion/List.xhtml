@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="AplicacionListPage">
+        <pm:header title="#{msg_security.ListAplicacionTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/securitymaneger/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_security.Create}" update=":AplicacionCreatePage:AplicacionCreateForm" actionListener="#{aplicacionController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:AplicacionCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="AplicacionListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{aplicacionController.items}"
+                             var="item"
+                             rowKey="#{item.idAplicativo}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{aplicacionController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('AplicacionListPage:AplicacionListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('AplicacionListPage:AplicacionListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('AplicacionListPage:AplicacionListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idAplicativo}" filterBy="#{item.idAplicativo}" headerText="#{msg_security.ListAplicacionTitle_idAplicativo}">
+                        <h:outputText value="#{item.idAplicativo}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}" headerText="#{msg_security.ListAplicacionTitle_nombre}">
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}" headerText="#{msg_security.ListAplicacionTitle_descripcion}">
+                        <h:outputText value="#{item.descripcion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.soporte}" filterBy="#{item.soporte}" headerText="#{msg_security.ListAplicacionTitle_soporte}">
+                        <h:outputText value="#{item.soporte}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.estadoApp}" filterBy="#{item.estadoApp}" headerText="#{msg_security.ListAplicacionTitle_estadoApp}">
+                        <h:outputText value="#{item.estadoApp}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":AplicacionEditPage:AplicacionEditForm" disabled="#{empty aplicacionController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:AplicacionEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{aplicacionController.delete}" update=":growl,datalist" disabled="#{empty aplicacionController.selected}">
+                    <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_security.Menu}" disabled="#{empty aplicacionController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_security.AplicacionHeading} #{msg_security.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_security.AplicacionMenuItem_moduloCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty aplicacionController.selected.moduloCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{aplicacionController.navigateModuloCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_security.AplicacionMenuItem_controlAccesoAplicacionCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty aplicacionController.selected.controlAccesoAplicacionCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{aplicacionController.navigateControlAccesoAplicacionCollection()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

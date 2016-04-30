@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EntidadViewPage" lazy="true">
+        <pm:header title="#{msg_security.ViewEntidadTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EntidadListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EntidadViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{entidadController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_idEntidad}"/>
+                            <h:outputText value="#{entidadController.selected.idEntidad}" title="#{msg_security.ViewEntidadTitle_idEntidad}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_tipoEmpresa}"/>
+                            <h:outputText value="#{entidadController.selected.tipoEmpresa}" title="#{msg_security.ViewEntidadTitle_tipoEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_dni}"/>
+                            <h:outputText value="#{entidadController.selected.dni}" title="#{msg_security.ViewEntidadTitle_dni}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_nombre}"/>
+                            <h:outputText value="#{entidadController.selected.nombre}" title="#{msg_security.ViewEntidadTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_apellido}"/>
+                            <h:outputText value="#{entidadController.selected.apellido}" title="#{msg_security.ViewEntidadTitle_apellido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_senalUsuario}"/>
+                            <h:selectBooleanCheckbox id="senalUsuario" value="#{entidadController.selected.senalUsuario}" title="#{msg_security.EditEntidadTitle_senalUsuario}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_cuentaUsuario}"/>
+                            <h:outputText value="#{entidadController.selected.cuentaUsuario.cuentaId}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_ciudad}"/>
+                            <h:outputText value="#{entidadController.selected.ciudad.descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_genero}"/>
+                            <h:outputText value="#{entidadController.selected.genero.descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_nacionalidad}"/>
+                            <h:outputText value="#{entidadController.selected.nacionalidad.descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewEntidadLabel_tipoidentificacion}"/>
+                            <h:outputText value="#{entidadController.selected.tipoidentificacion.descripcion}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

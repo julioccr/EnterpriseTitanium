@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DirectivaGrupoListPage">
+        <pm:header title="#{msg_security.ListDirectivaGrupoTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/securitymaneger/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_security.Create}" update=":DirectivaGrupoCreatePage:DirectivaGrupoCreateForm" actionListener="#{directivaGrupoController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:DirectivaGrupoCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DirectivaGrupoListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{directivaGrupoController.items}"
+                             var="item"
+                             rowKey="#{item.idSegDirectivaGrupo}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{directivaGrupoController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{directivaGrupoController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{directivaGrupoController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('DirectivaGrupoListPage:DirectivaGrupoListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('DirectivaGrupoListPage:DirectivaGrupoListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('DirectivaGrupoListPage:DirectivaGrupoListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idSegDirectivaGrupo}" filterBy="#{item.idSegDirectivaGrupo}" headerText="#{msg_security.ListDirectivaGrupoTitle_idSegDirectivaGrupo}">
+                        <h:outputText value="#{item.idSegDirectivaGrupo}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}" headerText="#{msg_security.ListDirectivaGrupoTitle_nombre}">
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}" headerText="#{msg_security.ListDirectivaGrupoTitle_descripcion}">
+                        <h:outputText value="#{item.descripcion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}" headerText="#{msg_security.ListDirectivaGrupoTitle_estado}">
+                        <h:outputText value="#{item.estado}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaRegistro}" filterBy="#{item.fechaRegistro}" headerText="#{msg_security.ListDirectivaGrupoTitle_fechaRegistro}">
+                        <h:outputText value="#{item.fechaRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idCuenta.cuentaId}" filterBy="#{item.idCuenta.cuentaId}" headerText="#{msg_security.ListDirectivaGrupoTitle_idCuenta}">
+                        <h:outputText value="#{item.idCuenta.cuentaId}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":DirectivaGrupoEditPage:DirectivaGrupoEditForm" disabled="#{empty directivaGrupoController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:DirectivaGrupoEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{directivaGrupoController.delete}" update=":growl,datalist" disabled="#{empty directivaGrupoController.selected}">
+                    <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_security.Menu}" disabled="#{empty directivaGrupoController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_security.DirectivaGrupoHeading} #{msg_security.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_security.DirectivaGrupoMenuItem_politicasAccesoGrupoCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty directivaGrupoController.selected.politicasAccesoGrupoCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{directivaGrupoController.navigatePoliticasAccesoGrupoCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_security.DirectivaGrupoMenuItem_idCuenta}" icon="ui-icon-search" update=":CuentaUsuarioEditPage:CuentaUsuarioEditForm" disabled="#{empty directivaGrupoController.selected.idCuenta}" actionListener="#{directivaGrupoController.prepareIdCuenta}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:CuentaUsuarioEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

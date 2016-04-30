@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ControlAccesoAplicacionViewDlg" widgetVar="ControlAccesoAplicacionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.ViewControlAccesoAplicacionTitle}" closeOnEscape="true">
+
+            <h:form id="ControlAccesoAplicacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{controlAccesoAplicacionController.selected != null}">
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_accesoAppId}"/>
+                        <h:outputText value="#{controlAccesoAplicacionController.selected.accesoAppId}" title="#{msg_security.ViewControlAccesoAplicacionTitle_accesoAppId}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_tiempoSession}"/>
+                        <h:outputText value="#{controlAccesoAplicacionController.selected.tiempoSession}" title="#{msg_security.ViewControlAccesoAplicacionTitle_tiempoSession}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_estado}"/>
+                        <h:outputText value="#{controlAccesoAplicacionController.selected.estado}" title="#{msg_security.ViewControlAccesoAplicacionTitle_estado}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_idApp}"/>
+                        <h:outputText value="#{controlAccesoAplicacionController.selected.idApp.descripcion}"/>
+
+                        <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_idCuenta}"/>
+                        <h:outputText value="#{controlAccesoAplicacionController.selected.idCuenta.cuentaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_security.Close}" onclick="PF('ControlAccesoAplicacionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

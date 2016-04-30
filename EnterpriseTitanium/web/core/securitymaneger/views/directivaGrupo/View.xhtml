@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DirectivaGrupoViewDlg" widgetVar="DirectivaGrupoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.ViewDirectivaGrupoTitle}" closeOnEscape="true">
+
+            <h:form id="DirectivaGrupoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{directivaGrupoController.selected != null}">
+
+                        <h:outputText value="#{msg_security.ViewDirectivaGrupoLabel_idSegDirectivaGrupo}"/>
+                        <h:outputText value="#{directivaGrupoController.selected.idSegDirectivaGrupo}" title="#{msg_security.ViewDirectivaGrupoTitle_idSegDirectivaGrupo}"/>
+
+                        <h:outputText value="#{msg_security.ViewDirectivaGrupoLabel_nombre}"/>
+                        <h:outputText value="#{directivaGrupoController.selected.nombre}" title="#{msg_security.ViewDirectivaGrupoTitle_nombre}"/>
+
+                        <h:outputText value="#{msg_security.ViewDirectivaGrupoLabel_descripcion}"/>
+                        <h:outputText value="#{directivaGrupoController.selected.descripcion}" title="#{msg_security.ViewDirectivaGrupoTitle_descripcion}"/>
+
+                        <h:outputText value="#{msg_security.ViewDirectivaGrupoLabel_estado}"/>
+                        <h:outputText value="#{directivaGrupoController.selected.estado}" title="#{msg_security.ViewDirectivaGrupoTitle_estado}"/>
+
+                        <h:outputText value="#{msg_security.ViewDirectivaGrupoLabel_fechaRegistro}"/>
+                        <h:outputText value="#{directivaGrupoController.selected.fechaRegistro}" title="#{msg_security.ViewDirectivaGrupoTitle_fechaRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_security.ViewDirectivaGrupoLabel_idCuenta}"/>
+                        <h:outputText value="#{directivaGrupoController.selected.idCuenta.cuentaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_security.Close}" onclick="PF('DirectivaGrupoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

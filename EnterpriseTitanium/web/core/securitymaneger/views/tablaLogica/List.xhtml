@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TablaLogicaListForm">
+
+        <p:panel header="#{msg_security.ListTablaLogicaTitle}">
+            <p:contextMenu id="TablaLogicaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('TablaLogicaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('TablaLogicaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('TablaLogicaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('TablaLogicaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.TablaLogicaMenuItem_controlAccesoDispositivosCollection}" icon="ui-icon-search"  action="#{tablaLogicaController.navigateControlAccesoDispositivosCollection}" disabled="#{empty tablaLogicaController.selected.controlAccesoDispositivosCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.TablaLogicaMenuItem_entidadCollection}" icon="ui-icon-search"  action="#{tablaLogicaController.navigateEntidadCollection}" disabled="#{empty tablaLogicaController.selected.entidadCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.TablaLogicaMenuItem_entidadCollection1}" icon="ui-icon-search"  action="#{tablaLogicaController.navigateEntidadCollection1}" disabled="#{empty tablaLogicaController.selected.entidadCollection1}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.TablaLogicaMenuItem_entidadCollection2}" icon="ui-icon-search"  action="#{tablaLogicaController.navigateEntidadCollection2}" disabled="#{empty tablaLogicaController.selected.entidadCollection2}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.TablaLogicaMenuItem_entidadCollection3}" icon="ui-icon-search"  action="#{tablaLogicaController.navigateEntidadCollection3}" disabled="#{empty tablaLogicaController.selected.entidadCollection3}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{tablaLogicaController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{tablaLogicaController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{tablaLogicaController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idCodec}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TablaLogicaDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TablaLogicaDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TablaLogicaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idCodec}" filterBy="#{item.idCodec}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_idCodec}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idCodec}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipotabla}" filterBy="#{item.tipotabla}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_tipotabla}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipotabla}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.codePadre}" filterBy="#{item.codePadre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_codePadre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codePadre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreCorto}" filterBy="#{item.nombreCorto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_nombreCorto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreCorto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreLargo}" filterBy="#{item.nombreLargo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_nombreLargo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreLargo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.codelang}" filterBy="#{item.codelang}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_codelang}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codelang}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaRegistro}" filterBy="#{item.fechaRegistro}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_fechaRegistro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaRegistro}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaModificacion}" filterBy="#{item.fechaModificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListTablaLogicaTitle_fechaModificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaModificacion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.userRegistro}" filterBy="#{item.userRegistro}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListTablaLogicaTitle_userRegistro}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.userRegistro}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.userModificion}" filterBy="#{item.userModificion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListTablaLogicaTitle_userModificion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.userModificion}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{tablaLogicaController.prepareCreate}" update=":TablaLogicaCreateForm" oncomplete="PF('TablaLogicaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":TablaLogicaViewForm" oncomplete="PF('TablaLogicaViewDialog').show()" disabled="#{empty tablaLogicaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":TablaLogicaEditForm" oncomplete="PF('TablaLogicaEditDialog').show()" disabled="#{empty tablaLogicaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{tablaLogicaController.delete}" update=":growl,datalist" disabled="#{empty tablaLogicaController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

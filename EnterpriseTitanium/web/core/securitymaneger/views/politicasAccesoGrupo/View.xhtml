@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PoliticasAccesoGrupoViewDlg" widgetVar="PoliticasAccesoGrupoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.ViewPoliticasAccesoGrupoTitle}" closeOnEscape="true">
+
+            <h:form id="PoliticasAccesoGrupoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{politicasAccesoGrupoController.selected != null}">
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_idPoliticasAcceso}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.idPoliticasAcceso}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_idPoliticasAcceso}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_registro}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.registro}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_registro}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_actualizar}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.actualizar}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_actualizar}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_eliminar}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.eliminar}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_eliminar}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_verDetalles}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.verDetalles}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_verDetalles}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_fechaPoderInicio}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.fechaPoderInicio}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_fechaPoderInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_fechaPoderFin}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.fechaPoderFin}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_fechaPoderFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_DLunes}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.DLunes}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_DLunes}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_DMartes}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.DMartes}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_DMartes}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_DMiercoles}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.DMiercoles}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_DMiercoles}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_DJueves}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.DJueves}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_DJueves}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_DViernes}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.DViernes}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_DViernes}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_DSabado}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.DSabado}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_DSabado}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_DDomingo}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.DDomingo}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_DDomingo}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_horaInicio}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.horaInicio}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_horaInicio}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_horaFin}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.horaFin}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_horaFin}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_fechaRegistro}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.fechaRegistro}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_fechaRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_estadoPoder}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.estadoPoder}" title="#{msg_security.ViewPoliticasAccesoGrupoTitle_estadoPoder}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_idGrupo}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.idGrupo.descripcion}"/>
+
+                        <h:outputText value="#{msg_security.ViewPoliticasAccesoGrupoLabel_idTransaccion}"/>
+                        <h:outputText value="#{politicasAccesoGrupoController.selected.idTransaccion.descripcionTrans}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_security.Close}" onclick="PF('PoliticasAccesoGrupoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

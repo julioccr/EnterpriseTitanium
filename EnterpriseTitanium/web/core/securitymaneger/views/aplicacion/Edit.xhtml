@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AplicacionEditDlg" widgetVar="AplicacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.EditAplicacionTitle}" closeOnEscape="true">
+
+            <h:form id="AplicacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{aplicacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg_security.EditAplicacionLabel_idAplicativo}" for="idAplicativo" />
+                        <h:panelGroup>
+                            <h:outputText id="idAplicativo" value="#{aplicacionController.selected.idAplicativo}" />
+                            <p:tooltip for="idAplicativo" value="#{aplicacionController.getComponentMessages('idAplicativo', msg_security.EditAplicacionHelpText_idAplicativo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditAplicacionLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{aplicacionController.selected.nombre}" title="#{msg_security.EditAplicacionTitle_nombre}" required="true" requiredMessage="#{msg_security.EditAplicacionRequiredMessage_nombre}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombre" value="#{aplicacionController.getComponentMessages('nombre', msg_security.EditAplicacionHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditAplicacionLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{aplicacionController.selected.descripcion}" title="#{msg_security.EditAplicacionTitle_descripcion}" size="45" maxlength="45"/>
+                            <p:tooltip for="descripcion" value="#{aplicacionController.getComponentMessages('descripcion', msg_security.EditAplicacionHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditAplicacionLabel_soporte}" for="soporte" />
+                        <h:panelGroup>
+                            <p:inputText id="soporte" value="#{aplicacionController.selected.soporte}" title="#{msg_security.EditAplicacionTitle_soporte}" size="45" maxlength="45"/>
+                            <p:tooltip for="soporte" value="#{aplicacionController.getComponentMessages('soporte', msg_security.EditAplicacionHelpText_soporte)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditAplicacionLabel_estadoApp}" for="estadoApp" />
+                        <h:panelGroup>
+                            <p:inputText id="estadoApp" value="#{aplicacionController.selected.estadoApp}" title="#{msg_security.EditAplicacionTitle_estadoApp}" size="45" maxlength="45"/>
+                            <p:tooltip for="estadoApp" value="#{aplicacionController.getComponentMessages('estadoApp', msg_security.EditAplicacionHelpText_estadoApp)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{aplicacionController.save}" value="#{msg_security.Save}" update="display,:AplicacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AplicacionEditDialog'));">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg_security.Cancel}" oncomplete="PF('AplicacionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

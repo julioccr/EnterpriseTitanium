@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ControlAccesoAplicacionViewPage" lazy="true">
+        <pm:header title="#{msg_security.ViewControlAccesoAplicacionTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ControlAccesoAplicacionListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ControlAccesoAplicacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{controlAccesoAplicacionController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_accesoAppId}"/>
+                            <h:outputText value="#{controlAccesoAplicacionController.selected.accesoAppId}" title="#{msg_security.ViewControlAccesoAplicacionTitle_accesoAppId}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_tiempoSession}"/>
+                            <h:outputText value="#{controlAccesoAplicacionController.selected.tiempoSession}" title="#{msg_security.ViewControlAccesoAplicacionTitle_tiempoSession}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_estado}"/>
+                            <h:outputText value="#{controlAccesoAplicacionController.selected.estado}" title="#{msg_security.ViewControlAccesoAplicacionTitle_estado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_idApp}"/>
+                            <h:outputText value="#{controlAccesoAplicacionController.selected.idApp.descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoAplicacionLabel_idCuenta}"/>
+                            <h:outputText value="#{controlAccesoAplicacionController.selected.idCuenta.cuentaId}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

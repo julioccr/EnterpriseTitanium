@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ControlAccesoDispositivosCreatePage" lazy="true">
+        <pm:header title="#{msg_security.CreateControlAccesoDispositivosTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ControlAccesoDispositivosListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ControlAccesoDispositivosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{controlAccesoDispositivosController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateControlAccesoDispositivosLabel_deviceName}" for="deviceName" />
+                            <h:panelGroup>
+                                <p:inputText id="deviceName" value="#{controlAccesoDispositivosController.selected.deviceName}" title="#{msg_security.CreateControlAccesoDispositivosTitle_deviceName}" required="true" requiredMessage="#{msg_security.CreateControlAccesoDispositivosRequiredMessage_deviceName}" size="45" maxlength="45"/>
+                                <p:tooltip for="deviceName" value="#{controlAccesoDispositivosController.getComponentMessages('deviceName', msg_security.CreateControlAccesoDispositivosHelpText_deviceName)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateControlAccesoDispositivosLabel_deviceOS}" for="deviceOS" />
+                            <h:panelGroup>
+                                <p:inputText id="deviceOS" value="#{controlAccesoDispositivosController.selected.deviceOS}" title="#{msg_security.CreateControlAccesoDispositivosTitle_deviceOS}" size="45" maxlength="45"/>
+                                <p:tooltip for="deviceOS" value="#{controlAccesoDispositivosController.getComponentMessages('deviceOS', msg_security.CreateControlAccesoDispositivosHelpText_deviceOS)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateControlAccesoDispositivosLabel_deviceIp}" for="deviceIp" />
+                            <h:panelGroup>
+                                <p:inputText id="deviceIp" value="#{controlAccesoDispositivosController.selected.deviceIp}" title="#{msg_security.CreateControlAccesoDispositivosTitle_deviceIp}" size="45" maxlength="45"/>
+                                <p:tooltip for="deviceIp" value="#{controlAccesoDispositivosController.getComponentMessages('deviceIp', msg_security.CreateControlAccesoDispositivosHelpText_deviceIp)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateControlAccesoDispositivosLabel_deviceCode}" for="deviceCode" />
+                            <h:panelGroup>
+                                <p:inputText id="deviceCode" value="#{controlAccesoDispositivosController.selected.deviceCode}" title="#{msg_security.CreateControlAccesoDispositivosTitle_deviceCode}"/>
+                                <p:tooltip for="deviceCode" value="#{controlAccesoDispositivosController.getComponentMessages('deviceCode', msg_security.CreateControlAccesoDispositivosHelpText_deviceCode)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateControlAccesoDispositivosLabel_deviceEstado}" for="deviceEstado" />
+                            <h:panelGroup>
+                                <p:inputText id="deviceEstado" value="#{controlAccesoDispositivosController.selected.deviceEstado}" title="#{msg_security.CreateControlAccesoDispositivosTitle_deviceEstado}" size="45" maxlength="45"/>
+                                <p:tooltip for="deviceEstado" value="#{controlAccesoDispositivosController.getComponentMessages('deviceEstado', msg_security.CreateControlAccesoDispositivosHelpText_deviceEstado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateControlAccesoDispositivosLabel_segCuentaCuentaId}" for="segCuentaCuentaId" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="segCuentaCuentaId" value="#{controlAccesoDispositivosController.selected.segCuentaCuentaId}" required="true" requiredMessage="#{msg_security.CreateControlAccesoDispositivosRequiredMessage_segCuentaCuentaId}" converter="cuentaUsuarioConverter">
+                                    <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                    <f:selectItems value="#{cuentaUsuarioController.items}"
+                                                   var="segCuentaCuentaIdItem"
+                                                   itemValue="#{segCuentaCuentaIdItem}"
+                                                   itemLabel="#{segCuentaCuentaIdItem.cuentaId.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="segCuentaCuentaId" value="#{controlAccesoDispositivosController.getComponentMessages('segCuentaCuentaId', msg_security.CreateControlAccesoDispositivosHelpText_segCuentaCuentaId)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_security.CreateControlAccesoDispositivosLabel_deviceType}" for="deviceType" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="deviceType" value="#{controlAccesoDispositivosController.selected.deviceType}"  converter="tablaLogicaConverter">
+                                    <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tablaLogicaController.items}"
+                                                   var="deviceTypeItem"
+                                                   itemValue="#{deviceTypeItem}"
+                                                   itemLabel="#{deviceTypeItem.descripcion.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="deviceType" value="#{controlAccesoDispositivosController.getComponentMessages('deviceType', msg_security.CreateControlAccesoDispositivosHelpText_deviceType)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{controlAccesoDispositivosController.saveNew}" value="#{msg_security.Save}" update="display,:ControlAccesoDispositivosListPage:ControlAccesoDispositivosListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:ControlAccesoDispositivosListPage')}">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

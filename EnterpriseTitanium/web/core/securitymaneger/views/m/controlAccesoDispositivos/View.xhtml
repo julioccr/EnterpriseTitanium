@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ControlAccesoDispositivosViewPage" lazy="true">
+        <pm:header title="#{msg_security.ViewControlAccesoDispositivosTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_security.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ControlAccesoDispositivosListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ControlAccesoDispositivosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{controlAccesoDispositivosController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_idSegAccesoDevice}"/>
+                            <h:outputText value="#{controlAccesoDispositivosController.selected.idSegAccesoDevice}" title="#{msg_security.ViewControlAccesoDispositivosTitle_idSegAccesoDevice}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceName}"/>
+                            <h:outputText value="#{controlAccesoDispositivosController.selected.deviceName}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceName}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceOS}"/>
+                            <h:outputText value="#{controlAccesoDispositivosController.selected.deviceOS}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceOS}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceIp}"/>
+                            <h:outputText value="#{controlAccesoDispositivosController.selected.deviceIp}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceIp}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceCode}"/>
+                            <h:outputText value="#{controlAccesoDispositivosController.selected.deviceCode}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceCode}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceEstado}"/>
+                            <h:outputText value="#{controlAccesoDispositivosController.selected.deviceEstado}" title="#{msg_security.ViewControlAccesoDispositivosTitle_deviceEstado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_segCuentaCuentaId}"/>
+                            <h:outputText value="#{controlAccesoDispositivosController.selected.segCuentaCuentaId.cuentaId}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_security.ViewControlAccesoDispositivosLabel_deviceType}"/>
+                            <h:outputText value="#{controlAccesoDispositivosController.selected.deviceType.descripcion}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PoliticasAccesoGrupoCreateDlg" widgetVar="PoliticasAccesoGrupoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg_security.CreatePoliticasAccesoGrupoTitle}" closeOnEscape="true">
+
+            <h:form id="PoliticasAccesoGrupoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{politicasAccesoGrupoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_registro}" for="registro" />
+                        <h:panelGroup>
+                            <p:inputText id="registro" value="#{politicasAccesoGrupoController.selected.registro}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_registro}" size="10" maxlength="10"/>
+                            <p:tooltip for="registro" value="#{politicasAccesoGrupoController.getComponentMessages('registro', msg_security.CreatePoliticasAccesoGrupoHelpText_registro)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_actualizar}" for="actualizar" />
+                        <h:panelGroup>
+                            <p:inputText id="actualizar" value="#{politicasAccesoGrupoController.selected.actualizar}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_actualizar}" size="10" maxlength="10"/>
+                            <p:tooltip for="actualizar" value="#{politicasAccesoGrupoController.getComponentMessages('actualizar', msg_security.CreatePoliticasAccesoGrupoHelpText_actualizar)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_eliminar}" for="eliminar" />
+                        <h:panelGroup>
+                            <p:inputText id="eliminar" value="#{politicasAccesoGrupoController.selected.eliminar}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_eliminar}" size="10" maxlength="10"/>
+                            <p:tooltip for="eliminar" value="#{politicasAccesoGrupoController.getComponentMessages('eliminar', msg_security.CreatePoliticasAccesoGrupoHelpText_eliminar)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_verDetalles}" for="verDetalles" />
+                        <h:panelGroup>
+                            <p:inputText id="verDetalles" value="#{politicasAccesoGrupoController.selected.verDetalles}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_verDetalles}" size="10" maxlength="10"/>
+                            <p:tooltip for="verDetalles" value="#{politicasAccesoGrupoController.getComponentMessages('verDetalles', msg_security.CreatePoliticasAccesoGrupoHelpText_verDetalles)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_fechaPoderInicio}" for="fechaPoderInicio" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaPoderInicio" pattern="MM/dd/yyyy HH:mm:ss" value="#{politicasAccesoGrupoController.selected.fechaPoderInicio}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_fechaPoderInicio}"  showOn="button"/>
+                            <p:tooltip for="fechaPoderInicio" value="#{politicasAccesoGrupoController.getComponentMessages('fechaPoderInicio', msg_security.CreatePoliticasAccesoGrupoHelpText_fechaPoderInicio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_fechaPoderFin}" for="fechaPoderFin" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaPoderFin" pattern="MM/dd/yyyy HH:mm:ss" value="#{politicasAccesoGrupoController.selected.fechaPoderFin}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_fechaPoderFin}"  showOn="button"/>
+                            <p:tooltip for="fechaPoderFin" value="#{politicasAccesoGrupoController.getComponentMessages('fechaPoderFin', msg_security.CreatePoliticasAccesoGrupoHelpText_fechaPoderFin)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_DLunes}" for="DLunes" />
+                        <h:panelGroup>
+                            <p:inputText id="DLunes" value="#{politicasAccesoGrupoController.selected.DLunes}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_DLunes}" size="1" maxlength="1"/>
+                            <p:tooltip for="DLunes" value="#{politicasAccesoGrupoController.getComponentMessages('DLunes', msg_security.CreatePoliticasAccesoGrupoHelpText_DLunes)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_DMartes}" for="DMartes" />
+                        <h:panelGroup>
+                            <p:inputText id="DMartes" value="#{politicasAccesoGrupoController.selected.DMartes}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_DMartes}" size="1" maxlength="1"/>
+                            <p:tooltip for="DMartes" value="#{politicasAccesoGrupoController.getComponentMessages('DMartes', msg_security.CreatePoliticasAccesoGrupoHelpText_DMartes)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_DMiercoles}" for="DMiercoles" />
+                        <h:panelGroup>
+                            <p:inputText id="DMiercoles" value="#{politicasAccesoGrupoController.selected.DMiercoles}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_DMiercoles}" size="1" maxlength="1"/>
+                            <p:tooltip for="DMiercoles" value="#{politicasAccesoGrupoController.getComponentMessages('DMiercoles', msg_security.CreatePoliticasAccesoGrupoHelpText_DMiercoles)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_DJueves}" for="DJueves" />
+                        <h:panelGroup>
+                            <p:inputText id="DJueves" value="#{politicasAccesoGrupoController.selected.DJueves}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_DJueves}" size="1" maxlength="1"/>
+                            <p:tooltip for="DJueves" value="#{politicasAccesoGrupoController.getComponentMessages('DJueves', msg_security.CreatePoliticasAccesoGrupoHelpText_DJueves)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_DViernes}" for="DViernes" />
+                        <h:panelGroup>
+                            <p:inputText id="DViernes" value="#{politicasAccesoGrupoController.selected.DViernes}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_DViernes}" size="1" maxlength="1"/>
+                            <p:tooltip for="DViernes" value="#{politicasAccesoGrupoController.getComponentMessages('DViernes', msg_security.CreatePoliticasAccesoGrupoHelpText_DViernes)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_DSabado}" for="DSabado" />
+                        <h:panelGroup>
+                            <p:inputText id="DSabado" value="#{politicasAccesoGrupoController.selected.DSabado}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_DSabado}" size="1" maxlength="1"/>
+                            <p:tooltip for="DSabado" value="#{politicasAccesoGrupoController.getComponentMessages('DSabado', msg_security.CreatePoliticasAccesoGrupoHelpText_DSabado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_DDomingo}" for="DDomingo" />
+                        <h:panelGroup>
+                            <p:inputText id="DDomingo" value="#{politicasAccesoGrupoController.selected.DDomingo}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_DDomingo}" size="1" maxlength="1"/>
+                            <p:tooltip for="DDomingo" value="#{politicasAccesoGrupoController.getComponentMessages('DDomingo', msg_security.CreatePoliticasAccesoGrupoHelpText_DDomingo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_horaInicio}" for="horaInicio" />
+                        <h:panelGroup>
+                            <p:calendar id="horaInicio" pattern="HH:mm:ss" value="#{politicasAccesoGrupoController.selected.horaInicio}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_horaInicio}"  showOn="button"/>
+                            <p:tooltip for="horaInicio" value="#{politicasAccesoGrupoController.getComponentMessages('horaInicio', msg_security.CreatePoliticasAccesoGrupoHelpText_horaInicio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_horaFin}" for="horaFin" />
+                        <h:panelGroup>
+                            <p:calendar id="horaFin" pattern="HH:mm:ss" value="#{politicasAccesoGrupoController.selected.horaFin}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_horaFin}"  showOn="button"/>
+                            <p:tooltip for="horaFin" value="#{politicasAccesoGrupoController.getComponentMessages('horaFin', msg_security.CreatePoliticasAccesoGrupoHelpText_horaFin)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_fechaRegistro}" for="fechaRegistro" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{politicasAccesoGrupoController.selected.fechaRegistro}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_fechaRegistro}"  showOn="button"/>
+                            <p:tooltip for="fechaRegistro" value="#{politicasAccesoGrupoController.getComponentMessages('fechaRegistro', msg_security.CreatePoliticasAccesoGrupoHelpText_fechaRegistro)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_estadoPoder}" for="estadoPoder" />
+                        <h:panelGroup>
+                            <p:inputText id="estadoPoder" value="#{politicasAccesoGrupoController.selected.estadoPoder}" title="#{msg_security.CreatePoliticasAccesoGrupoTitle_estadoPoder}" size="45" maxlength="45"/>
+                            <p:tooltip for="estadoPoder" value="#{politicasAccesoGrupoController.getComponentMessages('estadoPoder', msg_security.CreatePoliticasAccesoGrupoHelpText_estadoPoder)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_idGrupo}" for="idGrupo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idGrupo" value="#{politicasAccesoGrupoController.selected.idGrupo}" required="true" requiredMessage="#{msg_security.CreatePoliticasAccesoGrupoRequiredMessage_idGrupo}" converter="directivaGrupoConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{directivaGrupoController.items}"
+                                               var="idGrupoItem"
+                                               itemValue="#{idGrupoItem}"
+                                               itemLabel="#{idGrupoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idGrupo" value="#{politicasAccesoGrupoController.getComponentMessages('idGrupo', msg_security.CreatePoliticasAccesoGrupoHelpText_idGrupo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreatePoliticasAccesoGrupoLabel_idTransaccion}" for="idTransaccion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTransaccion" value="#{politicasAccesoGrupoController.selected.idTransaccion}"  converter="transaccionConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{transaccionController.items}"
+                                               var="idTransaccionItem"
+                                               itemValue="#{idTransaccionItem}"
+                                               itemLabel="#{idTransaccionItem.descripcionTrans.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTransaccion" value="#{politicasAccesoGrupoController.getComponentMessages('idTransaccion', msg_security.CreatePoliticasAccesoGrupoHelpText_idTransaccion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{politicasAccesoGrupoController.saveNew}" value="#{msg_security.Save}" update="display,:PoliticasAccesoGrupoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PoliticasAccesoGrupoCreateDialog'));">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg_security.Cancel}" oncomplete="PF('PoliticasAccesoGrupoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="AplicacionListForm">
+
+        <p:panel header="#{msg_security.ListAplicacionTitle}">
+            <p:contextMenu id="AplicacionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('AplicacionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('AplicacionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('AplicacionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('AplicacionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.AplicacionMenuItem_moduloCollection}" icon="ui-icon-search"  action="#{aplicacionController.navigateModuloCollection}" disabled="#{empty aplicacionController.selected.moduloCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.AplicacionMenuItem_controlAccesoAplicacionCollection}" icon="ui-icon-search"  action="#{aplicacionController.navigateControlAccesoAplicacionCollection}" disabled="#{empty aplicacionController.selected.controlAccesoAplicacionCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{aplicacionController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{aplicacionController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{aplicacionController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idAplicativo}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AplicacionDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AplicacionDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('AplicacionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idAplicativo}" filterBy="#{item.idAplicativo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListAplicacionTitle_idAplicativo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idAplicativo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListAplicacionTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListAplicacionTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.soporte}" filterBy="#{item.soporte}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListAplicacionTitle_soporte}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.soporte}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estadoApp}" filterBy="#{item.estadoApp}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListAplicacionTitle_estadoApp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estadoApp}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{aplicacionController.prepareCreate}" update=":AplicacionCreateForm" oncomplete="PF('AplicacionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":AplicacionViewForm" oncomplete="PF('AplicacionViewDialog').show()" disabled="#{empty aplicacionController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":AplicacionEditForm" oncomplete="PF('AplicacionEditDialog').show()" disabled="#{empty aplicacionController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{aplicacionController.delete}" update=":growl,datalist" disabled="#{empty aplicacionController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

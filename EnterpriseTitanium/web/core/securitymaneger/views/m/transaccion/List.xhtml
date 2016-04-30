@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TransaccionListPage">
+        <pm:header title="#{msg_security.ListTransaccionTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/securitymaneger/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_security.Create}" update=":TransaccionCreatePage:TransaccionCreateForm" actionListener="#{transaccionController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:TransaccionCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TransaccionListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{transaccionController.items}"
+                             var="item"
+                             rowKey="#{item.idTransaccion}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{transaccionController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{transaccionController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{transaccionController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TransaccionListPage:TransaccionListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TransaccionListPage:TransaccionListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('TransaccionListPage:TransaccionListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idTransaccion}" filterBy="#{item.idTransaccion}" headerText="#{msg_security.ListTransaccionTitle_idTransaccion}">
+                        <h:outputText value="#{item.idTransaccion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreTrans}" filterBy="#{item.nombreTrans}" headerText="#{msg_security.ListTransaccionTitle_nombreTrans}">
+                        <h:outputText value="#{item.nombreTrans}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.descripcionTrans}" filterBy="#{item.descripcionTrans}" headerText="#{msg_security.ListTransaccionTitle_descripcionTrans}">
+                        <h:outputText value="#{item.descripcionTrans}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.estadoTransf}" filterBy="#{item.estadoTransf}" headerText="#{msg_security.ListTransaccionTitle_estadoTransf}">
+                        <h:outputText value="#{item.estadoTransf}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.appModuloCodModulo.descripcion}" filterBy="#{item.appModuloCodModulo.descripcion}" headerText="#{msg_security.ListTransaccionTitle_appModuloCodModulo}">
+                        <h:outputText value="#{item.appModuloCodModulo.descripcion}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":TransaccionEditPage:TransaccionEditForm" disabled="#{empty transaccionController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:TransaccionEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{transaccionController.delete}" update=":growl,datalist" disabled="#{empty transaccionController.selected}">
+                    <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_security.Menu}" disabled="#{empty transaccionController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_security.TransaccionHeading} #{msg_security.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_security.TransaccionMenuItem_appModuloCodModulo}" icon="ui-icon-search" update=":ModuloEditPage:ModuloEditForm" disabled="#{empty transaccionController.selected.appModuloCodModulo}" actionListener="#{transaccionController.prepareAppModuloCodModulo}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:ModuloEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_security.TransaccionMenuItem_politicasAccesoGrupoCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty transaccionController.selected.politicasAccesoGrupoCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{transaccionController.navigatePoliticasAccesoGrupoCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_security.TransaccionMenuItem_politicasAccesoUsuarioCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty transaccionController.selected.politicasAccesoUsuarioCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{transaccionController.navigatePoliticasAccesoUsuarioCollection()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

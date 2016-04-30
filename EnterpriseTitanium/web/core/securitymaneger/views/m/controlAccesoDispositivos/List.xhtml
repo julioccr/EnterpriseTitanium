@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ControlAccesoDispositivosListPage">
+        <pm:header title="#{msg_security.ListControlAccesoDispositivosTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/securitymaneger/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_security.Create}" update=":ControlAccesoDispositivosCreatePage:ControlAccesoDispositivosCreateForm" actionListener="#{controlAccesoDispositivosController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:ControlAccesoDispositivosCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ControlAccesoDispositivosListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{controlAccesoDispositivosController.items}"
+                             var="item"
+                             rowKey="#{item.idSegAccesoDevice}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{controlAccesoDispositivosController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{controlAccesoDispositivosController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{controlAccesoDispositivosController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('ControlAccesoDispositivosListPage:ControlAccesoDispositivosListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('ControlAccesoDispositivosListPage:ControlAccesoDispositivosListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('ControlAccesoDispositivosListPage:ControlAccesoDispositivosListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idSegAccesoDevice}" filterBy="#{item.idSegAccesoDevice}" headerText="#{msg_security.ListControlAccesoDispositivosTitle_idSegAccesoDevice}">
+                        <h:outputText value="#{item.idSegAccesoDevice}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.deviceName}" filterBy="#{item.deviceName}" headerText="#{msg_security.ListControlAccesoDispositivosTitle_deviceName}">
+                        <h:outputText value="#{item.deviceName}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.deviceOS}" filterBy="#{item.deviceOS}" headerText="#{msg_security.ListControlAccesoDispositivosTitle_deviceOS}">
+                        <h:outputText value="#{item.deviceOS}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.deviceIp}" filterBy="#{item.deviceIp}" headerText="#{msg_security.ListControlAccesoDispositivosTitle_deviceIp}">
+                        <h:outputText value="#{item.deviceIp}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.deviceCode}" filterBy="#{item.deviceCode}" headerText="#{msg_security.ListControlAccesoDispositivosTitle_deviceCode}">
+                        <h:outputText value="#{item.deviceCode}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.deviceEstado}" filterBy="#{item.deviceEstado}" headerText="#{msg_security.ListControlAccesoDispositivosTitle_deviceEstado}">
+                        <h:outputText value="#{item.deviceEstado}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.segCuentaCuentaId.cuentaId}" filterBy="#{item.segCuentaCuentaId.cuentaId}" headerText="#{msg_security.ListControlAccesoDispositivosTitle_segCuentaCuentaId}">
+                        <h:outputText value="#{item.segCuentaCuentaId.cuentaId}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.deviceType.descripcion}" filterBy="#{item.deviceType.descripcion}" headerText="#{msg_security.ListControlAccesoDispositivosTitle_deviceType}">
+                        <h:outputText value="#{item.deviceType.descripcion}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":ControlAccesoDispositivosEditPage:ControlAccesoDispositivosEditForm" disabled="#{empty controlAccesoDispositivosController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:ControlAccesoDispositivosEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{controlAccesoDispositivosController.delete}" update=":growl,datalist" disabled="#{empty controlAccesoDispositivosController.selected}">
+                    <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_security.Menu}" disabled="#{empty controlAccesoDispositivosController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_security.ControlAccesoDispositivosHeading} #{msg_security.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_security.ControlAccesoDispositivosMenuItem_segCuentaCuentaId}" icon="ui-icon-search" update=":CuentaUsuarioEditPage:CuentaUsuarioEditForm" disabled="#{empty controlAccesoDispositivosController.selected.segCuentaCuentaId}" actionListener="#{controlAccesoDispositivosController.prepareSegCuentaCuentaId}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:CuentaUsuarioEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_security.ControlAccesoDispositivosMenuItem_deviceType}" icon="ui-icon-search" update=":TablaLogicaEditPage:TablaLogicaEditForm" disabled="#{empty controlAccesoDispositivosController.selected.deviceType}" actionListener="#{controlAccesoDispositivosController.prepareDeviceType}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TablaLogicaEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

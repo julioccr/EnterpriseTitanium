@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PoliticasAccesoUsuarioListForm">
+
+        <p:panel header="#{msg_security.ListPoliticasAccesoUsuarioTitle}">
+            <p:contextMenu id="PoliticasAccesoUsuarioDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('PoliticasAccesoUsuarioListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('PoliticasAccesoUsuarioListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('PoliticasAccesoUsuarioListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('PoliticasAccesoUsuarioListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.PoliticasAccesoUsuarioMenuItem_idCuenta}" icon="ui-icon-search"  actionListener="#{politicasAccesoUsuarioController.prepareIdCuenta}" update=":CuentaUsuarioViewForm" oncomplete="PF('CuentaUsuarioViewDialog').show()" disabled="#{empty politicasAccesoUsuarioController.selected.idCuenta}"/>  
+                <p:menuitem value="#{msg_security.PoliticasAccesoUsuarioMenuItem_idTransaccion}" icon="ui-icon-search"  actionListener="#{politicasAccesoUsuarioController.prepareIdTransaccion}" update=":TransaccionViewForm" oncomplete="PF('TransaccionViewDialog').show()" disabled="#{empty politicasAccesoUsuarioController.selected.idTransaccion}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{politicasAccesoUsuarioController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{politicasAccesoUsuarioController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{politicasAccesoUsuarioController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idPoliticasAcceso}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PoliticasAccesoUsuarioDataTableContextMenu" listener="#{politicasAccesoUsuarioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PoliticasAccesoUsuarioDataTableContextMenu" listener="#{politicasAccesoUsuarioController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{politicasAccesoUsuarioController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PoliticasAccesoUsuarioListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idPoliticasAcceso}" filterBy="#{item.idPoliticasAcceso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_idPoliticasAcceso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idPoliticasAcceso}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.registro}" filterBy="#{item.registro}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_registro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.registro}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.actualizar}" filterBy="#{item.actualizar}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_actualizar}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.actualizar}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.eliminar}" filterBy="#{item.eliminar}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_eliminar}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.eliminar}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.verDetalles}" filterBy="#{item.verDetalles}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_verDetalles}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.verDetalles}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaPoderInicio}" filterBy="#{item.fechaPoderInicio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_fechaPoderInicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaPoderInicio}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaPoderFin}" filterBy="#{item.fechaPoderFin}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_fechaPoderFin}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaPoderFin}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.DLunes}" filterBy="#{item.DLunes}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_DLunes}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.DLunes}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.DMartes}" filterBy="#{item.DMartes}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_DMartes}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.DMartes}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.DMiercoles}" filterBy="#{item.DMiercoles}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_DMiercoles}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.DMiercoles}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.DJueves}" filterBy="#{item.DJueves}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_DJueves}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DJueves}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DViernes}" filterBy="#{item.DViernes}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_DViernes}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DViernes}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DSabado}" filterBy="#{item.DSabado}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_DSabado}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DSabado}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DDomingo}" filterBy="#{item.DDomingo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_DDomingo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DDomingo}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.horaInicio}" filterBy="#{item.horaInicio}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_horaInicio}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.horaInicio}">
+                                            <f:convertDateTime pattern="HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.horaFin}" filterBy="#{item.horaFin}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_horaFin}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.horaFin}">
+                                            <f:convertDateTime pattern="HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.fechaRegistro}" filterBy="#{item.fechaRegistro}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_fechaRegistro}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaRegistro}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.estadoPoder}" filterBy="#{item.estadoPoder}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_estadoPoder}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.estadoPoder}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idCuenta.cuentaId}" filterBy="#{item.idCuenta.cuentaId}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_idCuenta}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idCuenta.cuentaId}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idTransaccion.descripcionTrans}" filterBy="#{item.idTransaccion.descripcionTrans}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListPoliticasAccesoUsuarioTitle_idTransaccion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idTransaccion.descripcionTrans}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{politicasAccesoUsuarioController.prepareCreate}" update=":PoliticasAccesoUsuarioCreateForm" oncomplete="PF('PoliticasAccesoUsuarioCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":PoliticasAccesoUsuarioViewForm" oncomplete="PF('PoliticasAccesoUsuarioViewDialog').show()" disabled="#{empty politicasAccesoUsuarioController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":PoliticasAccesoUsuarioEditForm" oncomplete="PF('PoliticasAccesoUsuarioEditDialog').show()" disabled="#{empty politicasAccesoUsuarioController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{politicasAccesoUsuarioController.delete}" update=":growl,datalist" disabled="#{empty politicasAccesoUsuarioController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

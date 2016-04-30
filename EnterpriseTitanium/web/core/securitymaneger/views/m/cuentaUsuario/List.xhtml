@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CuentaUsuarioListPage">
+        <pm:header title="#{msg_security.ListCuentaUsuarioTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/core/securitymaneger/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_security.Create}" update=":CuentaUsuarioCreatePage:CuentaUsuarioCreateForm" actionListener="#{cuentaUsuarioController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:CuentaUsuarioCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CuentaUsuarioListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{cuentaUsuarioController.items}"
+                             var="item"
+                             rowKey="#{item.cuentaId}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{cuentaUsuarioController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{cuentaUsuarioController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{cuentaUsuarioController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('CuentaUsuarioListPage:CuentaUsuarioListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('CuentaUsuarioListPage:CuentaUsuarioListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('CuentaUsuarioListPage:CuentaUsuarioListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.cuentaId}" filterBy="#{item.cuentaId}" headerText="#{msg_security.ListCuentaUsuarioTitle_cuentaId}">
+                        <h:outputText value="#{item.cuentaId}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.password}" filterBy="#{item.password}" headerText="#{msg_security.ListCuentaUsuarioTitle_password}">
+                        <h:outputText value="#{item.password}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.grupos}" filterBy="#{item.grupos}" headerText="#{msg_security.ListCuentaUsuarioTitle_grupos}">
+                        <h:outputText value="#{item.grupos}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaRegistro}" filterBy="#{item.fechaRegistro}" headerText="#{msg_security.ListCuentaUsuarioTitle_fechaRegistro}">
+                        <h:outputText value="#{item.fechaRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.cantidadIntentos}" filterBy="#{item.cantidadIntentos}" headerText="#{msg_security.ListCuentaUsuarioTitle_cantidadIntentos}">
+                        <h:outputText value="#{item.cantidadIntentos}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.codigoVerificacion}" filterBy="#{item.codigoVerificacion}" headerText="#{msg_security.ListCuentaUsuarioTitle_codigoVerificacion}">
+                        <h:outputText value="#{item.codigoVerificacion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.accEmail}" filterBy="#{item.accEmail}" headerText="#{msg_security.ListCuentaUsuarioTitle_accEmail}">
+                        <h:outputText value="#{item.accEmail}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.accTmovil}" filterBy="#{item.accTmovil}" headerText="#{msg_security.ListCuentaUsuarioTitle_accTmovil}">
+                        <h:outputText value="#{item.accTmovil}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.accNid}" filterBy="#{item.accNid}" headerText="#{msg_security.ListCuentaUsuarioTitle_accNid}">
+                        <h:outputText value="#{item.accNid}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.accUrl}" filterBy="#{item.accUrl}" headerText="#{msg_security.ListCuentaUsuarioTitle_accUrl}">
+                        <h:outputText value="#{item.accUrl}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.accCodigo}" filterBy="#{item.accCodigo}" headerText="#{msg_security.ListCuentaUsuarioTitle_accCodigo}">
+                                            <h:outputText value="#{item.accCodigo}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.estado}" filterBy="#{item.estado}" headerText="#{msg_security.ListCuentaUsuarioTitle_estado}">
+                                            <h:outputText value="#{item.estado}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idEntidad.idEntidad}" filterBy="#{item.idEntidad.idEntidad}" headerText="#{msg_security.ListCuentaUsuarioTitle_idEntidad}">
+                                            <h:outputText value="#{item.idEntidad.idEntidad}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":CuentaUsuarioEditPage:CuentaUsuarioEditForm" disabled="#{empty cuentaUsuarioController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:CuentaUsuarioEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{cuentaUsuarioController.delete}" update=":growl,datalist" disabled="#{empty cuentaUsuarioController.selected}">
+                    <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_security.Menu}" disabled="#{empty cuentaUsuarioController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_security.CuentaUsuarioHeading} #{msg_security.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_controlAccesoDispositivosCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty cuentaUsuarioController.selected.controlAccesoDispositivosCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{cuentaUsuarioController.navigateControlAccesoDispositivosCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_segAccesoModuloCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty cuentaUsuarioController.selected.segAccesoModuloCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{cuentaUsuarioController.navigateSegAccesoModuloCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_idEntidad}" icon="ui-icon-search" update=":EntidadEditPage:EntidadEditForm" disabled="#{empty cuentaUsuarioController.selected.idEntidad}" actionListener="#{cuentaUsuarioController.prepareIdEntidad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EntidadEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_directivaGrupoCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty cuentaUsuarioController.selected.directivaGrupoCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{cuentaUsuarioController.navigateDirectivaGrupoCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_politicasAccesoUsuarioCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty cuentaUsuarioController.selected.politicasAccesoUsuarioCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{cuentaUsuarioController.navigatePoliticasAccesoUsuarioCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_controlAccesoAplicacionCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty cuentaUsuarioController.selected.controlAccesoAplicacionCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{cuentaUsuarioController.navigateControlAccesoAplicacionCollection()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

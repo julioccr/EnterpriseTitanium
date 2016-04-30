@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TablaLogicaEditDlg" widgetVar="TablaLogicaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.EditTablaLogicaTitle}" closeOnEscape="true">
+
+            <h:form id="TablaLogicaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tablaLogicaController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg_security.EditTablaLogicaLabel_idCodec}" for="idCodec" />
+                        <h:panelGroup>
+                            <h:outputText id="idCodec" value="#{tablaLogicaController.selected.idCodec}" />
+                            <p:tooltip for="idCodec" value="#{tablaLogicaController.getComponentMessages('idCodec', msg_security.EditTablaLogicaHelpText_idCodec)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_tipotabla}" for="tipotabla" />
+                        <h:panelGroup>
+                            <p:inputText id="tipotabla" value="#{tablaLogicaController.selected.tipotabla}" title="#{msg_security.EditTablaLogicaTitle_tipotabla}" required="true" requiredMessage="#{msg_security.EditTablaLogicaRequiredMessage_tipotabla}" size="20" maxlength="20"/>
+                            <p:tooltip for="tipotabla" value="#{tablaLogicaController.getComponentMessages('tipotabla', msg_security.EditTablaLogicaHelpText_tipotabla)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_codePadre}" for="codePadre" />
+                        <h:panelGroup>
+                            <p:inputText id="codePadre" value="#{tablaLogicaController.selected.codePadre}" title="#{msg_security.EditTablaLogicaTitle_codePadre}"/>
+                            <p:tooltip for="codePadre" value="#{tablaLogicaController.getComponentMessages('codePadre', msg_security.EditTablaLogicaHelpText_codePadre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_nombreCorto}" for="nombreCorto" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreCorto" value="#{tablaLogicaController.selected.nombreCorto}" title="#{msg_security.EditTablaLogicaTitle_nombreCorto}" required="true" requiredMessage="#{msg_security.EditTablaLogicaRequiredMessage_nombreCorto}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombreCorto" value="#{tablaLogicaController.getComponentMessages('nombreCorto', msg_security.EditTablaLogicaHelpText_nombreCorto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_nombreLargo}" for="nombreLargo" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreLargo" value="#{tablaLogicaController.selected.nombreLargo}" title="#{msg_security.EditTablaLogicaTitle_nombreLargo}" required="true" requiredMessage="#{msg_security.EditTablaLogicaRequiredMessage_nombreLargo}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombreLargo" value="#{tablaLogicaController.getComponentMessages('nombreLargo', msg_security.EditTablaLogicaHelpText_nombreLargo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_codelang}" for="codelang" />
+                        <h:panelGroup>
+                            <p:inputText id="codelang" value="#{tablaLogicaController.selected.codelang}" title="#{msg_security.EditTablaLogicaTitle_codelang}" size="45" maxlength="45"/>
+                            <p:tooltip for="codelang" value="#{tablaLogicaController.getComponentMessages('codelang', msg_security.EditTablaLogicaHelpText_codelang)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:inputText id="estado" value="#{tablaLogicaController.selected.estado}" title="#{msg_security.EditTablaLogicaTitle_estado}" size="1" maxlength="1"/>
+                            <p:tooltip for="estado" value="#{tablaLogicaController.getComponentMessages('estado', msg_security.EditTablaLogicaHelpText_estado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{tablaLogicaController.selected.descripcion}" title="#{msg_security.EditTablaLogicaTitle_descripcion}" size="255" maxlength="255"/>
+                            <p:tooltip for="descripcion" value="#{tablaLogicaController.getComponentMessages('descripcion', msg_security.EditTablaLogicaHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_fechaRegistro}" for="fechaRegistro" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{tablaLogicaController.selected.fechaRegistro}" title="#{msg_security.EditTablaLogicaTitle_fechaRegistro}"  showOn="button"/>
+                            <p:tooltip for="fechaRegistro" value="#{tablaLogicaController.getComponentMessages('fechaRegistro', msg_security.EditTablaLogicaHelpText_fechaRegistro)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_fechaModificacion}" for="fechaModificacion" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{tablaLogicaController.selected.fechaModificacion}" title="#{msg_security.EditTablaLogicaTitle_fechaModificacion}"  showOn="button"/>
+                            <p:tooltip for="fechaModificacion" value="#{tablaLogicaController.getComponentMessages('fechaModificacion', msg_security.EditTablaLogicaHelpText_fechaModificacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_userRegistro}" for="userRegistro" />
+                        <h:panelGroup>
+                            <p:inputText id="userRegistro" value="#{tablaLogicaController.selected.userRegistro}" title="#{msg_security.EditTablaLogicaTitle_userRegistro}"/>
+                            <p:tooltip for="userRegistro" value="#{tablaLogicaController.getComponentMessages('userRegistro', msg_security.EditTablaLogicaHelpText_userRegistro)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditTablaLogicaLabel_userModificion}" for="userModificion" />
+                        <h:panelGroup>
+                            <p:inputText id="userModificion" value="#{tablaLogicaController.selected.userModificion}" title="#{msg_security.EditTablaLogicaTitle_userModificion}"/>
+                            <p:tooltip for="userModificion" value="#{tablaLogicaController.getComponentMessages('userModificion', msg_security.EditTablaLogicaHelpText_userModificion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tablaLogicaController.save}" value="#{msg_security.Save}" update="display,:TablaLogicaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TablaLogicaEditDialog'));">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg_security.Cancel}" oncomplete="PF('TablaLogicaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

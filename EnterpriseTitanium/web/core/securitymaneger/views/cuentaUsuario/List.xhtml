@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CuentaUsuarioListForm">
+
+        <p:panel header="#{msg_security.ListCuentaUsuarioTitle}">
+            <p:contextMenu id="CuentaUsuarioDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_security.Create}" onclick="document.getElementById('CuentaUsuarioListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_security.View}" onclick="document.getElementById('CuentaUsuarioListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_security.Edit}" onclick="document.getElementById('CuentaUsuarioListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_security.Delete}" onclick="document.getElementById('CuentaUsuarioListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_controlAccesoDispositivosCollection}" icon="ui-icon-search"  action="#{cuentaUsuarioController.navigateControlAccesoDispositivosCollection}" disabled="#{empty cuentaUsuarioController.selected.controlAccesoDispositivosCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_segAccesoModuloCollection}" icon="ui-icon-search"  action="#{cuentaUsuarioController.navigateSegAccesoModuloCollection}" disabled="#{empty cuentaUsuarioController.selected.segAccesoModuloCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_idEntidad}" icon="ui-icon-search"  actionListener="#{cuentaUsuarioController.prepareIdEntidad}" update=":EntidadViewForm" oncomplete="PF('EntidadViewDialog').show()" disabled="#{empty cuentaUsuarioController.selected.idEntidad}"/>  
+                <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_directivaGrupoCollection}" icon="ui-icon-search"  action="#{cuentaUsuarioController.navigateDirectivaGrupoCollection}" disabled="#{empty cuentaUsuarioController.selected.directivaGrupoCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_politicasAccesoUsuarioCollection}" icon="ui-icon-search"  action="#{cuentaUsuarioController.navigatePoliticasAccesoUsuarioCollection}" disabled="#{empty cuentaUsuarioController.selected.politicasAccesoUsuarioCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg_security.CuentaUsuarioMenuItem_controlAccesoAplicacionCollection}" icon="ui-icon-search"  action="#{cuentaUsuarioController.navigateControlAccesoAplicacionCollection}" disabled="#{empty cuentaUsuarioController.selected.controlAccesoAplicacionCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{cuentaUsuarioController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{cuentaUsuarioController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{cuentaUsuarioController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.cuentaId}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CuentaUsuarioDataTableContextMenu" listener="#{cuentaUsuarioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CuentaUsuarioDataTableContextMenu" listener="#{cuentaUsuarioController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{cuentaUsuarioController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CuentaUsuarioListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.cuentaId}" filterBy="#{item.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_cuentaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.password}" filterBy="#{item.password}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_password}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.password}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.grupos}" filterBy="#{item.grupos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_grupos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.grupos}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaRegistro}" filterBy="#{item.fechaRegistro}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_fechaRegistro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaRegistro}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cantidadIntentos}" filterBy="#{item.cantidadIntentos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_cantidadIntentos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidadIntentos}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.codigoVerificacion}" filterBy="#{item.codigoVerificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_codigoVerificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codigoVerificacion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.accEmail}" filterBy="#{item.accEmail}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_accEmail}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accEmail}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.accTmovil}" filterBy="#{item.accTmovil}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_accTmovil}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accTmovil}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.accNid}" filterBy="#{item.accNid}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_accNid}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accNid}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.accUrl}" filterBy="#{item.accUrl}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_accUrl}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accUrl}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.accCodigo}" filterBy="#{item.accCodigo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_accCodigo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.accCodigo}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_estado}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.estado}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idEntidad.idEntidad}" filterBy="#{item.idEntidad.idEntidad}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_security.ListCuentaUsuarioTitle_idEntidad}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idEntidad.idEntidad}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_security.Create}" actionListener="#{cuentaUsuarioController.prepareCreate}" update=":CuentaUsuarioCreateForm" oncomplete="PF('CuentaUsuarioCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_security.View}" update=":CuentaUsuarioViewForm" oncomplete="PF('CuentaUsuarioViewDialog').show()" disabled="#{empty cuentaUsuarioController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_security.Edit}" update=":CuentaUsuarioEditForm" oncomplete="PF('CuentaUsuarioEditDialog').show()" disabled="#{empty cuentaUsuarioController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_security.Delete}" actionListener="#{cuentaUsuarioController.delete}" update=":growl,datalist" disabled="#{empty cuentaUsuarioController.selected}">
+                <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/securitymaneger/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

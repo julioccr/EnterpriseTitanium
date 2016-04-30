@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DirectivaGrupoCreateDlg" widgetVar="DirectivaGrupoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg_security.CreateDirectivaGrupoTitle}" closeOnEscape="true">
+
+            <h:form id="DirectivaGrupoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{directivaGrupoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_idSegDirectivaGrupo}" for="idSegDirectivaGrupo" />
+                        <h:panelGroup>
+                            <p:inputText id="idSegDirectivaGrupo" value="#{directivaGrupoController.selected.idSegDirectivaGrupo}" title="#{msg_security.CreateDirectivaGrupoTitle_idSegDirectivaGrupo}" required="true" requiredMessage="#{msg_security.CreateDirectivaGrupoRequiredMessage_idSegDirectivaGrupo}"/>
+                            <p:tooltip for="idSegDirectivaGrupo" value="#{directivaGrupoController.getComponentMessages('idSegDirectivaGrupo', msg_security.CreateDirectivaGrupoHelpText_idSegDirectivaGrupo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{directivaGrupoController.selected.nombre}" title="#{msg_security.CreateDirectivaGrupoTitle_nombre}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombre" value="#{directivaGrupoController.getComponentMessages('nombre', msg_security.CreateDirectivaGrupoHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{directivaGrupoController.selected.descripcion}" title="#{msg_security.CreateDirectivaGrupoTitle_descripcion}" size="120" maxlength="120"/>
+                            <p:tooltip for="descripcion" value="#{directivaGrupoController.getComponentMessages('descripcion', msg_security.CreateDirectivaGrupoHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:inputText id="estado" value="#{directivaGrupoController.selected.estado}" title="#{msg_security.CreateDirectivaGrupoTitle_estado}" size="1" maxlength="1"/>
+                            <p:tooltip for="estado" value="#{directivaGrupoController.getComponentMessages('estado', msg_security.CreateDirectivaGrupoHelpText_estado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_fechaRegistro}" for="fechaRegistro" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{directivaGrupoController.selected.fechaRegistro}" title="#{msg_security.CreateDirectivaGrupoTitle_fechaRegistro}"  showOn="button"/>
+                            <p:tooltip for="fechaRegistro" value="#{directivaGrupoController.getComponentMessages('fechaRegistro', msg_security.CreateDirectivaGrupoHelpText_fechaRegistro)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.CreateDirectivaGrupoLabel_idCuenta}" for="idCuenta" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idCuenta" value="#{directivaGrupoController.selected.idCuenta}" required="true" requiredMessage="#{msg_security.CreateDirectivaGrupoRequiredMessage_idCuenta}" converter="cuentaUsuarioConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{cuentaUsuarioController.items}"
+                                               var="idCuentaItem"
+                                               itemValue="#{idCuentaItem}"
+                                               itemLabel="#{idCuentaItem.cuentaId.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idCuenta" value="#{directivaGrupoController.getComponentMessages('idCuenta', msg_security.CreateDirectivaGrupoHelpText_idCuenta)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{directivaGrupoController.saveNew}" value="#{msg_security.Save}" update="display,:DirectivaGrupoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DirectivaGrupoCreateDialog'));">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg_security.Cancel}" oncomplete="PF('DirectivaGrupoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EntidadEditDlg" widgetVar="EntidadEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_security.EditEntidadTitle}" closeOnEscape="true">
+
+            <h:form id="EntidadEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{entidadController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg_security.EditEntidadLabel_idEntidad}" for="idEntidad" />
+                        <h:panelGroup>
+                            <h:outputText id="idEntidad" value="#{entidadController.selected.idEntidad}" />
+                            <p:tooltip for="idEntidad" value="#{entidadController.getComponentMessages('idEntidad', msg_security.EditEntidadHelpText_idEntidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_tipoEmpresa}" for="tipoEmpresa" />
+                        <h:panelGroup>
+                            <p:inputText id="tipoEmpresa" value="#{entidadController.selected.tipoEmpresa}" title="#{msg_security.EditEntidadTitle_tipoEmpresa}"/>
+                            <p:tooltip for="tipoEmpresa" value="#{entidadController.getComponentMessages('tipoEmpresa', msg_security.EditEntidadHelpText_tipoEmpresa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_dni}" for="dni" />
+                        <h:panelGroup>
+                            <p:inputText id="dni" value="#{entidadController.selected.dni}" title="#{msg_security.EditEntidadTitle_dni}" required="true" requiredMessage="#{msg_security.EditEntidadRequiredMessage_dni}" size="25" maxlength="25"/>
+                            <p:tooltip for="dni" value="#{entidadController.getComponentMessages('dni', msg_security.EditEntidadHelpText_dni)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{entidadController.selected.nombre}" title="#{msg_security.EditEntidadTitle_nombre}" required="true" requiredMessage="#{msg_security.EditEntidadRequiredMessage_nombre}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombre" value="#{entidadController.getComponentMessages('nombre', msg_security.EditEntidadHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_apellido}" for="apellido" />
+                        <h:panelGroup>
+                            <p:inputText id="apellido" value="#{entidadController.selected.apellido}" title="#{msg_security.EditEntidadTitle_apellido}" size="45" maxlength="45"/>
+                            <p:tooltip for="apellido" value="#{entidadController.getComponentMessages('apellido', msg_security.EditEntidadHelpText_apellido)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_senalUsuario}" for="senalUsuario" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="senalUsuario" value="#{entidadController.selected.senalUsuario}" />
+                            <p:tooltip for="senalUsuario" value="#{entidadController.getComponentMessages('senalUsuario', msg_security.EditEntidadHelpText_senalUsuario)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_cuentaUsuario}" for="cuentaUsuario" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="cuentaUsuario" value="#{entidadController.selected.cuentaUsuario}"  converter="cuentaUsuarioConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{cuentaUsuarioController.items}"
+                                               var="cuentaUsuarioItem"
+                                               itemValue="#{cuentaUsuarioItem}"
+                                               itemLabel="#{cuentaUsuarioItem.cuentaId.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="cuentaUsuario" value="#{entidadController.getComponentMessages('cuentaUsuario', msg_security.EditEntidadHelpText_cuentaUsuario)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_ciudad}" for="ciudad" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="ciudad" value="#{entidadController.selected.ciudad}"  converter="tablaLogicaConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaController.items}"
+                                               var="ciudadItem"
+                                               itemValue="#{ciudadItem}"
+                                               itemLabel="#{ciudadItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="ciudad" value="#{entidadController.getComponentMessages('ciudad', msg_security.EditEntidadHelpText_ciudad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_genero}" for="genero" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="genero" value="#{entidadController.selected.genero}"  converter="tablaLogicaConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaController.items}"
+                                               var="generoItem"
+                                               itemValue="#{generoItem}"
+                                               itemLabel="#{generoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="genero" value="#{entidadController.getComponentMessages('genero', msg_security.EditEntidadHelpText_genero)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_nacionalidad}" for="nacionalidad" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="nacionalidad" value="#{entidadController.selected.nacionalidad}"  converter="tablaLogicaConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaController.items}"
+                                               var="nacionalidadItem"
+                                               itemValue="#{nacionalidadItem}"
+                                               itemLabel="#{nacionalidadItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="nacionalidad" value="#{entidadController.getComponentMessages('nacionalidad', msg_security.EditEntidadHelpText_nacionalidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_security.EditEntidadLabel_tipoidentificacion}" for="tipoidentificacion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipoidentificacion" value="#{entidadController.selected.tipoidentificacion}" required="true" requiredMessage="#{msg_security.EditEntidadRequiredMessage_tipoidentificacion}" converter="tablaLogicaConverter">
+                                <f:selectItem itemLabel="#{msg_security.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaController.items}"
+                                               var="tipoidentificacionItem"
+                                               itemValue="#{tipoidentificacionItem}"
+                                               itemLabel="#{tipoidentificacionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="tipoidentificacion" value="#{entidadController.getComponentMessages('tipoidentificacion', msg_security.EditEntidadHelpText_tipoidentificacion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{entidadController.save}" value="#{msg_security.Save}" update="display,:EntidadListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EntidadEditDialog'));">
+                        <p:confirm header="#{msg_security.ConfirmationHeader}" message="#{msg_security.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg_security.Cancel}" oncomplete="PF('EntidadEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
