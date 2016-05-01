@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EntidadCompViewDlg" widgetVar="EntidadCompViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_schedule.ViewEntidadCompTitle}" closeOnEscape="true">
+
+            <h:form id="EntidadCompViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{entidadCompController.selected != null}">
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_idEntidad}"/>
+                        <h:outputText value="#{entidadCompController.selected.idEntidad}" title="#{msg_schedule.ViewEntidadCompTitle_idEntidad}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_tipoEmpresa}"/>
+                        <h:outputText value="#{entidadCompController.selected.tipoEmpresa}" title="#{msg_schedule.ViewEntidadCompTitle_tipoEmpresa}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_dni}"/>
+                        <h:outputText value="#{entidadCompController.selected.dni}" title="#{msg_schedule.ViewEntidadCompTitle_dni}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_nombre}"/>
+                        <h:outputText value="#{entidadCompController.selected.nombre}" title="#{msg_schedule.ViewEntidadCompTitle_nombre}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_apellido}"/>
+                        <h:outputText value="#{entidadCompController.selected.apellido}" title="#{msg_schedule.ViewEntidadCompTitle_apellido}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_senalUsuario}"/>
+                        <h:selectBooleanCheckbox id="senalUsuario" value="#{entidadCompController.selected.senalUsuario}" title="#{msg_schedule.EditEntidadCompTitle_senalUsuario}"  disabled="true"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_cuentaUsuario}"/>
+                        <h:outputText value="#{entidadCompController.selected.cuentaUsuario.cuentaId}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_ciudad}"/>
+                        <h:outputText value="#{entidadCompController.selected.ciudad.descripcion}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_genero}"/>
+                        <h:outputText value="#{entidadCompController.selected.genero.descripcion}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_nacionalidad}"/>
+                        <h:outputText value="#{entidadCompController.selected.nacionalidad.descripcion}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_tipoidentificacion}"/>
+                        <h:outputText value="#{entidadCompController.selected.tipoidentificacion.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_schedule.Close}" onclick="PF('EntidadCompViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

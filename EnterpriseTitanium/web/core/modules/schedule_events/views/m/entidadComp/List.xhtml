@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EntidadCompListPage">
+        <pm:header title="#{msg_schedule.ListEntidadCompTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageControllerSchedule.navigateBackInHistory('/core/modules/schedule_events/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_schedule.Create}" update=":EntidadCompCreatePage:EntidadCompCreateForm" actionListener="#{entidadCompController.prepareCreate}" action="#{mobilePageControllerSchedule.navigateWithHistory('pm:EntidadCompCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EntidadCompListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{entidadCompController.items}"
+                             var="item"
+                             rowKey="#{item.idEntidad}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{entidadCompController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{entidadCompController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{entidadCompController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('EntidadCompListPage:EntidadCompListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('EntidadCompListPage:EntidadCompListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('EntidadCompListPage:EntidadCompListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idEntidad}" filterBy="#{item.idEntidad}" headerText="#{msg_schedule.ListEntidadCompTitle_idEntidad}">
+                        <h:outputText value="#{item.idEntidad}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.tipoEmpresa}" filterBy="#{item.tipoEmpresa}" headerText="#{msg_schedule.ListEntidadCompTitle_tipoEmpresa}">
+                        <h:outputText value="#{item.tipoEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.dni}" filterBy="#{item.dni}" headerText="#{msg_schedule.ListEntidadCompTitle_dni}">
+                        <h:outputText value="#{item.dni}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}" headerText="#{msg_schedule.ListEntidadCompTitle_nombre}">
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.apellido}" filterBy="#{item.apellido}" headerText="#{msg_schedule.ListEntidadCompTitle_apellido}">
+                        <h:outputText value="#{item.apellido}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.senalUsuario}" filterBy="#{item.senalUsuario}" headerText="#{msg_schedule.ListEntidadCompTitle_senalUsuario}">
+                        <h:selectBooleanCheckbox id="senalUsuario" value="#{item.senalUsuario}" title="#{msg_schedule.EditEntidadCompTitle_senalUsuario}"  disabled="true"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.cuentaUsuario.cuentaId}" filterBy="#{item.cuentaUsuario.cuentaId}" headerText="#{msg_schedule.ListEntidadCompTitle_cuentaUsuario}">
+                        <h:outputText value="#{item.cuentaUsuario.cuentaId}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.ciudad.descripcion}" filterBy="#{item.ciudad.descripcion}" headerText="#{msg_schedule.ListEntidadCompTitle_ciudad}">
+                        <h:outputText value="#{item.ciudad.descripcion}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.genero.descripcion}" filterBy="#{item.genero.descripcion}" headerText="#{msg_schedule.ListEntidadCompTitle_genero}">
+                                            <h:outputText value="#{item.genero.descripcion}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.nacionalidad.descripcion}" filterBy="#{item.nacionalidad.descripcion}" headerText="#{msg_schedule.ListEntidadCompTitle_nacionalidad}">
+                                            <h:outputText value="#{item.nacionalidad.descripcion}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.tipoidentificacion.descripcion}" filterBy="#{item.tipoidentificacion.descripcion}" headerText="#{msg_schedule.ListEntidadCompTitle_tipoidentificacion}">
+                                            <h:outputText value="#{item.tipoidentificacion.descripcion}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_schedule.Edit}" update=":EntidadCompEditPage:EntidadCompEditForm" disabled="#{empty entidadCompController.selected}" actionListener="#{mobilePageControllerSchedule.currentPageListener}" action="#{mobilePageControllerSchedule.navigateWithHistory('pm:EntidadCompEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_schedule.Delete}" actionListener="#{entidadCompController.delete}" update=":growl,datalist" disabled="#{empty entidadCompController.selected}">
+                    <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_schedule.Menu}" disabled="#{empty entidadCompController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_schedule.EntidadCompHeading} #{msg_schedule.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_cuentaUsuario}" icon="ui-icon-search" update=":CuentaUsuarioCompEditPage:CuentaUsuarioCompEditForm" disabled="#{empty entidadCompController.selected.cuentaUsuario}" actionListener="#{entidadCompController.prepareCuentaUsuario}" action="#{mobilePageControllerSchedule.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerSchedule}"/>
+                            <f:setPropertyActionListener target="#{mobilePageControllerSchedule.nextPage}" value="pm:CuentaUsuarioCompEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_ciudad}" icon="ui-icon-search" update=":TablaLogicaCompEditPage:TablaLogicaCompEditForm" disabled="#{empty entidadCompController.selected.ciudad}" actionListener="#{entidadCompController.prepareCiudad}" action="#{mobilePageControllerSchedule.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerSchedule}"/>
+                            <f:setPropertyActionListener target="#{mobilePageControllerSchedule.nextPage}" value="pm:TablaLogicaCompEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_genero}" icon="ui-icon-search" update=":TablaLogicaCompEditPage:TablaLogicaCompEditForm" disabled="#{empty entidadCompController.selected.genero}" actionListener="#{entidadCompController.prepareGenero}" action="#{mobilePageControllerSchedule.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerSchedule}"/>
+                            <f:setPropertyActionListener target="#{mobilePageControllerSchedule.nextPage}" value="pm:TablaLogicaCompEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_nacionalidad}" icon="ui-icon-search" update=":TablaLogicaCompEditPage:TablaLogicaCompEditForm" disabled="#{empty entidadCompController.selected.nacionalidad}" actionListener="#{entidadCompController.prepareNacionalidad}" action="#{mobilePageControllerSchedule.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerSchedule}"/>
+                            <f:setPropertyActionListener target="#{mobilePageControllerSchedule.nextPage}" value="pm:TablaLogicaCompEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_tipoidentificacion}" icon="ui-icon-search" update=":TablaLogicaCompEditPage:TablaLogicaCompEditForm" disabled="#{empty entidadCompController.selected.tipoidentificacion}" actionListener="#{entidadCompController.prepareTipoidentificacion}" action="#{mobilePageControllerSchedule.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListenerSchedule}"/>
+                            <f:setPropertyActionListener target="#{mobilePageControllerSchedule.nextPage}" value="pm:TablaLogicaCompEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

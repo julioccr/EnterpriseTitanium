@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CuentaUsuarioCompListForm">
+
+        <p:panel header="#{msg_schedule.ListCuentaUsuarioCompTitle}">
+            <p:contextMenu id="CuentaUsuarioCompDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_schedule.Create}" onclick="document.getElementById('CuentaUsuarioCompListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_schedule.View}" onclick="document.getElementById('CuentaUsuarioCompListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_schedule.Edit}" onclick="document.getElementById('CuentaUsuarioCompListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_schedule.Delete}" onclick="document.getElementById('CuentaUsuarioCompListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_schedule.CuentaUsuarioCompMenuItem_idEntidad}" icon="ui-icon-search"  actionListener="#{cuentaUsuarioCompController.prepareIdEntidad}" update=":EntidadCompViewForm" oncomplete="PF('EntidadCompViewDialog').show()" disabled="#{empty cuentaUsuarioCompController.selected.idEntidad}"/>  
+                <p:menuitem value="#{msg_schedule.CuentaUsuarioCompMenuItem_compScheduleCollection}" icon="ui-icon-search"  action="#{cuentaUsuarioCompController.navigateCompScheduleCollection}" disabled="#{empty cuentaUsuarioCompController.selected.compScheduleCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{cuentaUsuarioCompController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{cuentaUsuarioCompController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{cuentaUsuarioCompController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.cuentaId}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CuentaUsuarioCompDataTableContextMenu" listener="#{cuentaUsuarioCompController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CuentaUsuarioCompDataTableContextMenu" listener="#{cuentaUsuarioCompController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{cuentaUsuarioCompController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CuentaUsuarioCompListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.cuentaId}" filterBy="#{item.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_cuentaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.password}" filterBy="#{item.password}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_password}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.password}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.grupos}" filterBy="#{item.grupos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_grupos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.grupos}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaRegistro}" filterBy="#{item.fechaRegistro}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_fechaRegistro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaRegistro}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cantidadIntentos}" filterBy="#{item.cantidadIntentos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_cantidadIntentos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidadIntentos}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.codigoVerificacion}" filterBy="#{item.codigoVerificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_codigoVerificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codigoVerificacion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.accEmail}" filterBy="#{item.accEmail}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_accEmail}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accEmail}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.accTmovil}" filterBy="#{item.accTmovil}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_accTmovil}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accTmovil}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.accNid}" filterBy="#{item.accNid}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_accNid}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.accNid}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.accUrl}" filterBy="#{item.accUrl}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_accUrl}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.accUrl}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.accCodigo}" filterBy="#{item.accCodigo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_accCodigo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.accCodigo}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_estado}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.estado}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idEntidad.idEntidad}" filterBy="#{item.idEntidad.idEntidad}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCuentaUsuarioCompTitle_idEntidad}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idEntidad.idEntidad}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_schedule.Create}" actionListener="#{cuentaUsuarioCompController.prepareCreate}" update=":CuentaUsuarioCompCreateForm" oncomplete="PF('CuentaUsuarioCompCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_schedule.View}" update=":CuentaUsuarioCompViewForm" oncomplete="PF('CuentaUsuarioCompViewDialog').show()" disabled="#{empty cuentaUsuarioCompController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_schedule.Edit}" update=":CuentaUsuarioCompEditForm" oncomplete="PF('CuentaUsuarioCompEditDialog').show()" disabled="#{empty cuentaUsuarioCompController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_schedule.Delete}" actionListener="#{cuentaUsuarioCompController.delete}" update=":growl,datalist" disabled="#{empty cuentaUsuarioCompController.selected}">
+                <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/modules/schedule_events/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

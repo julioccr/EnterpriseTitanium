@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TablaLogicaCompEditPage" lazy="true">
+        <pm:header title="#{msg_schedule.EditTablaLogicaCompTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_schedule.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageControllerSchedule.navigateBackInHistory('pm:TablaLogicaCompListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TablaLogicaCompEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tablaLogicaCompController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_idCodec}" for="idCodec" />
+                            <h:panelGroup>
+                                <h:outputText id="idCodec" value="#{tablaLogicaCompController.selected.idCodec}" />
+                                <p:tooltip for="idCodec" value="#{tablaLogicaCompController.getComponentMessages('idCodec', msg_schedule.EditTablaLogicaCompHelpText_idCodec)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_tipotabla}" for="tipotabla" />
+                            <h:panelGroup>
+                                <p:inputText id="tipotabla" value="#{tablaLogicaCompController.selected.tipotabla}" title="#{msg_schedule.EditTablaLogicaCompTitle_tipotabla}" required="true" requiredMessage="#{msg_schedule.EditTablaLogicaCompRequiredMessage_tipotabla}" size="20" maxlength="20"/>
+                                <p:tooltip for="tipotabla" value="#{tablaLogicaCompController.getComponentMessages('tipotabla', msg_schedule.EditTablaLogicaCompHelpText_tipotabla)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_codePadre}" for="codePadre" />
+                            <h:panelGroup>
+                                <p:inputText id="codePadre" value="#{tablaLogicaCompController.selected.codePadre}" title="#{msg_schedule.EditTablaLogicaCompTitle_codePadre}"/>
+                                <p:tooltip for="codePadre" value="#{tablaLogicaCompController.getComponentMessages('codePadre', msg_schedule.EditTablaLogicaCompHelpText_codePadre)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_nombreCorto}" for="nombreCorto" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreCorto" value="#{tablaLogicaCompController.selected.nombreCorto}" title="#{msg_schedule.EditTablaLogicaCompTitle_nombreCorto}" required="true" requiredMessage="#{msg_schedule.EditTablaLogicaCompRequiredMessage_nombreCorto}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreCorto" value="#{tablaLogicaCompController.getComponentMessages('nombreCorto', msg_schedule.EditTablaLogicaCompHelpText_nombreCorto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_nombreLargo}" for="nombreLargo" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreLargo" value="#{tablaLogicaCompController.selected.nombreLargo}" title="#{msg_schedule.EditTablaLogicaCompTitle_nombreLargo}" required="true" requiredMessage="#{msg_schedule.EditTablaLogicaCompRequiredMessage_nombreLargo}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreLargo" value="#{tablaLogicaCompController.getComponentMessages('nombreLargo', msg_schedule.EditTablaLogicaCompHelpText_nombreLargo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_codelang}" for="codelang" />
+                            <h:panelGroup>
+                                <p:inputText id="codelang" value="#{tablaLogicaCompController.selected.codelang}" title="#{msg_schedule.EditTablaLogicaCompTitle_codelang}" size="45" maxlength="45"/>
+                                <p:tooltip for="codelang" value="#{tablaLogicaCompController.getComponentMessages('codelang', msg_schedule.EditTablaLogicaCompHelpText_codelang)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_estado}" for="estado" />
+                            <h:panelGroup>
+                                <p:inputText id="estado" value="#{tablaLogicaCompController.selected.estado}" title="#{msg_schedule.EditTablaLogicaCompTitle_estado}" size="1" maxlength="1"/>
+                                <p:tooltip for="estado" value="#{tablaLogicaCompController.getComponentMessages('estado', msg_schedule.EditTablaLogicaCompHelpText_estado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_descripcion}" for="descripcion" />
+                            <h:panelGroup>
+                                <p:inputText id="descripcion" value="#{tablaLogicaCompController.selected.descripcion}" title="#{msg_schedule.EditTablaLogicaCompTitle_descripcion}" size="255" maxlength="255"/>
+                                <p:tooltip for="descripcion" value="#{tablaLogicaCompController.getComponentMessages('descripcion', msg_schedule.EditTablaLogicaCompHelpText_descripcion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_fechaRegistro}" for="fechaRegistro" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{tablaLogicaCompController.selected.fechaRegistro}" title="#{msg_schedule.EditTablaLogicaCompTitle_fechaRegistro}"  showOn="button"/>
+                                <p:tooltip for="fechaRegistro" value="#{tablaLogicaCompController.getComponentMessages('fechaRegistro', msg_schedule.EditTablaLogicaCompHelpText_fechaRegistro)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_fechaModificacion}" for="fechaModificacion" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{tablaLogicaCompController.selected.fechaModificacion}" title="#{msg_schedule.EditTablaLogicaCompTitle_fechaModificacion}"  showOn="button"/>
+                                <p:tooltip for="fechaModificacion" value="#{tablaLogicaCompController.getComponentMessages('fechaModificacion', msg_schedule.EditTablaLogicaCompHelpText_fechaModificacion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_userRegistro}" for="userRegistro" />
+                            <h:panelGroup>
+                                <p:inputText id="userRegistro" value="#{tablaLogicaCompController.selected.userRegistro}" title="#{msg_schedule.EditTablaLogicaCompTitle_userRegistro}"/>
+                                <p:tooltip for="userRegistro" value="#{tablaLogicaCompController.getComponentMessages('userRegistro', msg_schedule.EditTablaLogicaCompHelpText_userRegistro)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditTablaLogicaCompLabel_userModificion}" for="userModificion" />
+                            <h:panelGroup>
+                                <p:inputText id="userModificion" value="#{tablaLogicaCompController.selected.userModificion}" title="#{msg_schedule.EditTablaLogicaCompTitle_userModificion}"/>
+                                <p:tooltip for="userModificion" value="#{tablaLogicaCompController.getComponentMessages('userModificion', msg_schedule.EditTablaLogicaCompHelpText_userModificion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tablaLogicaCompController.save}" value="#{msg_schedule.Save}" update="#{mobilePageControllerSchedule.updatableWidgets(component,'display,:TablaLogicaCompListPage:TablaLogicaCompListForm:datalist,:growl')}" action="#{mobilePageControllerSchedule.navigateWithHistory('pm:TablaLogicaCompListPage')}">
+                        <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

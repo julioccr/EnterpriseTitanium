@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EntidadCompViewPage" lazy="true">
+        <pm:header title="#{msg_schedule.ViewEntidadCompTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_schedule.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageControllerSchedule.navigateBackInHistory('pm:EntidadCompListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EntidadCompViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{entidadCompController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_idEntidad}"/>
+                            <h:outputText value="#{entidadCompController.selected.idEntidad}" title="#{msg_schedule.ViewEntidadCompTitle_idEntidad}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_tipoEmpresa}"/>
+                            <h:outputText value="#{entidadCompController.selected.tipoEmpresa}" title="#{msg_schedule.ViewEntidadCompTitle_tipoEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_dni}"/>
+                            <h:outputText value="#{entidadCompController.selected.dni}" title="#{msg_schedule.ViewEntidadCompTitle_dni}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_nombre}"/>
+                            <h:outputText value="#{entidadCompController.selected.nombre}" title="#{msg_schedule.ViewEntidadCompTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_apellido}"/>
+                            <h:outputText value="#{entidadCompController.selected.apellido}" title="#{msg_schedule.ViewEntidadCompTitle_apellido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_senalUsuario}"/>
+                            <h:selectBooleanCheckbox id="senalUsuario" value="#{entidadCompController.selected.senalUsuario}" title="#{msg_schedule.EditEntidadCompTitle_senalUsuario}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_cuentaUsuario}"/>
+                            <h:outputText value="#{entidadCompController.selected.cuentaUsuario.cuentaId}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_ciudad}"/>
+                            <h:outputText value="#{entidadCompController.selected.ciudad.descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_genero}"/>
+                            <h:outputText value="#{entidadCompController.selected.genero.descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_nacionalidad}"/>
+                            <h:outputText value="#{entidadCompController.selected.nacionalidad.descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewEntidadCompLabel_tipoidentificacion}"/>
+                            <h:outputText value="#{entidadCompController.selected.tipoidentificacion.descripcion}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

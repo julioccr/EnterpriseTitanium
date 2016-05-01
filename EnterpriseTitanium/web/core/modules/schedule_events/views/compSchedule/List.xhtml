@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CompScheduleListForm">
+
+        <p:panel header="#{msg_schedule.ListCompScheduleTitle}">
+            <p:contextMenu id="CompScheduleDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_schedule.Create}" onclick="document.getElementById('CompScheduleListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_schedule.View}" onclick="document.getElementById('CompScheduleListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_schedule.Edit}" onclick="document.getElementById('CompScheduleListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_schedule.Delete}" onclick="document.getElementById('CompScheduleListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_schedule.CompScheduleMenuItem_idCuenta}" icon="ui-icon-search"  actionListener="#{compScheduleController.prepareIdCuenta}" update=":CuentaUsuarioCompViewForm" oncomplete="PF('CuentaUsuarioCompViewDialog').show()" disabled="#{empty compScheduleController.selected.idCuenta}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{compScheduleController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{compScheduleController.selected}">
+             
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CompScheduleDataTableContextMenu" listener="#{compScheduleController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CompScheduleDataTableContextMenu" listener="#{compScheduleController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{compScheduleController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CompScheduleListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idSchedule}" filterBy="#{item.idSchedule}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_idSchedule}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idSchedule}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.asunto}" filterBy="#{item.asunto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_asunto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.asunto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.prioridad}" filterBy="#{item.prioridad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_prioridad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.prioridad}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.categoria}" filterBy="#{item.categoria}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_categoria}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.categoria}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipo}" filterBy="#{item.tipo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_tipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_fechaInicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaInicio}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.horaInicio}" filterBy="#{item.horaInicio}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_horaInicio}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.horaInicio}">
+                                            <f:convertDateTime pattern="HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.fechaFin}" filterBy="#{item.fechaFin}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_fechaFin}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaFin}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.horaFin}" filterBy="#{item.horaFin}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_horaFin}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.horaFin}">
+                                            <f:convertDateTime pattern="HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DLunes}" filterBy="#{item.DLunes}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_DLunes}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DLunes}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DMartes}" filterBy="#{item.DMartes}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_DMartes}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DMartes}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DMiercoles}" filterBy="#{item.DMiercoles}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_DMiercoles}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DMiercoles}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DJueves}" filterBy="#{item.DJueves}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_DJueves}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DJueves}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DViernes}" filterBy="#{item.DViernes}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_DViernes}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DViernes}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DSabado}" filterBy="#{item.DSabado}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_DSabado}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DSabado}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.DDomingo}" filterBy="#{item.DDomingo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_DDomingo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.DDomingo}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idCuenta.cuentaId}" filterBy="#{item.idCuenta.cuentaId}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_idCuenta}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idCuenta.cuentaId}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_schedule.Create}" actionListener="#{compScheduleController.prepareCreate}" update=":CompScheduleCreateForm" oncomplete="PF('CompScheduleCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_schedule.View}" update=":CompScheduleViewForm" oncomplete="PF('CompScheduleViewDialog').show()" disabled="#{empty compScheduleController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_schedule.Edit}" update=":CompScheduleEditForm" oncomplete="PF('CompScheduleEditDialog').show()" disabled="#{empty compScheduleController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_schedule.Delete}" actionListener="#{compScheduleController.delete}" update=":growl,datalist" disabled="#{empty compScheduleController.selected}">
+                <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/modules/schedule_events/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

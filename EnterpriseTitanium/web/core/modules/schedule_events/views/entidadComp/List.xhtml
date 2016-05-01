@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EntidadCompListForm">
+
+        <p:panel header="#{msg_schedule.ListEntidadCompTitle}">
+            <p:contextMenu id="EntidadCompDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg_schedule.Create}" onclick="document.getElementById('EntidadCompListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_schedule.View}" onclick="document.getElementById('EntidadCompListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_schedule.Edit}" onclick="document.getElementById('EntidadCompListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_schedule.Delete}" onclick="document.getElementById('EntidadCompListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_cuentaUsuario}" icon="ui-icon-search"  actionListener="#{entidadCompController.prepareCuentaUsuario}" update=":CuentaUsuarioCompViewForm" oncomplete="PF('CuentaUsuarioCompViewDialog').show()" disabled="#{empty entidadCompController.selected.cuentaUsuario}"/>  
+                <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_ciudad}" icon="ui-icon-search"  actionListener="#{entidadCompController.prepareCiudad}" update=":TablaLogicaCompViewForm" oncomplete="PF('TablaLogicaCompViewDialog').show()" disabled="#{empty entidadCompController.selected.ciudad}"/>  
+                <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_genero}" icon="ui-icon-search"  actionListener="#{entidadCompController.prepareGenero}" update=":TablaLogicaCompViewForm" oncomplete="PF('TablaLogicaCompViewDialog').show()" disabled="#{empty entidadCompController.selected.genero}"/>  
+                <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_nacionalidad}" icon="ui-icon-search"  actionListener="#{entidadCompController.prepareNacionalidad}" update=":TablaLogicaCompViewForm" oncomplete="PF('TablaLogicaCompViewDialog').show()" disabled="#{empty entidadCompController.selected.nacionalidad}"/>  
+                <p:menuitem value="#{msg_schedule.EntidadCompMenuItem_tipoidentificacion}" icon="ui-icon-search"  actionListener="#{entidadCompController.prepareTipoidentificacion}" update=":TablaLogicaCompViewForm" oncomplete="PF('TablaLogicaCompViewDialog').show()" disabled="#{empty entidadCompController.selected.tipoidentificacion}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{entidadCompController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{entidadCompController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{entidadCompController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idEntidad}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EntidadCompDataTableContextMenu" listener="#{entidadCompController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EntidadCompDataTableContextMenu" listener="#{entidadCompController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{entidadCompController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EntidadCompListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idEntidad}" filterBy="#{item.idEntidad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListEntidadCompTitle_idEntidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEntidad}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoEmpresa}" filterBy="#{item.tipoEmpresa}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListEntidadCompTitle_tipoEmpresa}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoEmpresa}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dni}" filterBy="#{item.dni}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListEntidadCompTitle_dni}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dni}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListEntidadCompTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.apellido}" filterBy="#{item.apellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListEntidadCompTitle_apellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellido}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.senalUsuario}" filterBy="#{item.senalUsuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListEntidadCompTitle_senalUsuario}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="senalUsuario" value="#{item.senalUsuario}" title="#{msg_schedule.EditEntidadCompTitle_senalUsuario}"  disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaUsuario.cuentaId}" filterBy="#{item.cuentaUsuario.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListEntidadCompTitle_cuentaUsuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaUsuario.cuentaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ciudad.descripcion}" filterBy="#{item.ciudad.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListEntidadCompTitle_ciudad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ciudad.descripcion}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.genero.descripcion}" filterBy="#{item.genero.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListEntidadCompTitle_genero}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.genero.descripcion}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.nacionalidad.descripcion}" filterBy="#{item.nacionalidad.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListEntidadCompTitle_nacionalidad}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nacionalidad.descripcion}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.tipoidentificacion.descripcion}" filterBy="#{item.tipoidentificacion.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListEntidadCompTitle_tipoidentificacion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tipoidentificacion.descripcion}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_schedule.Create}" actionListener="#{entidadCompController.prepareCreate}" update=":EntidadCompCreateForm" oncomplete="PF('EntidadCompCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_schedule.View}" update=":EntidadCompViewForm" oncomplete="PF('EntidadCompViewDialog').show()" disabled="#{empty entidadCompController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_schedule.Edit}" update=":EntidadCompEditForm" oncomplete="PF('EntidadCompEditDialog').show()" disabled="#{empty entidadCompController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_schedule.Delete}" actionListener="#{entidadCompController.delete}" update=":growl,datalist" disabled="#{empty entidadCompController.selected}">
+                <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/core/modules/schedule_events/views/includes/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

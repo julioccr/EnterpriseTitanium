@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CuentaUsuarioCompEditDlg" widgetVar="CuentaUsuarioCompEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_schedule.EditCuentaUsuarioCompTitle}" closeOnEscape="true">
+
+            <h:form id="CuentaUsuarioCompEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cuentaUsuarioCompController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_cuentaId}" for="cuentaId" />
+                        <h:panelGroup>
+                            <h:outputText id="cuentaId" value="#{cuentaUsuarioCompController.selected.cuentaId}" />
+                            <p:tooltip for="cuentaId" value="#{cuentaUsuarioCompController.getComponentMessages('cuentaId', msg_schedule.EditCuentaUsuarioCompHelpText_cuentaId)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_password}" for="password" />
+                        <h:panelGroup>
+                            <p:inputText id="password" value="#{cuentaUsuarioCompController.selected.password}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_password}" required="true" requiredMessage="#{msg_schedule.EditCuentaUsuarioCompRequiredMessage_password}" size="120" maxlength="120"/>
+                            <p:tooltip for="password" value="#{cuentaUsuarioCompController.getComponentMessages('password', msg_schedule.EditCuentaUsuarioCompHelpText_password)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_grupos}" for="grupos" />
+                        <h:panelGroup>
+                            <p:inputText id="grupos" value="#{cuentaUsuarioCompController.selected.grupos}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_grupos}"/>
+                            <p:tooltip for="grupos" value="#{cuentaUsuarioCompController.getComponentMessages('grupos', msg_schedule.EditCuentaUsuarioCompHelpText_grupos)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_fechaRegistro}" for="fechaRegistro" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{cuentaUsuarioCompController.selected.fechaRegistro}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_fechaRegistro}"  showOn="button"/>
+                            <p:tooltip for="fechaRegistro" value="#{cuentaUsuarioCompController.getComponentMessages('fechaRegistro', msg_schedule.EditCuentaUsuarioCompHelpText_fechaRegistro)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_cantidadIntentos}" for="cantidadIntentos" />
+                        <h:panelGroup>
+                            <p:inputText id="cantidadIntentos" value="#{cuentaUsuarioCompController.selected.cantidadIntentos}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_cantidadIntentos}" size="45" maxlength="45"/>
+                            <p:tooltip for="cantidadIntentos" value="#{cuentaUsuarioCompController.getComponentMessages('cantidadIntentos', msg_schedule.EditCuentaUsuarioCompHelpText_cantidadIntentos)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_codigoVerificacion}" for="codigoVerificacion" />
+                        <h:panelGroup>
+                            <p:inputText id="codigoVerificacion" value="#{cuentaUsuarioCompController.selected.codigoVerificacion}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_codigoVerificacion}" required="true" requiredMessage="#{msg_schedule.EditCuentaUsuarioCompRequiredMessage_codigoVerificacion}" size="45" maxlength="45"/>
+                            <p:tooltip for="codigoVerificacion" value="#{cuentaUsuarioCompController.getComponentMessages('codigoVerificacion', msg_schedule.EditCuentaUsuarioCompHelpText_codigoVerificacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_accEmail}" for="accEmail" />
+                        <h:panelGroup>
+                            <p:inputText id="accEmail" value="#{cuentaUsuarioCompController.selected.accEmail}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_accEmail}"/>
+                            <p:tooltip for="accEmail" value="#{cuentaUsuarioCompController.getComponentMessages('accEmail', msg_schedule.EditCuentaUsuarioCompHelpText_accEmail)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_accTmovil}" for="accTmovil" />
+                        <h:panelGroup>
+                            <p:inputText id="accTmovil" value="#{cuentaUsuarioCompController.selected.accTmovil}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_accTmovil}"/>
+                            <p:tooltip for="accTmovil" value="#{cuentaUsuarioCompController.getComponentMessages('accTmovil', msg_schedule.EditCuentaUsuarioCompHelpText_accTmovil)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_accNid}" for="accNid" />
+                        <h:panelGroup>
+                            <p:inputText id="accNid" value="#{cuentaUsuarioCompController.selected.accNid}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_accNid}"/>
+                            <p:tooltip for="accNid" value="#{cuentaUsuarioCompController.getComponentMessages('accNid', msg_schedule.EditCuentaUsuarioCompHelpText_accNid)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_accUrl}" for="accUrl" />
+                        <h:panelGroup>
+                            <p:inputText id="accUrl" value="#{cuentaUsuarioCompController.selected.accUrl}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_accUrl}"/>
+                            <p:tooltip for="accUrl" value="#{cuentaUsuarioCompController.getComponentMessages('accUrl', msg_schedule.EditCuentaUsuarioCompHelpText_accUrl)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_accCodigo}" for="accCodigo" />
+                        <h:panelGroup>
+                            <p:inputText id="accCodigo" value="#{cuentaUsuarioCompController.selected.accCodigo}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_accCodigo}"/>
+                            <p:tooltip for="accCodigo" value="#{cuentaUsuarioCompController.getComponentMessages('accCodigo', msg_schedule.EditCuentaUsuarioCompHelpText_accCodigo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:inputText id="estado" value="#{cuentaUsuarioCompController.selected.estado}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_estado}" size="1" maxlength="1"/>
+                            <p:tooltip for="estado" value="#{cuentaUsuarioCompController.getComponentMessages('estado', msg_schedule.EditCuentaUsuarioCompHelpText_estado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_idEntidad}" for="idEntidad" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idEntidad" value="#{cuentaUsuarioCompController.selected.idEntidad}" required="true" requiredMessage="#{msg_schedule.EditCuentaUsuarioCompRequiredMessage_idEntidad}" converter="entidadCompConverter">
+                                <f:selectItem itemLabel="#{msg_schedule.SelectOneMessage}"/>
+                                <f:selectItems value="#{entidadCompController.items}"
+                                               var="idEntidadItem"
+                                               itemValue="#{idEntidadItem}"
+                                               itemLabel="#{idEntidadItem.idEntidad.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idEntidad" value="#{cuentaUsuarioCompController.getComponentMessages('idEntidad', msg_schedule.EditCuentaUsuarioCompHelpText_idEntidad)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cuentaUsuarioCompController.save}" value="#{msg_schedule.Save}" update="display,:CuentaUsuarioCompListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CuentaUsuarioCompEditDialog'));">
+                        <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg_schedule.Cancel}" oncomplete="PF('CuentaUsuarioCompEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

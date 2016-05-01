@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CompScheduleEditPage" lazy="true">
+        <pm:header title="#{msg_schedule.EditCompScheduleTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_schedule.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageControllerSchedule.navigateBackInHistory('pm:CompScheduleListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CompScheduleEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{compScheduleController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{msg_schedule.EditCompScheduleLabel_idSchedule}" for="idSchedule" />
+                            <h:panelGroup>
+                                <h:outputText id="idSchedule" value="#{compScheduleController.selected.idSchedule}" />
+                                <p:tooltip for="idSchedule" value="#{compScheduleController.getComponentMessages('idSchedule', msg_schedule.EditCompScheduleHelpText_idSchedule)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_asunto}" for="asunto" />
+                            <h:panelGroup>
+                                <p:inputText id="asunto" value="#{compScheduleController.selected.asunto}" title="#{msg_schedule.EditCompScheduleTitle_asunto}" required="true" requiredMessage="#{msg_schedule.EditCompScheduleRequiredMessage_asunto}" size="45" maxlength="45"/>
+                                <p:tooltip for="asunto" value="#{compScheduleController.getComponentMessages('asunto', msg_schedule.EditCompScheduleHelpText_asunto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_descripcion}" for="descripcion" />
+                            <h:panelGroup>
+                                <p:inputText id="descripcion" value="#{compScheduleController.selected.descripcion}" title="#{msg_schedule.EditCompScheduleTitle_descripcion}" size="45" maxlength="45"/>
+                                <p:tooltip for="descripcion" value="#{compScheduleController.getComponentMessages('descripcion', msg_schedule.EditCompScheduleHelpText_descripcion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_prioridad}" for="prioridad" />
+                            <h:panelGroup>
+                                <p:inputText id="prioridad" value="#{compScheduleController.selected.prioridad}" title="#{msg_schedule.EditCompScheduleTitle_prioridad}" size="45" maxlength="45"/>
+                                <p:tooltip for="prioridad" value="#{compScheduleController.getComponentMessages('prioridad', msg_schedule.EditCompScheduleHelpText_prioridad)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_estado}" for="estado" />
+                            <h:panelGroup>
+                                <p:inputText id="estado" value="#{compScheduleController.selected.estado}" title="#{msg_schedule.EditCompScheduleTitle_estado}" size="45" maxlength="45"/>
+                                <p:tooltip for="estado" value="#{compScheduleController.getComponentMessages('estado', msg_schedule.EditCompScheduleHelpText_estado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_categoria}" for="categoria" />
+                            <h:panelGroup>
+                                <p:inputText id="categoria" value="#{compScheduleController.selected.categoria}" title="#{msg_schedule.EditCompScheduleTitle_categoria}" size="45" maxlength="45"/>
+                                <p:tooltip for="categoria" value="#{compScheduleController.getComponentMessages('categoria', msg_schedule.EditCompScheduleHelpText_categoria)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_tipo}" for="tipo" />
+                            <h:panelGroup>
+                                <p:inputText id="tipo" value="#{compScheduleController.selected.tipo}" title="#{msg_schedule.EditCompScheduleTitle_tipo}" size="45" maxlength="45"/>
+                                <p:tooltip for="tipo" value="#{compScheduleController.getComponentMessages('tipo', msg_schedule.EditCompScheduleHelpText_tipo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_fechaInicio}" for="fechaInicio" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{compScheduleController.selected.fechaInicio}" title="#{msg_schedule.EditCompScheduleTitle_fechaInicio}" required="true" requiredMessage="#{msg_schedule.EditCompScheduleRequiredMessage_fechaInicio}" showOn="button"/>
+                                <p:tooltip for="fechaInicio" value="#{compScheduleController.getComponentMessages('fechaInicio', msg_schedule.EditCompScheduleHelpText_fechaInicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_horaInicio}" for="horaInicio" />
+                            <h:panelGroup>
+                                <p:calendar id="horaInicio" pattern="HH:mm:ss" value="#{compScheduleController.selected.horaInicio}" title="#{msg_schedule.EditCompScheduleTitle_horaInicio}"  showOn="button"/>
+                                <p:tooltip for="horaInicio" value="#{compScheduleController.getComponentMessages('horaInicio', msg_schedule.EditCompScheduleHelpText_horaInicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_fechaFin}" for="fechaFin" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{compScheduleController.selected.fechaFin}" title="#{msg_schedule.EditCompScheduleTitle_fechaFin}" required="true" requiredMessage="#{msg_schedule.EditCompScheduleRequiredMessage_fechaFin}" showOn="button"/>
+                                <p:tooltip for="fechaFin" value="#{compScheduleController.getComponentMessages('fechaFin', msg_schedule.EditCompScheduleHelpText_fechaFin)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_horaFin}" for="horaFin" />
+                            <h:panelGroup>
+                                <p:calendar id="horaFin" pattern="HH:mm:ss" value="#{compScheduleController.selected.horaFin}" title="#{msg_schedule.EditCompScheduleTitle_horaFin}"  showOn="button"/>
+                                <p:tooltip for="horaFin" value="#{compScheduleController.getComponentMessages('horaFin', msg_schedule.EditCompScheduleHelpText_horaFin)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_DLunes}" for="DLunes" />
+                            <h:panelGroup>
+                                <p:inputText id="DLunes" value="#{compScheduleController.selected.DLunes}" title="#{msg_schedule.EditCompScheduleTitle_DLunes}" size="1" maxlength="1"/>
+                                <p:tooltip for="DLunes" value="#{compScheduleController.getComponentMessages('DLunes', msg_schedule.EditCompScheduleHelpText_DLunes)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_DMartes}" for="DMartes" />
+                            <h:panelGroup>
+                                <p:inputText id="DMartes" value="#{compScheduleController.selected.DMartes}" title="#{msg_schedule.EditCompScheduleTitle_DMartes}" size="1" maxlength="1"/>
+                                <p:tooltip for="DMartes" value="#{compScheduleController.getComponentMessages('DMartes', msg_schedule.EditCompScheduleHelpText_DMartes)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_DMiercoles}" for="DMiercoles" />
+                            <h:panelGroup>
+                                <p:inputText id="DMiercoles" value="#{compScheduleController.selected.DMiercoles}" title="#{msg_schedule.EditCompScheduleTitle_DMiercoles}" size="1" maxlength="1"/>
+                                <p:tooltip for="DMiercoles" value="#{compScheduleController.getComponentMessages('DMiercoles', msg_schedule.EditCompScheduleHelpText_DMiercoles)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_DJueves}" for="DJueves" />
+                            <h:panelGroup>
+                                <p:inputText id="DJueves" value="#{compScheduleController.selected.DJueves}" title="#{msg_schedule.EditCompScheduleTitle_DJueves}" size="1" maxlength="1"/>
+                                <p:tooltip for="DJueves" value="#{compScheduleController.getComponentMessages('DJueves', msg_schedule.EditCompScheduleHelpText_DJueves)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_DViernes}" for="DViernes" />
+                            <h:panelGroup>
+                                <p:inputText id="DViernes" value="#{compScheduleController.selected.DViernes}" title="#{msg_schedule.EditCompScheduleTitle_DViernes}" size="1" maxlength="1"/>
+                                <p:tooltip for="DViernes" value="#{compScheduleController.getComponentMessages('DViernes', msg_schedule.EditCompScheduleHelpText_DViernes)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_DSabado}" for="DSabado" />
+                            <h:panelGroup>
+                                <p:inputText id="DSabado" value="#{compScheduleController.selected.DSabado}" title="#{msg_schedule.EditCompScheduleTitle_DSabado}" size="45" maxlength="45"/>
+                                <p:tooltip for="DSabado" value="#{compScheduleController.getComponentMessages('DSabado', msg_schedule.EditCompScheduleHelpText_DSabado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_DDomingo}" for="DDomingo" />
+                            <h:panelGroup>
+                                <p:inputText id="DDomingo" value="#{compScheduleController.selected.DDomingo}" title="#{msg_schedule.EditCompScheduleTitle_DDomingo}" size="45" maxlength="45"/>
+                                <p:tooltip for="DDomingo" value="#{compScheduleController.getComponentMessages('DDomingo', msg_schedule.EditCompScheduleHelpText_DDomingo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_idCuenta}" for="idCuenta" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idCuenta" value="#{compScheduleController.selected.idCuenta}"  converter="cuentaUsuarioCompConverter">
+                                    <f:selectItem itemLabel="#{msg_schedule.SelectOneMessage}"/>
+                                    <f:selectItems value="#{cuentaUsuarioCompController.items}"
+                                                   var="idCuentaItem"
+                                                   itemValue="#{idCuentaItem}"
+                                                   itemLabel="#{idCuentaItem.cuentaId.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idCuenta" value="#{compScheduleController.getComponentMessages('idCuenta', msg_schedule.EditCompScheduleHelpText_idCuenta)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{compScheduleController.save}" value="#{msg_schedule.Save}" update="#{mobilePageControllerSchedule.updatableWidgets(component,'display,:CompScheduleListPage:CompScheduleListForm:datalist,:growl')}" action="#{mobilePageControllerSchedule.navigateWithHistory('pm:CompScheduleListPage')}">
+                        <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

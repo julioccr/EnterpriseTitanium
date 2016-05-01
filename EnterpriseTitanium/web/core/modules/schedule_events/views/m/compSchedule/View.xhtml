@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CompScheduleViewPage" lazy="true">
+        <pm:header title="#{msg_schedule.ViewCompScheduleTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_schedule.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageControllerSchedule.navigateBackInHistory('pm:CompScheduleListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CompScheduleViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{compScheduleController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_idSchedule}"/>
+                            <h:outputText value="#{compScheduleController.selected.idSchedule}" title="#{msg_schedule.ViewCompScheduleTitle_idSchedule}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_asunto}"/>
+                            <h:outputText value="#{compScheduleController.selected.asunto}" title="#{msg_schedule.ViewCompScheduleTitle_asunto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_descripcion}"/>
+                            <h:outputText value="#{compScheduleController.selected.descripcion}" title="#{msg_schedule.ViewCompScheduleTitle_descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_prioridad}"/>
+                            <h:outputText value="#{compScheduleController.selected.prioridad}" title="#{msg_schedule.ViewCompScheduleTitle_prioridad}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_estado}"/>
+                            <h:outputText value="#{compScheduleController.selected.estado}" title="#{msg_schedule.ViewCompScheduleTitle_estado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_categoria}"/>
+                            <h:outputText value="#{compScheduleController.selected.categoria}" title="#{msg_schedule.ViewCompScheduleTitle_categoria}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_tipo}"/>
+                            <h:outputText value="#{compScheduleController.selected.tipo}" title="#{msg_schedule.ViewCompScheduleTitle_tipo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_fechaInicio}"/>
+                            <h:outputText value="#{compScheduleController.selected.fechaInicio}" title="#{msg_schedule.ViewCompScheduleTitle_fechaInicio}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_horaInicio}"/>
+                            <h:outputText value="#{compScheduleController.selected.horaInicio}" title="#{msg_schedule.ViewCompScheduleTitle_horaInicio}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_fechaFin}"/>
+                            <h:outputText value="#{compScheduleController.selected.fechaFin}" title="#{msg_schedule.ViewCompScheduleTitle_fechaFin}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_horaFin}"/>
+                            <h:outputText value="#{compScheduleController.selected.horaFin}" title="#{msg_schedule.ViewCompScheduleTitle_horaFin}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DLunes}"/>
+                            <h:outputText value="#{compScheduleController.selected.DLunes}" title="#{msg_schedule.ViewCompScheduleTitle_DLunes}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DMartes}"/>
+                            <h:outputText value="#{compScheduleController.selected.DMartes}" title="#{msg_schedule.ViewCompScheduleTitle_DMartes}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DMiercoles}"/>
+                            <h:outputText value="#{compScheduleController.selected.DMiercoles}" title="#{msg_schedule.ViewCompScheduleTitle_DMiercoles}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DJueves}"/>
+                            <h:outputText value="#{compScheduleController.selected.DJueves}" title="#{msg_schedule.ViewCompScheduleTitle_DJueves}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DViernes}"/>
+                            <h:outputText value="#{compScheduleController.selected.DViernes}" title="#{msg_schedule.ViewCompScheduleTitle_DViernes}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DSabado}"/>
+                            <h:outputText value="#{compScheduleController.selected.DSabado}" title="#{msg_schedule.ViewCompScheduleTitle_DSabado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DDomingo}"/>
+                            <h:outputText value="#{compScheduleController.selected.DDomingo}" title="#{msg_schedule.ViewCompScheduleTitle_DDomingo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_idCuenta}"/>
+                            <h:outputText value="#{compScheduleController.selected.idCuenta.cuentaId}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

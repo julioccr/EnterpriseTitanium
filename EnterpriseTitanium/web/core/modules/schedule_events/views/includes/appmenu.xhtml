@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="menuForm">
+            <p:menubar>
+                <p:menuitem value="#{msg_schedule.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:submenu label="#{msg_schedule.Maintenance}">
+                    <p:menuitem value="#{msg_schedule.CompScheduleHeading}..." outcome="/core/modules/schedule_events/views/compSchedule/index" />
+                    <p:menuitem value="#{msg_schedule.CuentaUsuarioCompHeading}..." outcome="/core/modules/schedule_events/views/cuentaUsuarioComp/index" />
+                    <p:menuitem value="#{msg_schedule.EntidadCompHeading}..." outcome="/core/modules/schedule_events/views/entidadComp/index" />
+                    <p:menuitem value="#{msg_schedule.TablaLogicaCompHeading}..." outcome="/core/modules/schedule_events/views/tablaLogicaComp/index" />
+                </p:submenu>
+                <p:menuitem value="#{msg_schedule.Mobile}" outcome="/core/modules/schedule_events/views/m/index" icon="ui-icon-signal"/>
+            </p:menubar>
+        </h:form>
+    </ui:composition>
+
+</html>

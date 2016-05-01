@@ -13,5 +13,9 @@
             <base-name>/lang/it18/administracion/msg_adm</base-name>
             <var>msg_adm</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/msg_schedule</base-name>
+            <var>msg_schedule</var>
+        </resource-bundle>
     </application>
 </faces-config>

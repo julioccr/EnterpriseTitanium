@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EntidadCompEditDlg" widgetVar="EntidadCompEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_schedule.EditEntidadCompTitle}" closeOnEscape="true">
+
+            <h:form id="EntidadCompEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{entidadCompController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg_schedule.EditEntidadCompLabel_idEntidad}" for="idEntidad" />
+                        <h:panelGroup>
+                            <h:outputText id="idEntidad" value="#{entidadCompController.selected.idEntidad}" />
+                            <p:tooltip for="idEntidad" value="#{entidadCompController.getComponentMessages('idEntidad', msg_schedule.EditEntidadCompHelpText_idEntidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_tipoEmpresa}" for="tipoEmpresa" />
+                        <h:panelGroup>
+                            <p:inputText id="tipoEmpresa" value="#{entidadCompController.selected.tipoEmpresa}" title="#{msg_schedule.EditEntidadCompTitle_tipoEmpresa}"/>
+                            <p:tooltip for="tipoEmpresa" value="#{entidadCompController.getComponentMessages('tipoEmpresa', msg_schedule.EditEntidadCompHelpText_tipoEmpresa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_dni}" for="dni" />
+                        <h:panelGroup>
+                            <p:inputText id="dni" value="#{entidadCompController.selected.dni}" title="#{msg_schedule.EditEntidadCompTitle_dni}" required="true" requiredMessage="#{msg_schedule.EditEntidadCompRequiredMessage_dni}" size="25" maxlength="25"/>
+                            <p:tooltip for="dni" value="#{entidadCompController.getComponentMessages('dni', msg_schedule.EditEntidadCompHelpText_dni)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{entidadCompController.selected.nombre}" title="#{msg_schedule.EditEntidadCompTitle_nombre}" required="true" requiredMessage="#{msg_schedule.EditEntidadCompRequiredMessage_nombre}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombre" value="#{entidadCompController.getComponentMessages('nombre', msg_schedule.EditEntidadCompHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_apellido}" for="apellido" />
+                        <h:panelGroup>
+                            <p:inputText id="apellido" value="#{entidadCompController.selected.apellido}" title="#{msg_schedule.EditEntidadCompTitle_apellido}" size="45" maxlength="45"/>
+                            <p:tooltip for="apellido" value="#{entidadCompController.getComponentMessages('apellido', msg_schedule.EditEntidadCompHelpText_apellido)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_senalUsuario}" for="senalUsuario" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="senalUsuario" value="#{entidadCompController.selected.senalUsuario}" />
+                            <p:tooltip for="senalUsuario" value="#{entidadCompController.getComponentMessages('senalUsuario', msg_schedule.EditEntidadCompHelpText_senalUsuario)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_cuentaUsuario}" for="cuentaUsuario" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="cuentaUsuario" value="#{entidadCompController.selected.cuentaUsuario}"  converter="cuentaUsuarioCompConverter">
+                                <f:selectItem itemLabel="#{msg_schedule.SelectOneMessage}"/>
+                                <f:selectItems value="#{cuentaUsuarioCompController.items}"
+                                               var="cuentaUsuarioItem"
+                                               itemValue="#{cuentaUsuarioItem}"
+                                               itemLabel="#{cuentaUsuarioItem.cuentaId.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="cuentaUsuario" value="#{entidadCompController.getComponentMessages('cuentaUsuario', msg_schedule.EditEntidadCompHelpText_cuentaUsuario)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_ciudad}" for="ciudad" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="ciudad" value="#{entidadCompController.selected.ciudad}"  converter="tablaLogicaCompConverter">
+                                <f:selectItem itemLabel="#{msg_schedule.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaCompController.items}"
+                                               var="ciudadItem"
+                                               itemValue="#{ciudadItem}"
+                                               itemLabel="#{ciudadItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="ciudad" value="#{entidadCompController.getComponentMessages('ciudad', msg_schedule.EditEntidadCompHelpText_ciudad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_genero}" for="genero" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="genero" value="#{entidadCompController.selected.genero}"  converter="tablaLogicaCompConverter">
+                                <f:selectItem itemLabel="#{msg_schedule.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaCompController.items}"
+                                               var="generoItem"
+                                               itemValue="#{generoItem}"
+                                               itemLabel="#{generoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="genero" value="#{entidadCompController.getComponentMessages('genero', msg_schedule.EditEntidadCompHelpText_genero)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_nacionalidad}" for="nacionalidad" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="nacionalidad" value="#{entidadCompController.selected.nacionalidad}"  converter="tablaLogicaCompConverter">
+                                <f:selectItem itemLabel="#{msg_schedule.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaCompController.items}"
+                                               var="nacionalidadItem"
+                                               itemValue="#{nacionalidadItem}"
+                                               itemLabel="#{nacionalidadItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="nacionalidad" value="#{entidadCompController.getComponentMessages('nacionalidad', msg_schedule.EditEntidadCompHelpText_nacionalidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{msg_schedule.EditEntidadCompLabel_tipoidentificacion}" for="tipoidentificacion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipoidentificacion" value="#{entidadCompController.selected.tipoidentificacion}" required="true" requiredMessage="#{msg_schedule.EditEntidadCompRequiredMessage_tipoidentificacion}" converter="tablaLogicaCompConverter">
+                                <f:selectItem itemLabel="#{msg_schedule.SelectOneMessage}"/>
+                                <f:selectItems value="#{tablaLogicaCompController.items}"
+                                               var="tipoidentificacionItem"
+                                               itemValue="#{tipoidentificacionItem}"
+                                               itemLabel="#{tipoidentificacionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="tipoidentificacion" value="#{entidadCompController.getComponentMessages('tipoidentificacion', msg_schedule.EditEntidadCompHelpText_tipoidentificacion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{entidadCompController.save}" value="#{msg_schedule.Save}" update="display,:EntidadCompListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EntidadCompEditDialog'));">
+                        <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg_schedule.Cancel}" oncomplete="PF('EntidadCompEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TablaLogicaCompListPage">
+        <pm:header title="#{msg_schedule.ListTablaLogicaCompTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageControllerSchedule.navigateBackInHistory('/core/modules/schedule_events/views/m/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{msg_schedule.Create}" update=":TablaLogicaCompCreatePage:TablaLogicaCompCreateForm" actionListener="#{tablaLogicaCompController.prepareCreate}" action="#{mobilePageControllerSchedule.navigateWithHistory('pm:TablaLogicaCompCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TablaLogicaCompListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{tablaLogicaCompController.items}"
+                             var="item"
+                             rowKey="#{item.idCodec}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{tablaLogicaCompController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TablaLogicaCompListPage:TablaLogicaCompListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TablaLogicaCompListPage:TablaLogicaCompListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('TablaLogicaCompListPage:TablaLogicaCompListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idCodec}" filterBy="#{item.idCodec}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_idCodec}">
+                        <h:outputText value="#{item.idCodec}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.tipotabla}" filterBy="#{item.tipotabla}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_tipotabla}">
+                        <h:outputText value="#{item.tipotabla}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.codePadre}" filterBy="#{item.codePadre}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_codePadre}">
+                        <h:outputText value="#{item.codePadre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreCorto}" filterBy="#{item.nombreCorto}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_nombreCorto}">
+                        <h:outputText value="#{item.nombreCorto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreLargo}" filterBy="#{item.nombreLargo}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_nombreLargo}">
+                        <h:outputText value="#{item.nombreLargo}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.codelang}" filterBy="#{item.codelang}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_codelang}">
+                        <h:outputText value="#{item.codelang}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_estado}">
+                        <h:outputText value="#{item.estado}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_descripcion}">
+                        <h:outputText value="#{item.descripcion}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.fechaRegistro}" filterBy="#{item.fechaRegistro}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_fechaRegistro}">
+                                            <h:outputText value="#{item.fechaRegistro}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                            </h:outputText>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.fechaModificacion}" filterBy="#{item.fechaModificacion}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_fechaModificacion}">
+                                            <h:outputText value="#{item.fechaModificacion}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                            </h:outputText>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.userRegistro}" filterBy="#{item.userRegistro}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_userRegistro}">
+                                            <h:outputText value="#{item.userRegistro}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.userModificion}" filterBy="#{item.userModificion}" headerText="#{msg_schedule.ListTablaLogicaCompTitle_userModificion}">
+                                            <h:outputText value="#{item.userModificion}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_schedule.Edit}" update=":TablaLogicaCompEditPage:TablaLogicaCompEditForm" disabled="#{empty tablaLogicaCompController.selected}" actionListener="#{mobilePageControllerSchedule.currentPageListener}" action="#{mobilePageControllerSchedule.navigateWithHistory('pm:TablaLogicaCompEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_schedule.Delete}" actionListener="#{tablaLogicaCompController.delete}" update=":growl,datalist" disabled="#{empty tablaLogicaCompController.selected}">
+                    <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{msg_schedule.Menu}" disabled="#{empty tablaLogicaCompController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{msg_schedule.TablaLogicaCompHeading} #{msg_schedule.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{msg_schedule.TablaLogicaCompMenuItem_entidadCollection}" icon="ui-icon-search"  action="#{mobilePageControllerSchedule.navigateWithHistory}" disabled="#{empty tablaLogicaCompController.selected.entidadCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListenerSchedule}"/>
+                            <f:setPropertyActionListener target="#{mobilePageControllerSchedule.nextPage}" value="#{tablaLogicaCompController.navigateEntidadCollection()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_schedule.TablaLogicaCompMenuItem_entidadCollection1}" icon="ui-icon-search"  action="#{mobilePageControllerSchedule.navigateWithHistory}" disabled="#{empty tablaLogicaCompController.selected.entidadCollection1}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListenerSchedule}"/>
+                            <f:setPropertyActionListener target="#{mobilePageControllerSchedule.nextPage}" value="#{tablaLogicaCompController.navigateEntidadCollection1()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_schedule.TablaLogicaCompMenuItem_entidadCollection2}" icon="ui-icon-search"  action="#{mobilePageControllerSchedule.navigateWithHistory}" disabled="#{empty tablaLogicaCompController.selected.entidadCollection2}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListenerSchedule}"/>
+                            <f:setPropertyActionListener target="#{mobilePageControllerSchedule.nextPage}" value="#{tablaLogicaCompController.navigateEntidadCollection2()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{msg_schedule.TablaLogicaCompMenuItem_entidadCollection3}" icon="ui-icon-search"  action="#{mobilePageControllerSchedule.navigateWithHistory}" disabled="#{empty tablaLogicaCompController.selected.entidadCollection3}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListenerSchedule}"/>
+                            <f:setPropertyActionListener target="#{mobilePageControllerSchedule.nextPage}" value="#{tablaLogicaCompController.navigateEntidadCollection3()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

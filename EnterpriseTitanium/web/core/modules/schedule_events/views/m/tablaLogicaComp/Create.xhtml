@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TablaLogicaCompCreatePage" lazy="true">
+        <pm:header title="#{msg_schedule.CreateTablaLogicaCompTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{msg_schedule.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageControllerSchedule.navigateBackInHistory('pm:TablaLogicaCompListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TablaLogicaCompCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tablaLogicaCompController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_tipotabla}" for="tipotabla" />
+                            <h:panelGroup>
+                                <p:inputText id="tipotabla" value="#{tablaLogicaCompController.selected.tipotabla}" title="#{msg_schedule.CreateTablaLogicaCompTitle_tipotabla}" required="true" requiredMessage="#{msg_schedule.CreateTablaLogicaCompRequiredMessage_tipotabla}" size="20" maxlength="20"/>
+                                <p:tooltip for="tipotabla" value="#{tablaLogicaCompController.getComponentMessages('tipotabla', msg_schedule.CreateTablaLogicaCompHelpText_tipotabla)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_codePadre}" for="codePadre" />
+                            <h:panelGroup>
+                                <p:inputText id="codePadre" value="#{tablaLogicaCompController.selected.codePadre}" title="#{msg_schedule.CreateTablaLogicaCompTitle_codePadre}"/>
+                                <p:tooltip for="codePadre" value="#{tablaLogicaCompController.getComponentMessages('codePadre', msg_schedule.CreateTablaLogicaCompHelpText_codePadre)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_nombreCorto}" for="nombreCorto" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreCorto" value="#{tablaLogicaCompController.selected.nombreCorto}" title="#{msg_schedule.CreateTablaLogicaCompTitle_nombreCorto}" required="true" requiredMessage="#{msg_schedule.CreateTablaLogicaCompRequiredMessage_nombreCorto}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreCorto" value="#{tablaLogicaCompController.getComponentMessages('nombreCorto', msg_schedule.CreateTablaLogicaCompHelpText_nombreCorto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_nombreLargo}" for="nombreLargo" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreLargo" value="#{tablaLogicaCompController.selected.nombreLargo}" title="#{msg_schedule.CreateTablaLogicaCompTitle_nombreLargo}" required="true" requiredMessage="#{msg_schedule.CreateTablaLogicaCompRequiredMessage_nombreLargo}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreLargo" value="#{tablaLogicaCompController.getComponentMessages('nombreLargo', msg_schedule.CreateTablaLogicaCompHelpText_nombreLargo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_codelang}" for="codelang" />
+                            <h:panelGroup>
+                                <p:inputText id="codelang" value="#{tablaLogicaCompController.selected.codelang}" title="#{msg_schedule.CreateTablaLogicaCompTitle_codelang}" size="45" maxlength="45"/>
+                                <p:tooltip for="codelang" value="#{tablaLogicaCompController.getComponentMessages('codelang', msg_schedule.CreateTablaLogicaCompHelpText_codelang)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_estado}" for="estado" />
+                            <h:panelGroup>
+                                <p:inputText id="estado" value="#{tablaLogicaCompController.selected.estado}" title="#{msg_schedule.CreateTablaLogicaCompTitle_estado}" size="1" maxlength="1"/>
+                                <p:tooltip for="estado" value="#{tablaLogicaCompController.getComponentMessages('estado', msg_schedule.CreateTablaLogicaCompHelpText_estado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_descripcion}" for="descripcion" />
+                            <h:panelGroup>
+                                <p:inputText id="descripcion" value="#{tablaLogicaCompController.selected.descripcion}" title="#{msg_schedule.CreateTablaLogicaCompTitle_descripcion}" size="255" maxlength="255"/>
+                                <p:tooltip for="descripcion" value="#{tablaLogicaCompController.getComponentMessages('descripcion', msg_schedule.CreateTablaLogicaCompHelpText_descripcion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_fechaRegistro}" for="fechaRegistro" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{tablaLogicaCompController.selected.fechaRegistro}" title="#{msg_schedule.CreateTablaLogicaCompTitle_fechaRegistro}"  showOn="button"/>
+                                <p:tooltip for="fechaRegistro" value="#{tablaLogicaCompController.getComponentMessages('fechaRegistro', msg_schedule.CreateTablaLogicaCompHelpText_fechaRegistro)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_fechaModificacion}" for="fechaModificacion" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{tablaLogicaCompController.selected.fechaModificacion}" title="#{msg_schedule.CreateTablaLogicaCompTitle_fechaModificacion}"  showOn="button"/>
+                                <p:tooltip for="fechaModificacion" value="#{tablaLogicaCompController.getComponentMessages('fechaModificacion', msg_schedule.CreateTablaLogicaCompHelpText_fechaModificacion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_userRegistro}" for="userRegistro" />
+                            <h:panelGroup>
+                                <p:inputText id="userRegistro" value="#{tablaLogicaCompController.selected.userRegistro}" title="#{msg_schedule.CreateTablaLogicaCompTitle_userRegistro}"/>
+                                <p:tooltip for="userRegistro" value="#{tablaLogicaCompController.getComponentMessages('userRegistro', msg_schedule.CreateTablaLogicaCompHelpText_userRegistro)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{msg_schedule.CreateTablaLogicaCompLabel_userModificion}" for="userModificion" />
+                            <h:panelGroup>
+                                <p:inputText id="userModificion" value="#{tablaLogicaCompController.selected.userModificion}" title="#{msg_schedule.CreateTablaLogicaCompTitle_userModificion}"/>
+                                <p:tooltip for="userModificion" value="#{tablaLogicaCompController.getComponentMessages('userModificion', msg_schedule.CreateTablaLogicaCompHelpText_userModificion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tablaLogicaCompController.saveNew}" value="#{msg_schedule.Save}" update="display,:TablaLogicaCompListPage:TablaLogicaCompListForm:datalist,:growl" action="#{mobilePageControllerSchedule.navigateWithHistory('pm:TablaLogicaCompListPage')}">
+                        <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

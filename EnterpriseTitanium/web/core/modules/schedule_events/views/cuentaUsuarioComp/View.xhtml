@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CuentaUsuarioCompViewDlg" widgetVar="CuentaUsuarioCompViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_schedule.ViewCuentaUsuarioCompTitle}" closeOnEscape="true">
+
+            <h:form id="CuentaUsuarioCompViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{cuentaUsuarioCompController.selected != null}">
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_cuentaId}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.cuentaId}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_cuentaId}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_password}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.password}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_password}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_grupos}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.grupos}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_grupos}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_fechaRegistro}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.fechaRegistro}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_fechaRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_cantidadIntentos}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.cantidadIntentos}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_cantidadIntentos}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_codigoVerificacion}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.codigoVerificacion}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_codigoVerificacion}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_accEmail}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.accEmail}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_accEmail}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_accTmovil}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.accTmovil}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_accTmovil}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_accNid}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.accNid}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_accNid}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_accUrl}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.accUrl}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_accUrl}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_accCodigo}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.accCodigo}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_accCodigo}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_estado}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.estado}" title="#{msg_schedule.ViewCuentaUsuarioCompTitle_estado}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCuentaUsuarioCompLabel_idEntidad}"/>
+                        <h:outputText value="#{cuentaUsuarioCompController.selected.idEntidad.idEntidad}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_schedule.Close}" onclick="PF('CuentaUsuarioCompViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

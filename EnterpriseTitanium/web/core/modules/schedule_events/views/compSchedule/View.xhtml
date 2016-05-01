@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompScheduleViewDlg" widgetVar="CompScheduleViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg_schedule.ViewCompScheduleTitle}" closeOnEscape="true">
+
+            <h:form id="CompScheduleViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{compScheduleController.selected != null}">
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_idSchedule}"/>
+                        <h:outputText value="#{compScheduleController.selected.idSchedule}" title="#{msg_schedule.ViewCompScheduleTitle_idSchedule}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_asunto}"/>
+                        <h:outputText value="#{compScheduleController.selected.asunto}" title="#{msg_schedule.ViewCompScheduleTitle_asunto}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_descripcion}"/>
+                        <h:outputText value="#{compScheduleController.selected.descripcion}" title="#{msg_schedule.ViewCompScheduleTitle_descripcion}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_prioridad}"/>
+                        <h:outputText value="#{compScheduleController.selected.prioridad}" title="#{msg_schedule.ViewCompScheduleTitle_prioridad}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_estado}"/>
+                        <h:outputText value="#{compScheduleController.selected.estado}" title="#{msg_schedule.ViewCompScheduleTitle_estado}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_categoria}"/>
+                        <h:outputText value="#{compScheduleController.selected.categoria}" title="#{msg_schedule.ViewCompScheduleTitle_categoria}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_tipo}"/>
+                        <h:outputText value="#{compScheduleController.selected.tipo}" title="#{msg_schedule.ViewCompScheduleTitle_tipo}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_fechaInicio}"/>
+                        <h:outputText value="#{compScheduleController.selected.fechaInicio}" title="#{msg_schedule.ViewCompScheduleTitle_fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_horaInicio}"/>
+                        <h:outputText value="#{compScheduleController.selected.horaInicio}" title="#{msg_schedule.ViewCompScheduleTitle_horaInicio}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_fechaFin}"/>
+                        <h:outputText value="#{compScheduleController.selected.fechaFin}" title="#{msg_schedule.ViewCompScheduleTitle_fechaFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_horaFin}"/>
+                        <h:outputText value="#{compScheduleController.selected.horaFin}" title="#{msg_schedule.ViewCompScheduleTitle_horaFin}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DLunes}"/>
+                        <h:outputText value="#{compScheduleController.selected.DLunes}" title="#{msg_schedule.ViewCompScheduleTitle_DLunes}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DMartes}"/>
+                        <h:outputText value="#{compScheduleController.selected.DMartes}" title="#{msg_schedule.ViewCompScheduleTitle_DMartes}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DMiercoles}"/>
+                        <h:outputText value="#{compScheduleController.selected.DMiercoles}" title="#{msg_schedule.ViewCompScheduleTitle_DMiercoles}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DJueves}"/>
+                        <h:outputText value="#{compScheduleController.selected.DJueves}" title="#{msg_schedule.ViewCompScheduleTitle_DJueves}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DViernes}"/>
+                        <h:outputText value="#{compScheduleController.selected.DViernes}" title="#{msg_schedule.ViewCompScheduleTitle_DViernes}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DSabado}"/>
+                        <h:outputText value="#{compScheduleController.selected.DSabado}" title="#{msg_schedule.ViewCompScheduleTitle_DSabado}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_DDomingo}"/>
+                        <h:outputText value="#{compScheduleController.selected.DDomingo}" title="#{msg_schedule.ViewCompScheduleTitle_DDomingo}"/>
+
+                        <h:outputText value="#{msg_schedule.ViewCompScheduleLabel_idCuenta}"/>
+                        <h:outputText value="#{compScheduleController.selected.idCuenta.cuentaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg_schedule.Close}" onclick="PF('CompScheduleViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
