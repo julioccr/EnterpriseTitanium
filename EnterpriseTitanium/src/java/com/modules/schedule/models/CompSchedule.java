@@ -55,7 +55,7 @@ public class CompSchedule implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "idSchedule")
     private Integer idSchedule;
     @Basic(optional = false)
@@ -126,7 +126,7 @@ public class CompSchedule implements Serializable {
         this.idSchedule = idSchedule;
     }
 
-    public CompSchedule(Integer idSchedule, String asunto, Date fechaInicio, Date fechaFin) {
+    public CompSchedule( String asunto, Date fechaInicio, Date fechaFin) {
         this.idSchedule = idSchedule;
         this.asunto = asunto;
         this.fechaInicio = fechaInicio;

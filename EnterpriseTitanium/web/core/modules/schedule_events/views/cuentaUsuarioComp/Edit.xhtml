@@ -14,13 +14,13 @@
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{cuentaUsuarioCompController.selected != null}">
 
-
+  
                         <h:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_cuentaId}" for="cuentaId" />
                         <h:panelGroup>
                             <h:outputText id="cuentaId" value="#{cuentaUsuarioCompController.selected.cuentaId}" />
                             <p:tooltip for="cuentaId" value="#{cuentaUsuarioCompController.getComponentMessages('cuentaId', msg_schedule.EditCuentaUsuarioCompHelpText_cuentaId)}"/>
                         </h:panelGroup>
-
+       
                         <p:outputLabel value="#{msg_schedule.EditCuentaUsuarioCompLabel_password}" for="password" />
                         <h:panelGroup>
                             <p:inputText id="password" value="#{cuentaUsuarioCompController.selected.password}" title="#{msg_schedule.EditCuentaUsuarioCompTitle_password}" required="true" requiredMessage="#{msg_schedule.EditCuentaUsuarioCompRequiredMessage_password}" size="120" maxlength="120"/>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="menutabschedule">
+            
+            <p:tabMenu activeIndex="#{param.i}">
+            
+                <p:menuitem value="Calendario" outcome="/core/modules/schedule_events/views/compSchedule/Schedule.xhtml"   icon="fa fa-calendar">
+                     <f:param name="i" value="1" />
+                </p:menuitem>
+                 <p:menuitem value="Consultas" outcome="/core/modules/schedule_events/views/compSchedule/index.xhtml"  icon="ui-icon-search" >
+                     <f:param name="i" value="0" />
+                </p:menuitem>
+                
+                
+            
+            
+            
+            </p:tabMenu>
+            
+        </h:form>
+    </ui:composition>
+
+</html>

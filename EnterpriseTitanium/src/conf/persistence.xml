@@ -3,7 +3,8 @@
   <persistence-unit name="TitaniumDB" transaction-type="JTA">
     <jta-data-source>jdbc_titaniumdb</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
+    <validation-mode>CALLBACK</validation-mode>
+    <properties> 
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/titaniumdb?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
@@ -11,7 +12,4 @@
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
-
 </persistence>
-
-  

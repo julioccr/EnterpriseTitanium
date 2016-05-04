@@ -58,7 +58,40 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.prioridad}" filterBy="#{item.prioridad}">
+
+
+
+                <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_fechaInicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaInicio}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.horaInicio}" filterBy="#{item.horaInicio}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_horaInicio}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.horaInicio}">
+                                            <f:convertDateTime pattern="HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+               
+                                    <p:column sortBy="#{item.fechaFin}" filterBy="#{item.fechaFin}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_fechaFin}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaFin}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                
+                
+                                <p:column sortBy="#{item.prioridad}" filterBy="#{item.prioridad}">
                     <f:facet name="header">
                         <h:outputText value="#{msg_schedule.ListCompScheduleTitle_prioridad}"/>
                     </f:facet>
@@ -88,37 +121,7 @@
                     </f:facet>
                     <h:outputText value="#{item.tipo}"/>
                 </p:column>
-
-
-                <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_fechaInicio}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.fechaInicio}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:outputText>
-                </p:column>
-
-                <!--
-                                    <p:column sortBy="#{item.horaInicio}" filterBy="#{item.horaInicio}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_horaInicio}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.horaInicio}">
-                                            <f:convertDateTime pattern="HH:mm:ss" />
-                                        </h:outputText>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.fechaFin}" filterBy="#{item.fechaFin}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{msg_schedule.ListCompScheduleTitle_fechaFin}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.fechaFin}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                                        </h:outputText>
-                                    </p:column>
-                -->
+            
                 <!--
                                     <p:column sortBy="#{item.horaFin}" filterBy="#{item.horaFin}">
                                         <f:facet name="header">
