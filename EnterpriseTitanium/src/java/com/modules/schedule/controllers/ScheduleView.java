@@ -72,11 +72,22 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
     public void init() {
         eventModel = new DefaultScheduleModel();
      
-          getListadeevento();
+         getListadeevento();
+         
          for(int i = 0; i < getListadeevento().size(); i++){
-        
+           
+            //por cada entidad consultada procede a guardarla en evento
             evento =  getListadeevento().get(i);
-             eventModel.addEvent(new DefaultScheduleEvent(evento.getAsunto(), evento.getFechaInicio(),evento.getFechaFin()));
+              
+              DefaultScheduleEvent itemEvent = new DefaultScheduleEvent();
+              itemEvent.setId(String.valueOf(evento.getIdSchedule()));
+              itemEvent.setTitle(evento.getAsunto());
+              itemEvent.setStartDate(evento.getFechaInicio());
+              itemEvent.setEndDate(evento.getFechaInicio());
+             //se procede a llenar la descripcion
+              itemEvent.setDescription(evento.getDescripcion());
+            
+              eventModel.addEvent(itemEvent);
         
         }
          
