@@ -6,6 +6,10 @@
 package com.modules.schedule.controllers;
 
 import com.modules.schedule.ejb.CompScheduleFacade;
+import org.primefaces.model.ScheduleEvent;
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.ScheduleModel;
+import org.primefaces.model.DefaultScheduleModel;
 import com.modules.schedule.models.CompSchedule;
 import com.security.controllers.util.JsfUtil;
 import java.io.Serializable;
@@ -15,58 +19,51 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.annotation.Resources;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.LazyScheduleModel;
-import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.ScheduleModel;
+ 
 /**
  *
  * @author Julio Cortorreal
  */
 @ManagedBean
 @ViewScoped
-public class ScheduleView   implements Serializable {
-    private ScheduleModel eventModel;
+public class ScheduleExtenderController   implements Serializable {
+   
      /*
 Primefaces                         Recreadas
-Interface ScheduleModel         =  ScheduleModelExtender  // Define los metodos de mantenimiento de los eventos
-Interface ScheduleEvent         =  ScheduleEventExtender  // Define los metodos informativos del evento
-Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implementa el constructor con la definicion de los metodos ScheduleModelExtender y
-							      algunos metodos de ScheduleEventExtender 
+Interface ScheduleModel         =  ScheduleModel  // Define los metodos de mantenimiento de los eventos
+Interface ScheduleEvent         =  ScheduleEvent  // Define los metodos informativos del evento
+Clase     DefaultScheduleModel  =  ScheduleModeltExtenderImplementent // implementa el constructor con la definicion de los metodos ScheduleModel y
+							      algunos metodos de ScheduleEvent 
+Clase     DefaultScheduleModel  =  DefaultScheduleEvent
 
-*/
-
-   
-    
+*/    
      @PersistenceContext
      EntityManager em;
     
      @Resource
      UserTransaction utx;
      
-    private ScheduleModel lazyEventModel;
-    private ScheduleEvent event = new DefaultScheduleEvent();
+   
+    private ScheduleEvent  event =  new DefaultScheduleEvent();
  
-    @Inject
-    private CompScheduleFacade ejbSchedule;
+ 
     
     private CompSchedule evento;
     private List<CompSchedule> listadeevento = new  ArrayList<CompSchedule>();
-            
+   
+    
+    private ScheduleModel eventModel;        
  
     @PostConstruct
     public void init() {
@@ -76,7 +73,8 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
          for(int i = 0; i < getListadeevento().size(); i++){
         
             evento =  getListadeevento().get(i);
-             eventModel.addEvent(new DefaultScheduleEvent(evento.getAsunto(), evento.getFechaInicio(),evento.getFechaFin()));
+               
+                    eventModel.addEvent(new DefaultScheduleEvent(evento.getAsunto(), evento.getFechaInicio(),  evento.getFechaFin()));
         
         }
          
@@ -101,9 +99,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         return eventModel;
     }
      
-    public ScheduleModel getLazyEventModel() {
-        return lazyEventModel;
-    }
+
  
     private Calendar today() {
         Calendar calendar = Calendar.getInstance();
@@ -112,79 +108,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         return calendar;
     }
      
-    
-    
-    
-    private Date previousDay8Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 8);
-         
-        return t.getTime();
-    }
-     
-    private Date previousDay11Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 11);
-         
-        return t.getTime();
-    }
-     
-    private Date today1Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 1);
-         
-        return t.getTime();
-    }
-     
-    private Date theDayAfter3Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 2);     
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 3);
-         
-        return t.getTime();
-    }
- 
-    private Date today6Pm() {
-        Calendar t = (Calendar) today().clone(); 
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 6);
-         
-        return t.getTime();
-    }
-     
-    private Date nextDay9Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 9);
-         
-        return t.getTime();
-    }
-     
-    private Date nextDay11Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 11);
-         
-        return t.getTime();
-    }
-     
-    private Date fourDaysLater3pm() {
-        Calendar t = (Calendar) today().clone(); 
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 4);
-        t.set(Calendar.HOUR, 3);
-         
-        return t.getTime();
-    }
-     
+        
     public ScheduleEvent getEvent() {
         return event;
     }
@@ -237,7 +161,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         
         
         
-        event = new DefaultScheduleEvent();
+        event = (ScheduleEvent) new DefaultScheduleEvent();
     }
      
     public void onEventSelect(SelectEvent selectEvent) {
@@ -245,7 +169,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
     }
      
     public void onDateSelect(SelectEvent selectEvent) {
-        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+        event = (ScheduleEvent) new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
     }
      
     public void onEventMove(ScheduleEntryMoveEvent event) {

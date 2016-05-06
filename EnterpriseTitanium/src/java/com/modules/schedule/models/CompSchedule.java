@@ -66,7 +66,7 @@ public class CompSchedule implements Serializable {
     @Size(max = 45)
     @Column(name = "Descripcion")
     private String descripcion;
-    @Size(max = 45)
+    @Size(max = 3000)
     @Column(name = "prioridad")
     private String prioridad;
     @Size(max = 45)
@@ -127,12 +127,21 @@ public class CompSchedule implements Serializable {
     }
 
     public CompSchedule( String asunto, Date fechaInicio, Date fechaFin) {
-        this.idSchedule = idSchedule;
+        //this.idSchedule = idSchedule;
         this.asunto = asunto;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.estado = "A";
     }
 
+      public CompSchedule( String asunto, Date fechaInicio, Date fechaFin, String Descripcion ) {
+        //this.idSchedule = idSchedule;
+        this.asunto = asunto;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = "A";
+        this.descripcion = Descripcion;
+    }
     public Integer getIdSchedule() {
         return idSchedule;
     }
