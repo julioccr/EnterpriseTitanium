@@ -63,13 +63,16 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
      
     private ScheduleModel lazyEventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
-     private ScheduleEvent event2 = new DefaultScheduleEvent();
+    private ScheduleEvent event2 = new DefaultScheduleEvent();
     @Inject
     private CompScheduleFacade ejbSchedule;
-    
     private CompSchedule evento, eventoSelect ;
     private List<CompSchedule> listadeevento = new  ArrayList<CompSchedule>();
-            
+    
+    //datos de evento
+    private String tipoEvento;
+    private String Categoria;
+    private String prioridad;
  
     @PostConstruct
     public void init() {
@@ -348,6 +351,31 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
      fecha_valida = new java.sql.Date(FechaFormato.getTime().getTime());
      return  fecha_valida;
      }
+
+    public String getTipoEvento() {
+        return tipoEvento;
+    }
+
+    public void setTipoEvento(String tipoEvento) {
+        this.tipoEvento = tipoEvento;
+    }
+
+    public String getCategoria() {
+        return Categoria;
+    }
+
+    public void setCategoria(String Categoria) {
+        this.Categoria = Categoria;
+    }
+
+    public String getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(String prioridad) {
+        this.prioridad = prioridad;
+    }
     
+     
     
 }
