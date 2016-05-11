@@ -15,7 +15,6 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.annotation.Resources;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -24,13 +23,17 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.RollbackException;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
+import org.primefaces.event.ScheduleEntryResizeEvent; 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 /**
@@ -40,7 +43,7 @@ import org.primefaces.model.ScheduleModel;
 @ManagedBean
 @ViewScoped
 public class ScheduleView   implements Serializable {
-    private ScheduleModel eventModel;
+    private ScheduleModel eventModel, eventModel2;
      /*
 Primefaces                         Recreadas
 Interface ScheduleModel         =  ScheduleModelExtender  // Define los metodos de mantenimiento de los eventos
@@ -49,7 +52,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
 							      algunos metodos de ScheduleEventExtender 
 
 */
-
+      private int id ;
    
     
      @PersistenceContext
@@ -60,18 +63,18 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
      
     private ScheduleModel lazyEventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
- 
+     private ScheduleEvent event2 = new DefaultScheduleEvent();
     @Inject
     private CompScheduleFacade ejbSchedule;
     
-    private CompSchedule evento;
+    private CompSchedule evento, eventoSelect ;
     private List<CompSchedule> listadeevento = new  ArrayList<CompSchedule>();
             
  
     @PostConstruct
     public void init() {
         eventModel = new DefaultScheduleModel();
-     
+        eventModel2 = new DefaultScheduleModel();
          getListadeevento();
          
          for(int i = 0; i < getListadeevento().size(); i++){
@@ -80,26 +83,24 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
             evento =  getListadeevento().get(i);
               
               DefaultScheduleEvent itemEvent = new DefaultScheduleEvent();
+             
+              
               itemEvent.setId(String.valueOf(evento.getIdSchedule()));
               itemEvent.setTitle(evento.getAsunto());
-              itemEvent.setStartDate(evento.getFechaInicio());
-              itemEvent.setEndDate(evento.getFechaInicio());
+              itemEvent.setStartDate(formatoCalendar(evento.getFechaInicio()));
+              itemEvent.setEndDate(formatoCalendar(evento.getFechaInicio()));
+              itemEvent.setStyleClass(evento.getCategoria());
              //se procede a llenar la descripcion
               itemEvent.setDescription(evento.getDescripcion());
-            
+              
+              eventModel2.addEvent(itemEvent);
               eventModel.addEvent(itemEvent);
         
         }
          
     }
      
-    public Date getRandomDate(Date base) {
-        Calendar date = Calendar.getInstance();
-        date.setTime(base);
-        date.add(Calendar.DATE, ((int) (Math.random()*30)) + 1);    //set random day of month
-         
-        return date.getTime();
-    }
+   
      
     public Date getInitialDate() {
         Calendar calendar = Calendar.getInstance();
@@ -111,8 +112,23 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
     public ScheduleModel getEventModel() {
         return eventModel;
     }
+
+    public ScheduleEvent getEvent2() {
+        return event2;
+    }
+
+    public void setEvent2(ScheduleEvent event2) {
+        this.event2 = event2;
+    }
+
+    public ScheduleModel getEventModel2() {
+        return eventModel2;
+    }
+    
+ 
      
     public ScheduleModel getLazyEventModel() {
+          
         return lazyEventModel;
     }
  
@@ -122,120 +138,109 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
  
         return calendar;
     }
-     
-    
-    
-    
-    private Date previousDay8Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 8);
-         
-        return t.getTime();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
      
-    private Date previousDay11Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 11);
-         
-        return t.getTime();
-    }
-     
-    private Date today1Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 1);
-         
-        return t.getTime();
-    }
-     
-    private Date theDayAfter3Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 2);     
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 3);
-         
-        return t.getTime();
-    }
- 
-    private Date today6Pm() {
-        Calendar t = (Calendar) today().clone(); 
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 6);
-         
-        return t.getTime();
-    }
-     
-    private Date nextDay9Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 9);
-         
-        return t.getTime();
-    }
-     
-    private Date nextDay11Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 11);
-         
-        return t.getTime();
-    }
-     
-    private Date fourDaysLater3pm() {
-        Calendar t = (Calendar) today().clone(); 
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 4);
-        t.set(Calendar.HOUR, 3);
-         
-        return t.getTime();
-    }
+
      
     public ScheduleEvent getEvent() {
+       
         return event;
     }
  
     public void setEvent(ScheduleEvent event) {
+        
+       
         this.event = event;
     }
-     
-    public void addEvent(ActionEvent actionEvent) {
-        if(event.getId() == null) {
+
+    
+     private Date diaCompletoInicio() {
+        Calendar t = (Calendar) today().clone();
+        t.set(Calendar.AM_PM, Calendar.AM);
+        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
+        t.set(Calendar.HOUR, 12);
         
-        try {
-            evento = new CompSchedule (event.getTitle(), event.getStartDate(), event.getEndDate()); 
-           utx.begin();
-            em.persist(evento);
-            utx.commit();
-            getListadeevento();
-            JsfUtil.addSuccessMessage(":) Se añadio el evento "+ event.getTitle() +" exitosamente" );
-        } catch (Exception e) {
-      JsfUtil.addErrorMessage("Error al registrar el evento" + event.getTitle()+  " :" + e.getMessage());
-        }finally{
-        
-        em.close();
-        
-        }
+         
+        return t.getTime();
+    }
+    
+    private Date diaCompletoFin() {
+        Calendar t = (Calendar) today().clone();
+        t.set(Calendar.AM_PM, Calendar.PM);
+        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
+        t.set(Calendar.HOUR, 12);
+        return t.getTime();
+    }
+
+    public CompSchedule getEventoSelect() {
+        return eventoSelect;
+    }
+
+    public void setEventoSelect(CompSchedule eventoSelect) {
+        this.eventoSelect = eventoSelect;
+    }
+    
+    
+    
+    public void addEvent(ActionEvent actionEvent) throws javax.transaction.RollbackException  {
        
-        
+        if(event.getId() == null && eventoSelect == null) {
+            
+            eventoSelect= new CompSchedule (null, event.getTitle(), event.getStartDate(), event.getEndDate(), event.getDescription()); 
+        try {
+         
+           
+            utx.begin();
+            em.persist(eventoSelect);
+            utx.commit();
+                       
+             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":) Se añadio el evento"+ event.getTitle() +"exitosamente", "");
+                 addMessage(message);
+            
+            
+        } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+     
+             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al actualizar el evento"+ event.getTitle() +" ",  e.getMessage());
+                 addMessage(message);
+            
+        } 
+       
+         
         
         }  else
               
       try {
-         evento.setAsunto(event.getTitle());
-         evento.setFechaInicio(event.getStartDate());
-         evento.setFechaFin(event.getEndDate());
          
-           utx.begin();
+         evento.setIdSchedule(evento.getIdSchedule());
+         evento.setAsunto(event.getTitle());
+         evento.setFechaInicio( event.getStartDate());
+         evento.setFechaFin( event.getEndDate());
+                 evento.setDescripcion(event.getDescription());
+        
+          try {
+            utx.begin();
             em.merge(evento);
-             utx.commit();
-             getListadeevento();
-              JsfUtil.addSuccessMessage(":) Se actualizo el evento"+ event.getTitle() +"exitosamente" );
+           utx.commit();
+           
+           FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":) Se actualizo el evento"+ event.getTitle() +"exitosamente", "");
+           addMessage(message);
+          } catch (Exception e) {
+          FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al actualizar el evento"+ event.getTitle() +" ", e.getMessage());
+                 addMessage(message);
+         
+          }
+        
+             
+         
+       
+          
         } catch (Exception e) {
       JsfUtil.addErrorMessage("Error al registrar el evento" + event.getTitle()+  " :" + e.getMessage());
         }finally{
@@ -243,21 +248,26 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         em.close();
         
         }
-        
-        
-        
-        
-        
+         
         event = new DefaultScheduleEvent();
     }
-     
-    public void onEventSelect(SelectEvent selectEvent) {
+    
+    
+    
+   public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
-    }
+        event2 = (ScheduleEvent) selectEvent.getObject();
+   
+       buscarEvento();
+       
      
+       
+        
+    }
     public void onDateSelect(SelectEvent selectEvent) {
         event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
-    }
+         event2 = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+    } 
      
     public void onEventMove(ScheduleEntryMoveEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
@@ -270,6 +280,34 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
          
           
     }
+    
+ 
+       public CompSchedule buscarEvento (){
+    eventoSelect = new CompSchedule();
+        // si no ese ha seleccionado ningun evento
+        if (event.getId().isEmpty() || event.getId() == null) {
+             //enviamelo null
+            eventoSelect = null;
+        
+        }else{       //en caso de que exista procede a buscarlo por parametros
+                    if(event2.getDescription().isEmpty() || event2.getDescription() == null){
+                      eventoSelect = (CompSchedule) em.createQuery("SELECT s FROM CompSchedule s WHERE s.asunto =:asunto  ")
+                    .setParameter("asunto", event2.getTitle() )
+                    .getSingleResult();
+
+                    }else{
+                    eventoSelect = (CompSchedule) em.createQuery("SELECT s FROM CompSchedule s WHERE s.asunto =:asunto and s.descripcion = :descripcion")
+                    .setParameter("asunto", event2.getTitle() )
+                    .setParameter("descripcion", event2.getDescription())
+                    .getSingleResult();
+
+                    }
+    
+        }
+         return eventoSelect;
+    
+    }// fin de buscar el evento
+    
      
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -300,4 +338,16 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
     public void setListadeevento(List<CompSchedule> listadeevento) {
         this.listadeevento = listadeevento;
     }
+    
+     private java.sql.Date formatoCalendar( Date Fecha){
+     java.sql.Date fecha_valida = null;
+         
+     Calendar FechaFormato = Calendar.getInstance();
+     FechaFormato.set(Fecha.getYear() + 1900, Fecha.getMonth(), Fecha.getDate());
+     
+     fecha_valida = new java.sql.Date(FechaFormato.getTime().getTime());
+     return  fecha_valida;
+     }
+    
+    
 }

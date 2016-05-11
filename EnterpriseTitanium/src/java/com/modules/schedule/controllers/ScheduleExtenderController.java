@@ -6,10 +6,10 @@
 package com.modules.schedule.controllers;
 
 import com.modules.schedule.ejb.CompScheduleFacade;
-import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.ScheduleModel;
-import org.primefaces.model.DefaultScheduleModel;
+import orgr.primefaces.model.ScheduleEvent;
+import orgr.primefaces.model.DefaultScheduleEvent;
+import orgr.primefaces.model.ScheduleModel;
+import orgr.primefaces.model.DefaultScheduleModel;
 import com.modules.schedule.models.CompSchedule;
 import com.security.controllers.util.JsfUtil;
 import java.io.Serializable;

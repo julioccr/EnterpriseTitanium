@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.primefaces.model;
+package orgr.primefaces.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

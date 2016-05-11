@@ -20,3 +20,8 @@
     font-weight: bold;
     background-color: menu;
 }
+
+  .personal, .personal .fc-event-skin .personal a{ background: red !important; } 
+  .negocios, .negocios .fc-event-skin .negocios a{ background: green !important; } 
+  .familiar, .familiar .fc-event-skin .familiar a{ background:    darkmagenta  !important;   } 
+  .trabajo,  .trabajo .fc-event-skin  .trabajo  a{ background: brown !important; } 

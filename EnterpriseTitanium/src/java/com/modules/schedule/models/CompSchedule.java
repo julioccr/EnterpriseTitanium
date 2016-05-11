@@ -20,7 +20,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -41,9 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CompSchedule.findByCategoria", query = "SELECT c FROM CompSchedule c WHERE c.categoria = :categoria"),
     @NamedQuery(name = "CompSchedule.findByTipo", query = "SELECT c FROM CompSchedule c WHERE c.tipo = :tipo"),
     @NamedQuery(name = "CompSchedule.findByFechaInicio", query = "SELECT c FROM CompSchedule c WHERE c.fechaInicio = :fechaInicio"),
-    @NamedQuery(name = "CompSchedule.findByHoraInicio", query = "SELECT c FROM CompSchedule c WHERE c.horaInicio = :horaInicio"),
     @NamedQuery(name = "CompSchedule.findByFechaFin", query = "SELECT c FROM CompSchedule c WHERE c.fechaFin = :fechaFin"),
-    @NamedQuery(name = "CompSchedule.findByHoraFin", query = "SELECT c FROM CompSchedule c WHERE c.horaFin = :horaFin"),
     @NamedQuery(name = "CompSchedule.findByDLunes", query = "SELECT c FROM CompSchedule c WHERE c.dLunes = :dLunes"),
     @NamedQuery(name = "CompSchedule.findByDMartes", query = "SELECT c FROM CompSchedule c WHERE c.dMartes = :dMartes"),
     @NamedQuery(name = "CompSchedule.findByDMiercoles", query = "SELECT c FROM CompSchedule c WHERE c.dMiercoles = :dMiercoles"),
@@ -83,17 +83,11 @@ public class CompSchedule implements Serializable {
     @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
-    @Column(name = "hora_inicio")
-    @Temporal(TemporalType.TIME)
-    private Date horaInicio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_fin")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
-    @Column(name = "hora_fin")
-    @Temporal(TemporalType.TIME)
-    private Date horaFin;
     @Size(max = 1)
     @Column(name = "d_lunes")
     private String dLunes;
@@ -119,6 +113,8 @@ public class CompSchedule implements Serializable {
     @ManyToOne
     private CuentaUsuarioComp idCuenta;
 
+     
+    
     public CompSchedule() {
     }
 
@@ -134,7 +130,7 @@ public class CompSchedule implements Serializable {
         this.estado = "A";
     }
 
-      public CompSchedule( String asunto, Date fechaInicio, Date fechaFin, String Descripcion ) {
+     public CompSchedule( String asunto, Date fechaInicio, Date fechaFin, String Descripcion ) {
         //this.idSchedule = idSchedule;
         this.asunto = asunto;
         this.fechaInicio = fechaInicio;
@@ -142,6 +138,25 @@ public class CompSchedule implements Serializable {
         this.estado = "A";
         this.descripcion = Descripcion;
     }
+      public CompSchedule(Integer idSchedule, String asunto, Date fechaInicio, Date fechaFin, String Descripcion ) {
+        this.idSchedule = idSchedule;
+        this.asunto = asunto;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = "A";
+        this.descripcion = Descripcion;
+    }
+       
+      public CompSchedule(Integer idSchedule, String asunto, Date fechaInicio, Date fechaFin ) {
+        this.idSchedule = idSchedule;
+        this.asunto = asunto;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = "A";
+        
+    }
+      //Constructor para actualizacion
+      
     public Integer getIdSchedule() {
         return idSchedule;
     }
@@ -206,14 +221,7 @@ public class CompSchedule implements Serializable {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(Date horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
+    
     public Date getFechaFin() {
         return fechaFin;
     }
@@ -222,13 +230,7 @@ public class CompSchedule implements Serializable {
         this.fechaFin = fechaFin;
     }
 
-    public Date getHoraFin() {
-        return horaFin;
-    }
-
-    public void setHoraFin(Date horaFin) {
-        this.horaFin = horaFin;
-    }
+    
 
     public String getDLunes() {
         return dLunes;

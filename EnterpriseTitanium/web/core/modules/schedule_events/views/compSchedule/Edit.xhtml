@@ -63,24 +63,14 @@
                             <p:tooltip for="fechaInicio" value="#{compScheduleController.getComponentMessages('fechaInicio', msg_schedule.EditCompScheduleHelpText_fechaInicio)}"/>
                         </h:panelGroup>
 
-                        <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_horaInicio}" for="horaInicio" />
-                        <h:panelGroup>
-                            <p:calendar id="horaInicio" pattern="HH:mm:ss" value="#{compScheduleController.selected.horaInicio}" title="#{msg_schedule.EditCompScheduleTitle_horaInicio}"  showOn="button"/>
-                            <p:tooltip for="horaInicio" value="#{compScheduleController.getComponentMessages('horaInicio', msg_schedule.EditCompScheduleHelpText_horaInicio)}"/>
-                        </h:panelGroup>
-
+                       
                         <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_fechaFin}" for="fechaFin" />
                         <h:panelGroup>
                             <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{compScheduleController.selected.fechaFin}" title="#{msg_schedule.EditCompScheduleTitle_fechaFin}" required="true" requiredMessage="#{msg_schedule.EditCompScheduleRequiredMessage_fechaFin}" showOn="button"/>
                             <p:tooltip for="fechaFin" value="#{compScheduleController.getComponentMessages('fechaFin', msg_schedule.EditCompScheduleHelpText_fechaFin)}"/>
                         </h:panelGroup>
 
-                        <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_horaFin}" for="horaFin" />
-                        <h:panelGroup>
-                            <p:calendar id="horaFin" pattern="HH:mm:ss" value="#{compScheduleController.selected.horaFin}" title="#{msg_schedule.EditCompScheduleTitle_horaFin}"  showOn="button"/>
-                            <p:tooltip for="horaFin" value="#{compScheduleController.getComponentMessages('horaFin', msg_schedule.EditCompScheduleHelpText_horaFin)}"/>
-                        </h:panelGroup>
-
+                       
                         <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_DLunes}" for="DLunes" />
                         <h:panelGroup>
                             <p:inputText id="DLunes" value="#{compScheduleController.selected.DLunes}" title="#{msg_schedule.EditCompScheduleTitle_DLunes}" size="1" maxlength="1"/>
