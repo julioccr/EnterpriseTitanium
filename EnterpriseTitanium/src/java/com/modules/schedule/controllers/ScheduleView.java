@@ -87,8 +87,8 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
               
               itemEvent.setId(String.valueOf(evento.getIdSchedule()));
               itemEvent.setTitle(evento.getAsunto());
-              itemEvent.setStartDate(formatoCalendar(evento.getFechaInicio()));
-              itemEvent.setEndDate(formatoCalendar(evento.getFechaInicio()));
+              itemEvent.setStartDate(evento.getFechaInicio());
+              itemEvent.setEndDate(evento.getFechaFin());
               itemEvent.setStyleClass(evento.getCategoria());
              //se procede a llenar la descripcion
               itemEvent.setDescription(evento.getDescripcion());
