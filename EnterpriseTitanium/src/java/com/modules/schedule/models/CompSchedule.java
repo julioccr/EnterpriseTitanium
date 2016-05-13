@@ -138,6 +138,15 @@ public class CompSchedule implements Serializable {
         this.estado = "A";
         this.descripcion = Descripcion;
     }
+     
+       public CompSchedule(Integer idSchedule,   Date fechaInicio, Date fechaFin  ) {
+        this.idSchedule = idSchedule;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    
+      
+    }
+      
       public CompSchedule(Integer idSchedule, String asunto, Date fechaInicio, Date fechaFin, String Descripcion ) {
         this.idSchedule = idSchedule;
         this.asunto = asunto;

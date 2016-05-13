@@ -74,29 +74,38 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
     private String Categoria;
     private String prioridad;
  
+     /************************************************************************************************* 
+     *PROCESO PARA CARGAR EL SCHEDULE O AGENDA DE EVENTOS EN EL SISTEMA                               *                                                                                                *                                                                                                * 
+     *                                                                                                *
+     ************************************************************************************************** 
+     */ 
     @PostConstruct
     public void init() {
+        //Se crearon dos event model uno para dar mantenimiento y otro solo para cargar contenido
         eventModel = new DefaultScheduleModel();
         eventModel2 = new DefaultScheduleModel();
-         getListadeevento();
-         
+        //ejecuta la consulta en la tabla de eventos  para cargar los eventos como objetos
+        getListadeevento();
+         //se genera una lista
          for(int i = 0; i < getListadeevento().size(); i++){
            
-            //por cada entidad consultada procede a guardarla en evento
+            //por cada entidad consultada procede a guardarla en el objeto evento
             evento =  getListadeevento().get(i);
-              
+              //Instanciamos un objeto de la calse DefaultScheduleEvent, es la que define los atributos de un evento
               DefaultScheduleEvent itemEvent = new DefaultScheduleEvent();
              
-              
+              //agregamos los atributos del evento a las propiedades de la isntancia de DefaultScheduleEvent itemEvent
               itemEvent.setId(String.valueOf(evento.getIdSchedule()));
               itemEvent.setTitle(evento.getAsunto());
               itemEvent.setStartDate(evento.getFechaInicio());
               itemEvent.setEndDate(evento.getFechaFin());
               itemEvent.setStyleClass(evento.getCategoria());
-             //se procede a llenar la descripcion
               itemEvent.setDescription(evento.getDescripcion());
-              
+             
+              //eventModel2 es para gestionar los eventos
               eventModel2.addEvent(itemEvent);
+              //añadimos todos los eventos hasta que finalice el for a la agenda.
+              //eventModel es para mostrar contenido
               eventModel.addEvent(itemEvent);
         
         }
@@ -112,9 +121,14 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         return calendar.getTime();
     }
      
+    /************************************************************************************************** 
+     *PROCESO PARA MOSTRAR TODOS LOS EVENTOS EN LA AGENDA DEL SISTEMA                                 *                                                                                                *                                                                                                * 
+     ************************************************************************************************** 
+     * @return 
+     */ 
     public ScheduleModel getEventModel() {
         return eventModel;
-    }
+    } // fin del metodo
 
     public ScheduleEvent getEvent2() {
         return event2;
@@ -190,13 +204,24 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         this.eventoSelect = eventoSelect;
     }
     
-    
+     /************************************************************************************************* 
+     *PROCESO DE MANTENIMIENTO DE EVENTOS GESTIONADOS POR LOS USUARIOS DEL SISTEMA                    *                                                                                                *                                                                                                * 
+     *El metodo procede a añadir evento si no existe en el sistema, si existe procede actualizarlo    *
+     ************************************************************************************************** 
+     * @param actionEvent
+     * @throws javax.transaction.RollbackException
+     */  
     
     public void addEvent(ActionEvent actionEvent) throws javax.transaction.RollbackException  {
-       
+      //VALIDACION DE LA EXISTENCIA DEL EVENTO
         if(event.getId() == null && eventoSelect == null) {
-            
+            // SI NO EXISTE
+            /***************************************************************************************************
+             * PROCEDEMOS A AñADIR EL EVENTO AL SISTEMA                                                        * 
+             * *************************************************************************************************
+             */
             eventoSelect= new CompSchedule (null, event.getTitle(), event.getStartDate(), event.getEndDate(), event.getDescription()); 
+            eventoSelect.setCategoria(Categoria);
         try {
          
            
@@ -204,13 +229,13 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
             em.persist(eventoSelect);
             utx.commit();
                        
-             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":) Se añadio el evento"+ event.getTitle() +"exitosamente", "");
+             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":D Se añadio el evento \""+ event.getTitle() +"\" exitosamente", "");
                  addMessage(message);
             
             
         } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
      
-             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al actualizar el evento"+ event.getTitle() +" ",  e.getMessage());
+             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":( ERROR al actualizar el evento"+ event.getTitle() +" ",  e.getMessage());
                  addMessage(message);
             
         } 
@@ -218,40 +243,41 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
          
         
         }  else
-              
+              // SI NO EXISTE
+            
       try {
-         
-         evento.setIdSchedule(evento.getIdSchedule());
-         evento.setAsunto(event.getTitle());
-         evento.setFechaInicio( event.getStartDate());
-         evento.setFechaFin( event.getEndDate());
-                 evento.setDescripcion(event.getDescription());
-        
+            /***************************************************************************************************
+             * PROCEDEMOS A ACTUALIZAR EL EVENTO AL SISTEMA                                                    * 
+             * *************************************************************************************************
+             */
+        eventoSelect.setIdSchedule(eventoSelect.getIdSchedule());
+        eventoSelect.setAsunto(event.getTitle());
+        eventoSelect.setFechaInicio( event.getStartDate());
+        eventoSelect.setFechaFin( event.getEndDate());
+        eventoSelect.setDescripcion(event.getDescription());
+        eventoSelect.setCategoria(Categoria);
           try {
             utx.begin();
-            em.merge(evento);
+            em.merge(eventoSelect);
            utx.commit();
-           
-           FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":) Se actualizo el evento"+ event.getTitle() +"exitosamente", "");
+           // MUESTRA NOTIFICACION EN PALANTALLA EXITOSO
+           FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":D Se actualizo el evento \""+ event.getTitle() +"\" exitosamente", "");
            addMessage(message);
-          } catch (Exception e) {
-          FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al actualizar el evento"+ event.getTitle() +" ", e.getMessage());
+           
+          } catch (NotSupportedException | SystemException | javax.transaction.RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+              //SI EXISTE ALGUNA EXCEPCION O ERROR MUESTRA EL TIPO DE ERROR
+          FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al actualizar el evento "+ event.getTitle() +" ", e.getMessage());
                  addMessage(message);
          
           }
         
-             
+              
          
        
           
         } catch (Exception e) {
       JsfUtil.addErrorMessage("Error al registrar el evento" + event.getTitle()+  " :" + e.getMessage());
-        }finally{
-        
-        em.close();
-        
         }
-         
         event = new DefaultScheduleEvent();
     }
     
@@ -272,11 +298,60 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
          event2 = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
     } 
      
-    public void onEventMove(ScheduleEntryMoveEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-         
-        addMessage(message);
-    }
+    /**************************************************************************************************
+     *PROCESO PARA ACTUALIZAR EVENTO, DESPUES DE MOVERLO EN LA AGENDA                                 *                                                                                                *                                                                                                * 
+     *Realiza cambio de fecha de inicio y fin del evento                                              * 
+     ************************************************************************************************** 
+     * @param eventMove
+     */
+    
+    public void onEventMove(ScheduleEntryMoveEvent eventMove) {
+          
+           if(eventMove.getScheduleEvent().getId() != null){
+               //Buscamos el evento seleccionado en la base de datos
+               buscarEvento(eventMove.getScheduleEvent().getTitle(),eventMove.getScheduleEvent().getDescription());
+               //si existe
+               if (eventoSelect != null) {
+                 
+                  try {
+                /**
+                 * PROCEDEMOS A ACTUCALIZAR DEL EVENTO, CON LA FECHA  DE INICIO Y FIN
+                 * 
+                 */
+                         CompSchedule  eventoMover = 
+                             new CompSchedule(eventoSelect.getIdSchedule(),
+                                         eventMove.getScheduleEvent().getTitle(),
+                                         formatoCalendar(eventMove.getScheduleEvent().getStartDate())       ,
+                                         formatoCalendar(eventMove.getScheduleEvent().getEndDate()), 
+                                         eventMove.getScheduleEvent().getDescription());
+        
+                       try {
+                         //em.getTransaction().begin();
+                         utx.begin();
+                         em.merge(eventoMover);
+                         utx.commit();
+                        // em.getTransaction().commit();
+
+                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,"Se movio el evento \"" + eventMove.getScheduleEvent().getTitle() + "\" desde "
+                                 + eventMove.getScheduleEvent().getStartDate() + " hasta " + eventMove.getScheduleEvent().getEndDate(), "");
+                            addMessage(message);
+
+                        }//fin del try
+                       catch (NotSupportedException | SystemException | javax.transaction.RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al mover el evento "+ eventMove.getScheduleEvent().getTitle() +" ", e.getMessage());
+                                   addMessage(message);
+
+                            }        
+        } catch (Exception e) {
+              FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL,"Error al registrar el evento" + eventMove.getScheduleEvent().getTitle()+  " :" + e.getMessage(), "");
+                   addMessage(message);
+        }
+               }
+      
+           }
+        
+        
+    } // fin del metodo mover
      
     public void onEventResize(ScheduleEntryResizeEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
@@ -284,8 +359,13 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
           
     }
     
- 
-       public CompSchedule buscarEvento (){
+      /************************************************************************************************* 
+     *PROCESO PARA BUSCAR EVENTO SELECCIONADO POR EL USUARIO                                          *                                                                                                *                                                                                                * 
+     *Busca el evento parametrizado por asusto y descripcion version 1 fecha 13-05-2016               *
+     ************************************************************************************************** 
+     * @return 
+     */ 
+    public CompSchedule buscarEvento (){
     eventoSelect = new CompSchedule();
         // si no ese ha seleccionado ningun evento
         if (event.getId().isEmpty() || event.getId() == null) {
@@ -303,14 +383,37 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                     .setParameter("asunto", event2.getTitle() )
                     .setParameter("descripcion", event2.getDescription())
                     .getSingleResult();
-
+ 
                     }
-    
+     
         }
          return eventoSelect;
     
     }// fin de buscar el evento
     
+        public CompSchedule buscarEvento (String AsuntoP, String DescripcionP){
+        eventoSelect = new CompSchedule();
+    
+          
+               if(DescripcionP.isEmpty()){
+                      eventoSelect = (CompSchedule) em.createQuery("SELECT s FROM CompSchedule s WHERE s.asunto =:asunto  ")
+                    .setParameter("asunto", AsuntoP )
+                    .getSingleResult();
+                            
+                    }else{
+                    eventoSelect = (CompSchedule) em.createQuery("SELECT s FROM CompSchedule s WHERE s.asunto =:asunto and s.descripcion = :descripcion")
+                    .setParameter("asunto", AsuntoP )
+                    .setParameter("descripcion", DescripcionP)
+                    .getSingleResult();
+                            
+                    }  
+            
+        
+    
+        
+         return eventoSelect;
+    
+    }// fin de buscar el evento
      
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
