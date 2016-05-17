@@ -3,191 +3,495 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.modules.schedule.models;
+package com.modules.schedule.controllers;
 
+import com.modules.schedule.ejb.CompScheduleFacade;
+import com.modules.schedule.models.CompSchedule;
+import com.security.controllers.util.JsfUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.RollbackException;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
+import org.primefaces.event.ScheduleEntryMoveEvent;
+import org.primefaces.event.ScheduleEntryResizeEvent; 
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.ScheduleEvent;
+import org.primefaces.model.ScheduleModel;
 /**
  *
  * @author Julio Cortorreal
  */
-@Entity
-@Table(name = "comp_schedule")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CompSchedule.findAll", query = "SELECT c FROM CompSchedule c"),
-    @NamedQuery(name = "CompSchedule.findByIdSchedule", query = "SELECT c FROM CompSchedule c WHERE c.idSchedule = :idSchedule"),
-    @NamedQuery(name = "CompSchedule.findByAsunto", query = "SELECT c FROM CompSchedule c WHERE c.asunto = :asunto"),
-    @NamedQuery(name = "CompSchedule.findByDescripcion", query = "SELECT c FROM CompSchedule c WHERE c.descripcion = :descripcion"),
-    @NamedQuery(name = "CompSchedule.findByPrioridad", query = "SELECT c FROM CompSchedule c WHERE c.prioridad = :prioridad"),
-    @NamedQuery(name = "CompSchedule.findByEstado", query = "SELECT c FROM CompSchedule c WHERE c.estado = :estado"),
-    @NamedQuery(name = "CompSchedule.findByCategoria", query = "SELECT c FROM CompSchedule c WHERE c.categoria = :categoria"),
-    @NamedQuery(name = "CompSchedule.findByTipo", query = "SELECT c FROM CompSchedule c WHERE c.tipo = :tipo"),
-    @NamedQuery(name = "CompSchedule.findByFechaInicio", query = "SELECT c FROM CompSchedule c WHERE c.fechaInicio = :fechaInicio"),
-    @NamedQuery(name = "CompSchedule.findByFechaFin", query = "SELECT c FROM CompSchedule c WHERE c.fechaFin = :fechaFin"),
-    @NamedQuery(name = "CompSchedule.findByDLunes", query = "SELECT c FROM CompSchedule c WHERE c.dLunes = :dLunes"),
-    @NamedQuery(name = "CompSchedule.findByDMartes", query = "SELECT c FROM CompSchedule c WHERE c.dMartes = :dMartes"),
-    @NamedQuery(name = "CompSchedule.findByDMiercoles", query = "SELECT c FROM CompSchedule c WHERE c.dMiercoles = :dMiercoles"),
-    @NamedQuery(name = "CompSchedule.findByDJueves", query = "SELECT c FROM CompSchedule c WHERE c.dJueves = :dJueves"),
-    @NamedQuery(name = "CompSchedule.findByDViernes", query = "SELECT c FROM CompSchedule c WHERE c.dViernes = :dViernes"),
-    @NamedQuery(name = "CompSchedule.findByDSabado", query = "SELECT c FROM CompSchedule c WHERE c.dSabado = :dSabado"),
-    @NamedQuery(name = "CompSchedule.findByDDomingo", query = "SELECT c FROM CompSchedule c WHERE c.dDomingo = :dDomingo")})
-public class CompSchedule implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = true)
-    @Column(name = "idSchedule")
-    private Integer idSchedule;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "Asunto")
-    private String asunto;
-    @Size(max = 45)
-    @Column(name = "Descripcion")
-    private String descripcion;
-    @Size(max = 3000)
-    @Column(name = "prioridad")
+@ManagedBean
+@ViewScoped
+public class ScheduleView   implements Serializable {
+    private ScheduleModel eventModel, eventModel2;
+     /*
+Primefaces                         Recreadas
+Interface ScheduleModel         =  ScheduleModelExtender  // Define los metodos de mantenimiento de los eventos
+Interface ScheduleEvent         =  ScheduleEventExtender  // Define los metodos informativos del evento
+Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implementa el constructor con la definicion de los metodos ScheduleModelExtender y
+							      algunos metodos de ScheduleEventExtender 
+*/
+      private int id ;
+   
+    
+     @PersistenceContext
+     EntityManager em;
+    
+     @Resource
+     UserTransaction utx;
+     
+    private ScheduleModel lazyEventModel;
+    private ScheduleEvent event = new DefaultScheduleEvent();
+    private ScheduleEvent event2 = new DefaultScheduleEvent();
+    @Inject
+    private CompScheduleFacade ejbSchedule;
+    private CompSchedule evento, eventoSelect, eventoDetalle ;
+    private List<CompSchedule> listadeevento = new  ArrayList<CompSchedule>();
+    
+    //datos de evento
+    private String tipoEvento;
+    private String Categoria;
     private String prioridad;
-    @Size(max = 45)
-    @Column(name = "estado")
-    private String estado;
-    @Size(max = 45)
-    @Column(name = "categoria")
-    private String categoria;
-    @Size(max = 45)
-    @Column(name = "tipo")
-    private String tipo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_fin")
-    @Temporal(TemporalType.DATE)
-    private Date fechaFin;
-    @Size(max = 1)
-    @Column(name = "d_lunes")
-    private String dLunes;
-    @Size(max = 1)
-    @Column(name = "d_martes")
-    private String dMartes;
-    @Size(max = 1)
-    @Column(name = "d_miercoles")
-    private String dMiercoles;
-    @Size(max = 1)
-    @Column(name = "d_jueves")
-    private String dJueves;
-    @Size(max = 1)
-    @Column(name = "d_viernes")
-    private String dViernes;
-    @Size(max = 45)
-    @Column(name = "d_sabado")
-    private String dSabado;
-    @Size(max = 45)
-    @Column(name = "d_domingo")
-    private String dDomingo;
-    @JoinColumn(name = "id_cuenta", referencedColumnName = "Cuenta_Id")
-    @ManyToOne
-    private CuentaUsuarioComp idCuenta;
-
-     
-    
-    public CompSchedule() {
-    }
-
-    public CompSchedule(Integer idSchedule) {
-        this.idSchedule = idSchedule;
-    }
-
-    public CompSchedule( String asunto, Date fechaInicio, Date fechaFin) {
-        //this.idSchedule = idSchedule;
-        this.asunto = asunto;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.estado = "A";
-    }
-
-     public CompSchedule( String asunto, Date fechaInicio, Date fechaFin, String Descripcion ) {
-        //this.idSchedule = idSchedule;
-        this.asunto = asunto;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.estado = "A";
-        this.descripcion = Descripcion;
+ 
+     /************************************************************************************************* 
+     *PROCESO PARA CARGAR EL SCHEDULE O AGENDA DE EVENTOS EN EL SISTEMA                               *                                                                                                *                                                                                                * 
+     *                                                                                                *
+     ************************************************************************************************** 
+     */ 
+    @PostConstruct
+    public void init() {
+        //Se crearon dos event model uno para dar mantenimiento y otro solo para cargar contenido
+        eventModel = new DefaultScheduleModel();
+        eventModel2 = new DefaultScheduleModel();
+        //ejecuta la consulta en la tabla de eventos  para cargar los eventos como objetos
+        getListadeevento();
+         //se genera una lista
+         for(int i = 0; i < getListadeevento().size(); i++){
+           
+            //por cada entidad consultada procede a guardarla en el objeto evento
+            evento =  getListadeevento().get(i);
+              //Instanciamos un objeto de la calse DefaultScheduleEvent, es la que define los atributos de un evento
+              DefaultScheduleEvent itemEvent = new DefaultScheduleEvent();
+              
+              //agregamos los atributos del evento a las propiedades de la isntancia de DefaultScheduleEvent itemEvent
+              itemEvent.setId(String.valueOf(evento.getIdSchedule()));
+              itemEvent.setTitle(evento.getAsunto());
+              itemEvent.setStartDate(formatoCalendar(evento.getFechaInicio()));
+              itemEvent.setEndDate(formatoCalendar(evento.getFechaFin()));
+              itemEvent.setStyleClass(evento.getCategoria());
+              itemEvent.setDescription(evento.getDescripcion());
+             
+              //eventModel2 es para gestionar los eventos
+              eventModel2.addEvent(itemEvent);
+              //añadimos todos los eventos hasta que finalice el for a la agenda.
+              //eventModel es para mostrar contenido
+              eventModel.addEvent(itemEvent);
+        
+        }
+         
     }
      
-       public CompSchedule(Integer idSchedule,   Date fechaInicio, Date fechaFin  ) {
-        this.idSchedule = idSchedule;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+   
+     
+    public Date getInitialDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
+         
+        return calendar.getTime();
+    }
+     
+    /************************************************************************************************** 
+     *PROCESO PARA MOSTRAR TODOS LOS EVENTOS EN LA AGENDA DEL SISTEMA                                 *                                                                                                *                                                                                                * 
+     ************************************************************************************************** 
+     * @return 
+     */ 
+    public ScheduleModel getEventModel() {
+        return eventModel;
+    } // fin del metodo
+
+    public ScheduleEvent getEvent2() {
+        return event2;
+    }
+
+    public void setEvent2(ScheduleEvent event2) {
+        this.event2 = event2;
+    }
+
+    public ScheduleModel getEventModel2() {
+        return eventModel2;
+    }
     
-      
+ 
+     
+    public ScheduleModel getLazyEventModel() {
+          
+        return lazyEventModel;
     }
-      
-      public CompSchedule(Integer idSchedule, String asunto, Date fechaInicio, Date fechaFin, String Descripcion ) {
-        this.idSchedule = idSchedule;
-        this.asunto = asunto;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.estado = "A";
-        this.descripcion = Descripcion;
+ 
+    private Calendar today() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
+ 
+        return calendar;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+     
+
+     
+    public ScheduleEvent getEvent() {
        
-      public CompSchedule(Integer idSchedule, String asunto, Date fechaInicio, Date fechaFin ) {
-        this.idSchedule = idSchedule;
-        this.asunto = asunto;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.estado = "A";
+        return event;
+    }
+ 
+    public void setEvent(ScheduleEvent event) {
+        
+       
+        this.event = event;
+    }
+
+    
+     private Date diaCompletoInicio() {
+        Calendar t = (Calendar) today().clone();
+        t.set(Calendar.AM_PM, Calendar.AM);
+        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
+        t.set(Calendar.HOUR, 12);
+        
+         
+        return t.getTime();
+    }
+    
+    private Date diaCompletoFin() {
+        Calendar t = (Calendar) today().clone();
+        t.set(Calendar.AM_PM, Calendar.PM);
+        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
+        t.set(Calendar.HOUR, 12);
+        return t.getTime();
+    }
+
+    public CompSchedule getEventoSelect() {
+        return eventoSelect;
+    }
+
+    public void setEventoSelect(CompSchedule eventoSelect) {
+        this.eventoSelect = eventoSelect;
+    }
+    
+     /************************************************************************************************* 
+     *PROCESO DE MANTENIMIENTO DE EVENTOS GESTIONADOS POR LOS USUARIOS DEL SISTEMA                    *                                                                                                *                                                                                                * 
+     *El metodo procede a añadir evento si no existe en el sistema, si existe procede actualizarlo    *
+     ************************************************************************************************** 
+     * @param actionEvent
+     * @throws javax.transaction.RollbackException
+     */  
+    
+    public void addEvent(ActionEvent actionEvent) throws javax.transaction.RollbackException  {
+      //VALIDACION DE LA EXISTENCIA DEL EVENTO
+        if(event.getId() == null && eventoSelect == null) {
+            // SI NO EXISTE
+            /***************************************************************************************************
+             * PROCEDEMOS A AñADIR EL EVENTO AL SISTEMA                                                        * 
+             * *************************************************************************************************
+             */
+            eventoSelect= new CompSchedule (null, event.getTitle(), event.getStartDate(), event.getEndDate(), event.getDescription(),eventoDetalle.getCategoria(), eventoSelect.getUbicacion(),eventoSelect.getPrioridad() ); 
+         
+        try {
+         
+           
+            utx.begin();
+            em.persist(eventoSelect);
+            utx.commit();
+                       
+             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":D Se añadio el evento \""+ event.getTitle() +"\" exitosamente", "");
+                 addMessage(message);
+            
+            
+        } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+     
+             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":( ERROR al actualizar el evento"+ event.getTitle() +" ",  e.getMessage());
+                 addMessage(message);
+            
+        } 
+       
+         
+        
+        }  else
+              // SI NO EXISTE
+            
+      try {
+            /***************************************************************************************************
+             * PROCEDEMOS A ACTUALIZAR EL EVENTO AL SISTEMA                                                    * 
+             * *************************************************************************************************
+             */
+        eventoSelect.setIdSchedule(eventoSelect.getIdSchedule());
+        eventoSelect.setAsunto(event.getTitle());
+        eventoSelect.setUbicacion(eventoSelect.getUbicacion());
+        eventoSelect.setFechaInicio( event.getStartDate());
+        eventoSelect.setFechaFin( event.getEndDate());
+        eventoSelect.setDescripcion(event.getDescription());
+        eventoSelect.setCategoria(eventoSelect.getCategoria());
+        eventoSelect.setPrioridad(eventoSelect.getPrioridad());
+          try {
+            utx.begin();
+            em.merge(eventoSelect);
+           utx.commit();
+           // MUESTRA NOTIFICACION EN PALANTALLA EXITOSO
+           FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":D Se actualizo el evento \""+ event.getTitle() +"\" exitosamente", "");
+           addMessage(message);
+           
+          } catch (NotSupportedException | SystemException | javax.transaction.RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+              //SI EXISTE ALGUNA EXCEPCION O ERROR MUESTRA EL TIPO DE ERROR
+          FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al actualizar el evento "+ event.getTitle() +" ", e.getMessage());
+                 addMessage(message);
+         
+          }
+        
+              
+         
+       
+          
+        } catch (Exception e) {
+      JsfUtil.addErrorMessage("Error al registrar el evento" + event.getTitle()+  " :" + e.getMessage());
+        }
+        event = new DefaultScheduleEvent();
+    }
+    
+   public void eliminarEvento()  throws javax.transaction.RollbackException {
+       buscarEvento(event.getTitle(), event.getDescription());
+       try {
+            utx.begin();
+            em.remove(eventoSelect);
+           utx.commit(); 
+           
+            // MUESTRA NOTIFICACION EN PALANTALLA EXITOSO
+           FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":D Se elimino el evento \""+ event.getTitle() +"\" exitosamente", "");
+           addMessage(message);
+       } catch (Exception e) {
+      
+         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al actualizar el evento "+ event.getTitle() +" ", e.getMessage());
+                 addMessage(message);
+       }
+   
+   
+   } 
+    
+   public void onEventSelect(SelectEvent selectEvent) {
+        event = (ScheduleEvent) selectEvent.getObject();
+        event2 = (ScheduleEvent) selectEvent.getObject();
+   
+         buscarEvento();
+         eventoDetalle  = eventoSelect;
+       
+      
+       
         
     }
-      //Constructor para actualizacion
+    public void onDateSelect(SelectEvent selectEvent) {
+        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+         event2 = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+    } 
+     
+    /**************************************************************************************************
+     *PROCESO PARA ACTUALIZAR EVENTO, DESPUES DE MOVERLO EN LA AGENDA                                 *                                                                                                *                                                                                                * 
+     *Realiza cambio de fecha de inicio y fin del evento                                              * 
+     ************************************************************************************************** 
+     * @param eventMove
+     */
+    
+    public void onEventMove(ScheduleEntryMoveEvent eventMove) {
+          
+           if(eventMove.getScheduleEvent().getId() != null){
+               //Buscamos el evento seleccionado en la base de datos
+               buscarEvento(eventMove.getScheduleEvent().getTitle(),eventMove.getScheduleEvent().getDescription());
+              
+               //si existe
+               if (eventoSelect != null) {
+                 
+                  try {
+                /**
+                 * PROCEDEMOS A ACTUCALIZAR DEL EVENTO, CON LA FECHA  DE INICIO Y FIN
+                 * 
+                 */
+                         CompSchedule  eventoMover = 
+                             new CompSchedule(eventoSelect.getIdSchedule(),
+                                         eventMove.getScheduleEvent().getTitle(),
+                                         formatoCalendar(eventMove.getScheduleEvent().getStartDate())       ,
+                                         formatoCalendar(eventMove.getScheduleEvent().getEndDate()), 
+                                         eventMove.getScheduleEvent().getDescription(),
+                                         eventoSelect.getCategoria(),
+                                         eventoSelect.getUbicacion(),
+                                         eventoSelect.getPrioridad());
+         
+                       try {
+                        //em.getTransaction().begin();
+                         utx.begin();
+                         em.merge(eventoMover);
+                         utx.commit();
+                        // em.getTransaction().commit();
+
+                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,"Se movio el evento \"" + eventMove.getScheduleEvent().getTitle() + "\" desde "
+                                 + eventMove.getScheduleEvent().getStartDate() + " hasta " + eventMove.getScheduleEvent().getEndDate(), "");
+                            addMessage(message);
+
+                        }//fin del try
+                       catch (NotSupportedException | SystemException | javax.transaction.RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al mover el evento "+ eventMove.getScheduleEvent().getTitle() +" ", e.getMessage());
+                                   addMessage(message);
+
+                            }        
+        } catch (Exception e) {
+              FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL,"Error al registrar el evento" + eventMove.getScheduleEvent().getTitle()+  " :" + e.getMessage(), "");
+                   addMessage(message);
+        }
+               }
       
-    public Integer getIdSchedule() {
-        return idSchedule;
+           }
+        
+        
+    } // fin del metodo mover
+     
+    public void onEventResize(ScheduleEntryResizeEvent event) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
+         
+          
+    }
+    
+      /************************************************************************************************* 
+     *PROCESO PARA BUSCAR EVENTO SELECCIONADO POR EL USUARIO                                          *                                                                                                *                                                                                                * 
+     *Busca el evento parametrizado por asusto y descripcion version 1 fecha 13-05-2016               *
+     ************************************************************************************************** 
+     * @return 
+     */ 
+    public CompSchedule buscarEvento (){
+    eventoSelect = new CompSchedule();
+        // si no ese ha seleccionado ningun evento
+        if (event.getId().isEmpty() || event.getId() == null) {
+             //enviamelo null
+            eventoSelect = null;
+        
+        }else{       //en caso de que exista procede a buscarlo por parametros
+                    if(event2.getDescription().isEmpty() || event2.getDescription() == null){
+                      eventoSelect = (CompSchedule) em.createQuery("SELECT s FROM CompSchedule s WHERE s.asunto =:asunto  ")
+                    .setParameter("asunto", event2.getTitle() )
+                    .getSingleResult();
+
+                    }else{
+                    eventoSelect = (CompSchedule) em.createQuery("SELECT s FROM CompSchedule s WHERE s.asunto =:asunto and s.descripcion = :descripcion")
+                    .setParameter("asunto", event2.getTitle() )
+                    .setParameter("descripcion", event2.getDescription())
+                    .getSingleResult();
+ 
+                    }
+     
+        }
+         return eventoSelect;
+    
+    }// fin de buscar el evento
+    
+        public CompSchedule buscarEvento (String AsuntoP, String DescripcionP){
+        eventoSelect = new CompSchedule();
+    
+          
+               if(DescripcionP.isEmpty()){
+                      eventoSelect = (CompSchedule) em.createQuery("SELECT s FROM CompSchedule s WHERE s.asunto =:asunto  ")
+                    .setParameter("asunto", AsuntoP )
+                    .getSingleResult();
+                            
+                    }else{
+                    eventoSelect = (CompSchedule) em.createQuery("SELECT s FROM CompSchedule s WHERE s.asunto =:asunto and s.descripcion = :descripcion")
+                    .setParameter("asunto", AsuntoP )
+                    .setParameter("descripcion", DescripcionP)
+                    .getSingleResult();
+                            
+                    }  
+            
+        
+    
+        
+         return eventoSelect;
+    
+    }// fin de buscar el evento
+     
+    private void addMessage(FacesMessage message) {
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }  
+
+    public CompSchedule getEvento() {
+        return evento;
     }
 
-    public void setIdSchedule(Integer idSchedule) {
-        this.idSchedule = idSchedule;
+    public void setEvento(CompSchedule evento) {
+        this.evento = evento;
     }
 
-    public String getAsunto() {
-        return asunto;
+    public List<CompSchedule> getListadeevento() {
+       
+        try {
+            
+            listadeevento = em.createNamedQuery("CompSchedule.findAll", CompSchedule.class).getResultList();
+            
+            
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage( "Error del sistema " + e.getMessage());
+        }
+        
+        return listadeevento;
     }
 
-    public void setAsunto(String asunto) {
-        this.asunto = asunto;
+    public void setListadeevento(List<CompSchedule> listadeevento) {
+        this.listadeevento = listadeevento;
+    }
+    
+     private java.sql.Date formatoCalendar( Date Fecha){
+     java.sql.Date fecha_valida = null;
+         
+     Calendar FechaFormato = Calendar.getInstance();
+     FechaFormato.set(Fecha.getYear() + 1900, Fecha.getMonth(), Fecha.getDate());
+     
+     fecha_valida = new java.sql.Date(FechaFormato.getTime().getTime());
+     return  fecha_valida;
+     }
+
+    public String getTipoEvento() {
+        return tipoEvento;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public void setTipoEvento(String tipoEvento) {
+        this.tipoEvento = tipoEvento;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public String getCategoria() {
+        return Categoria;
+    }
+
+    public void setCategoria(String Categoria) {
+        this.Categoria = Categoria;
     }
 
     public String getPrioridad() {
@@ -198,136 +502,14 @@ public class CompSchedule implements Serializable {
         this.prioridad = prioridad;
     }
 
-    public String getEstado() {
-        return estado;
+    public CompSchedule getEventoDetalle() {
+        return eventoDetalle;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setEventoDetalle(CompSchedule eventoDetalle) {
+        this.eventoDetalle = eventoDetalle;
     }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
     
-    public Date getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(Date fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    
-
-    public String getDLunes() {
-        return dLunes;
-    }
-
-    public void setDLunes(String dLunes) {
-        this.dLunes = dLunes;
-    }
-
-    public String getDMartes() {
-        return dMartes;
-    }
-
-    public void setDMartes(String dMartes) {
-        this.dMartes = dMartes;
-    }
-
-    public String getDMiercoles() {
-        return dMiercoles;
-    }
-
-    public void setDMiercoles(String dMiercoles) {
-        this.dMiercoles = dMiercoles;
-    }
-
-    public String getDJueves() {
-        return dJueves;
-    }
-
-    public void setDJueves(String dJueves) {
-        this.dJueves = dJueves;
-    }
-
-    public String getDViernes() {
-        return dViernes;
-    }
-
-    public void setDViernes(String dViernes) {
-        this.dViernes = dViernes;
-    }
-
-    public String getDSabado() {
-        return dSabado;
-    }
-
-    public void setDSabado(String dSabado) {
-        this.dSabado = dSabado;
-    }
-
-    public String getDDomingo() {
-        return dDomingo;
-    }
-
-    public void setDDomingo(String dDomingo) {
-        this.dDomingo = dDomingo;
-    }
-
-    public CuentaUsuarioComp getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(CuentaUsuarioComp idCuenta) {
-        this.idCuenta = idCuenta;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idSchedule != null ? idSchedule.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CompSchedule)) {
-            return false;
-        }
-        CompSchedule other = (CompSchedule) object;
-        if ((this.idSchedule == null && other.idSchedule != null) || (this.idSchedule != null && !this.idSchedule.equals(other.idSchedule))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.modules.models.CompSchedule[ idSchedule=" + idSchedule + " ]";
-    }
+     
     
 }
