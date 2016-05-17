@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -41,7 +41,10 @@
                 <h:panelGrid columns="2" cellpadding="0" cellspacing="2">
                             
                            <p:outputLabel for="title" value="Asunto:" />
-                       <p:inputText id="title" value="#{scheduleView.event.title}"  required="true" size="65"  />
+                           <p:inputText id="title" value="#{scheduleView.event.title}"  required="false" size="65" maxlength="120"  />
+                       
+                         <p:outputLabel for="ubicacion" value="Lugar:" />
+                         <p:inputText id="ubicacion" value="#{scheduleView.eventoSelect.ubicacion}"  required="false" size="65"  maxlength="60" />
                 </h:panelGrid>
                
                  
@@ -84,27 +87,27 @@
                 
                 <p:column>
                     
-                    <h:panelGrid columns="2" cellspacing="2">
+                    <h:panelGrid columns="1" cellspacing="2">
                           <f:facet name="header">
                             <p:outputLabel value="&emsp;&emsp;  ESTADOS DE EVENTO" />
 
                         </f:facet>
-                        <p:outputLabel for="tipoevento"  value="Tipo de Evento" />
+                        
                        
-                             <p:selectOneMenu id="tipoevento" value="#{scheduleView.tipoEvento}" style="width:125px">
-                                <f:selectItem itemLabel="tipo evento" itemValue="" />
-                                <f:selectItem itemLabel="Personal" itemValue="Personal" />
-                                <f:selectItem itemLabel="Familiar" itemValue="Familiar" />
-                                <f:selectItem itemLabel="Trabajo" itemValue="Trabajo" />
-                                <f:selectItem itemLabel="Negocios" itemValue="Negocios" />
+                        <p:selectOneMenu id="tipoevento" value="#{scheduleView.eventoSelect.categoria}" style="width:125px">
+                                <f:selectItem itemLabel="Categorizar" itemValue="" />
+                                <f:selectItem itemLabel="Personal" itemValue="personal" />
+                                <f:selectItem itemLabel="Familiar" itemValue="familiar" />
+                                <f:selectItem itemLabel="Trabajo" itemValue="trabajo" />
+                                <f:selectItem itemLabel="Negocios" itemValue="negocios" />
                         </p:selectOneMenu>
-                         <p:outputLabel for="prioridad"  value="prioridad" />
-                        <p:selectOneMenu id="prioridad" value="#{scheduleView.prioridad}" style="width:125px">
-                                <f:selectItem itemLabel="prioridad" itemValue="" />
-                                <f:selectItem itemLabel="bajo" itemValue="bajo" />
-                                <f:selectItem itemLabel="alto" itemValue="alto" />
-                                <f:selectItem itemLabel="urgente" itemValue="urgente" />
-                                <f:selectItem itemLabel="critico" itemValue="urgente" />
+                        
+                         <p:selectOneMenu id="prioridad" value="#{scheduleView.eventoSelect.prioridad}" style="width:125px">
+                                <f:selectItem itemLabel="Prioridad" itemValue="" />
+                                <f:selectItem itemLabel="Bajo" itemValue="bajo" />
+                                <f:selectItem itemLabel="Alto" itemValue="alto" />
+                                <f:selectItem itemLabel="Urgente" itemValue="urgente" />
+                                <f:selectItem itemLabel="Critico" itemValue="urgente" />
                         </p:selectOneMenu>
                     </h:panelGrid>
                         
@@ -115,7 +118,7 @@
                  </h:panelGrid>
             </p:row>
                 
-                
+              
              <p:row >
                  
                  <p:column>
@@ -132,11 +135,12 @@
                 <p:row >
                  
                  <p:column>
-                       <h:panelGrid columns="2"  cellspacing="5" cellpadding="1">  
+                       <h:panelGrid columns="3"  cellspacing="5" cellpadding="1">  
                     
  
                  <p:commandButton type="reset" value="Limpiar" />
                  <p:commandButton id="addButton" value="Guardar"   actionListener="#{scheduleView.addEvent}"  update=":ScheduleViewCalendarForm,:messages" icon="fa fa-save"   oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                 <p:commandButton id="delButton" value="Borrar"   actionListener="#{scheduleView.eliminarEvento}"  update=":ScheduleViewCalendarForm,:messages" icon="fa fa-trash-o"   oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                        </h:panelGrid>
                   </p:column>
                  
@@ -153,4 +157,3 @@
     
 
 </html>
-
