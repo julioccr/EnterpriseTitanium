@@ -40,7 +40,7 @@
                     </f:facet>
                     <h:outputText value="#{item.idSchedule}"/>
                 </p:column>
-
+ 
 
                 <p:column sortBy="#{item.asunto}" filterBy="#{item.asunto}">
                     <f:facet name="header">
@@ -59,6 +59,12 @@
 
 
 
+                  <p:column sortBy="#{item.ubicacion}" filterBy="#{item.ubicacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_ubicacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ubicacion}"/>
+                </p:column>
 
 
                 <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}">
