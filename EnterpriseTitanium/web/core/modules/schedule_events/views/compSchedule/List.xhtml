@@ -34,12 +34,12 @@
                 <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{compScheduleController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('CompScheduleListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.idSchedule}" filterBy="#{item.idSchedule}">
+<!--                <p:column sortBy="#{item.idSchedule}" filterBy="#{item.idSchedule}">
                     <f:facet name="header">
                         <h:outputText value="#{msg_schedule.ListCompScheduleTitle_idSchedule}"/>
                     </f:facet>
                     <h:outputText value="#{item.idSchedule}"/>
-                </p:column>
+                </p:column>-->
  
 
                 <p:column sortBy="#{item.asunto}" filterBy="#{item.asunto}">
@@ -50,12 +50,12 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+<!--                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
                     <f:facet name="header">
                         <h:outputText value="#{msg_schedule.ListCompScheduleTitle_descripcion}"/>
                     </f:facet>
                     <h:outputText value="#{item.descripcion}"/>
-                </p:column>
+                </p:column>-->
 
 
 
@@ -96,12 +96,12 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+<!--                <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
                     <f:facet name="header">
                         <h:outputText value="#{msg_schedule.ListCompScheduleTitle_estado}"/>
                     </f:facet>
                     <h:outputText value="#{item.estado}"/>
-                </p:column>
+                </p:column>-->
 
 
                 <p:column sortBy="#{item.categoria}" filterBy="#{item.categoria}">
@@ -117,6 +117,16 @@
                         <h:outputText value="#{msg_schedule.ListCompScheduleTitle_tipo}"/>
                     </f:facet>
                     <h:outputText value="#{item.tipo}"/>
+                </p:column>
+                
+                
+                <p:column sortBy="#{item.fechaRegistro}"  >
+                    <f:facet name="header">
+                        <h:outputText value="#{msg_schedule.ListCompScheduleTitle_FechaRegistro}"/>
+                    </f:facet>
+                   <h:outputText value="#{item.fechaRegistro}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                                        </h:outputText>
                 </p:column>
             
                 <!--

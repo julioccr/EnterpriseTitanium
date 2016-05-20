@@ -56,7 +56,7 @@
                             <p:inputText id="tipo" value="#{compScheduleController.selected.tipo}" title="#{msg_schedule.EditCompScheduleTitle_tipo}" size="45" maxlength="45"/>
                             <p:tooltip for="tipo" value="#{compScheduleController.getComponentMessages('tipo', msg_schedule.EditCompScheduleHelpText_tipo)}"/>
                         </h:panelGroup>
- 
+
                         <p:outputLabel value="#{msg_schedule.EditCompScheduleLabel_fechaInicio}" for="fechaInicio" />
                         <h:panelGroup>
                             <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{compScheduleController.selected.fechaInicio}" title="#{msg_schedule.EditCompScheduleTitle_fechaInicio}" required="true" requiredMessage="#{msg_schedule.EditCompScheduleRequiredMessage_fechaInicio}" showOn="button"/>

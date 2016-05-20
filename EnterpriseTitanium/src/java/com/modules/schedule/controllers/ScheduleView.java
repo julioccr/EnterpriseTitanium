@@ -5,6 +5,8 @@
  */
 package com.modules.schedule.controllers;
 
+import com.global.general.GlobalMetods;
+import com.global.general.VarSystem;
 import com.modules.schedule.ejb.CompScheduleFacade;
 import com.modules.schedule.models.CompSchedule;
 import com.security.controllers.util.JsfUtil;
@@ -42,7 +44,7 @@ import org.primefaces.model.ScheduleModel;
  */
 @ManagedBean
 @ViewScoped
-public class ScheduleView   implements Serializable {
+public class ScheduleView   extends GlobalMetods implements Serializable {
     private ScheduleModel eventModel, eventModel2;
      /*
 Primefaces                         Recreadas
@@ -73,6 +75,8 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
     private String Categoria;
     private String prioridad;
  
+    private GlobalMetods Global;
+    private VarSystem    varSystem;
      /************************************************************************************************* 
      *PROCESO PARA CARGAR EL SCHEDULE O AGENDA DE EVENTOS EN EL SISTEMA                               *                                                                                                *                                                                                                * 
      *                                                                                                *
@@ -219,7 +223,8 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
              * PROCEDEMOS A AñADIR EL EVENTO AL SISTEMA                                                        * 
              * *************************************************************************************************
              */
-            eventoSelect= new CompSchedule (null, event.getTitle(), event.getStartDate(), event.getEndDate(), event.getDescription(),eventoDetalle.getCategoria(), eventoSelect.getUbicacion(),eventoSelect.getPrioridad() ); 
+      
+            eventoSelect= new CompSchedule (null, event.getTitle(), event.getStartDate(), event.getEndDate(), event.getDescription(),eventoDetalle.getCategoria(), eventoSelect.getUbicacion(),eventoSelect.getPrioridad(), Global.fecha_system(), null ); 
          
         try {
          
@@ -249,6 +254,11 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
              * PROCEDEMOS A ACTUALIZAR EL EVENTO AL SISTEMA                                                    * 
              * *************************************************************************************************
              */
+         if (eventoSelect.getFechaRegistro() == null) {
+             eventoSelect.setFechaRegistro(fecha_system());  
+          }else{
+          eventoSelect.setFechaRegistro(eventoSelect.getFechaRegistro());
+          }
         eventoSelect.setIdSchedule(eventoSelect.getIdSchedule());
         eventoSelect.setAsunto(event.getTitle());
         eventoSelect.setUbicacion(eventoSelect.getUbicacion());
@@ -257,6 +267,8 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         eventoSelect.setDescripcion(event.getDescription());
         eventoSelect.setCategoria(eventoSelect.getCategoria());
         eventoSelect.setPrioridad(eventoSelect.getPrioridad());
+               
+        eventoDetalle.setFechaActualizacion(fecha_system());
           try {
             utx.begin();
             em.merge(eventoSelect);
@@ -298,7 +310,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                  addMessage(message);
        }
    
-   
+     
    } 
     
    public void onEventSelect(SelectEvent selectEvent) {
@@ -329,7 +341,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
            if(eventMove.getScheduleEvent().getId() != null){
                //Buscamos el evento seleccionado en la base de datos
                buscarEvento(eventMove.getScheduleEvent().getTitle(),eventMove.getScheduleEvent().getDescription());
-              
+                
                //si existe
                if (eventoSelect != null) {
                  
@@ -338,6 +350,13 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                  * PROCEDEMOS A ACTUCALIZAR DEL EVENTO, CON LA FECHA  DE INICIO Y FIN
                  * 
                  */
+                        if (eventoSelect.getFechaRegistro() == null) {
+                            DateNative =  fecha_system()  ;
+                            
+                        }else{
+                        DateNative =  eventoSelect.getFechaRegistro();
+                           }
+                      
                          CompSchedule  eventoMover = 
                              new CompSchedule(eventoSelect.getIdSchedule(),
                                          eventMove.getScheduleEvent().getTitle(),
@@ -346,7 +365,11 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                                          eventMove.getScheduleEvent().getDescription(),
                                          eventoSelect.getCategoria(),
                                          eventoSelect.getUbicacion(),
-                                         eventoSelect.getPrioridad());
+                                         eventoSelect.getPrioridad(),
+                                         DateNative,
+                                         new Date());
+                         
+                         
          
                        try {
                         //em.getTransaction().begin();
@@ -358,6 +381,11 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,"Se movio el evento \"" + eventMove.getScheduleEvent().getTitle() + "\" desde "
                                  + eventMove.getScheduleEvent().getStartDate() + " hasta " + eventMove.getScheduleEvent().getEndDate(), "");
                             addMessage(message);
+                            
+                            FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO,"Fecha Registro : \"" + new Date() + "\" desde "
+                                 + eventMove.getScheduleEvent().getStartDate() + " hasta " + eventMove.getScheduleEvent().getEndDate(), "");
+                            addMessage(message1);
+
 
                         }//fin del try
                        catch (NotSupportedException | SystemException | javax.transaction.RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
@@ -368,17 +396,88 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         } catch (Exception e) {
               FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL,"Error al registrar el evento" + eventMove.getScheduleEvent().getTitle()+  " :" + e.getMessage(), "");
                    addMessage(message);
-        }
+        }finally{
+                    // varSystem.DateNative = null;
+                  }
                }
       
            }
         
         
     } // fin del metodo mover
+    
+      /**************************************************************************************************
+     *PROCESO PARA REAJUSTAR O MODIFICAR LA FECHA DE LOS EVENTOS DE LA AGENDA                         *                                                                                                *                                                                                                * 
+     *Realiza cambio de fecha de inicio y fin del evento                                              * 
+     ************************************************************************************************** 
+     * @param event
+     */
      
     public void onEventResize(ScheduleEntryResizeEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
+      
+           
+           if(event.getScheduleEvent().getId() != null){
+               //Buscamos el evento seleccionado en la base de datos
+               buscarEvento(event.getScheduleEvent().getTitle(),event.getScheduleEvent().getDescription());
+                
+               //si existe
+               if (eventoSelect != null) {
+                 
+                  try {
+                /**
+                 * PROCEDEMOS A ACTUCALIZAR DEL EVENTO, CON LA FECHA  DE INICIO Y FIN
+                 * 
+                 */
+                        if (eventoSelect.getFechaRegistro() == null) {
+                            DateNative =  fecha_system()  ;
+                            
+                        }else{
+                        DateNative =  eventoSelect.getFechaRegistro();
+                           }
+                      
+                         CompSchedule  eventoMover = 
+                             new CompSchedule(eventoSelect.getIdSchedule(),
+                                         event.getScheduleEvent().getTitle(),
+                                         formatoCalendar(event.getScheduleEvent().getStartDate())       ,
+                                         formatoCalendar(event.getScheduleEvent().getEndDate()), 
+                                         event.getScheduleEvent().getDescription(),
+                                         eventoSelect.getCategoria(),
+                                         eventoSelect.getUbicacion(),
+                                         eventoSelect.getPrioridad(),
+                                         DateNative,
+                                         new Date());
+                         
+                         
          
+                       try {
+                        //em.getTransaction().begin();
+                         utx.begin();
+                         em.merge(eventoMover);
+                         utx.commit();
+                        // em.getTransaction().commit();
+
+                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,"Se movio el evento \"" + event.getScheduleEvent().getTitle() + "\" desde "
+                                 + event.getScheduleEvent().getStartDate() + " hasta " + event.getScheduleEvent().getEndDate(), "");
+                            addMessage(message);
+                            
+                             
+
+                        }//fin del try
+                       catch (NotSupportedException | SystemException | javax.transaction.RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al mover el evento "+ event.getScheduleEvent().getTitle() +" ", e.getMessage());
+                                   addMessage(message);
+
+                            }        
+        } catch (Exception e) {
+              FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL,"Error al registrar el evento" + event.getScheduleEvent().getTitle()+  " :" + e.getMessage(), "");
+                   addMessage(message);
+        }finally{
+                    // varSystem.DateNative = null;
+                  }
+               }
+      
+           }
+        
           
     }
     
@@ -507,7 +606,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
     }
 
     public void setEventoDetalle(CompSchedule eventoDetalle) {
-        this.eventoDetalle = eventoDetalle;
+//        this.eventoDetalle = eventoDetalle;
     }
     
      

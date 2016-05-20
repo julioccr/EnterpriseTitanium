@@ -14,7 +14,7 @@
             <var>msg_adm</var>
         </resource-bundle>
         <resource-bundle>
-            <base-name>/msg_schedule</base-name>
+            <base-name>/lang/it18/modulos/schedule/msg_schedule</base-name>
             <var>msg_schedule</var>
         </resource-bundle>
     </application>
