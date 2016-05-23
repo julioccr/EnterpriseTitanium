@@ -52,20 +52,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CompSchedule implements Serializable {
    
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = true)
     @Column(name = "idSchedule")
     private Integer idSchedule;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 10, max = 45)
     @Column(name = "Asunto")
     private String asunto;
+   
     @Basic(optional = true)
     @Size(min = 0, max = 120)
     @Column(name = "ubicacion")
     private String ubicacion;
+    
     @Size(max = 45)
     @Column(name = "Descripcion")
     private String descripcion;
@@ -138,22 +142,7 @@ public class CompSchedule implements Serializable {
         this.estado = "A";
     }
 
-     public CompSchedule( String asunto, Date fechaInicio, Date fechaFin, String Descripcion ) {
-        //this.idSchedule = idSchedule;
-        this.asunto = asunto;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.estado = "A";
-        this.descripcion = Descripcion;
-    }
-     
-       public CompSchedule(Integer idSchedule,   Date fechaInicio, Date fechaFin  ) {
-        this.idSchedule = idSchedule;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-    
-      
-    }
+
       
       public CompSchedule(Integer idSchedule, String asunto,
                           Date fechaInicio, Date fechaFin, 
@@ -174,15 +163,14 @@ public class CompSchedule implements Serializable {
         this.fechaRegistro = Fecha_Registro;
         this.fechaActualizacion = Fecha_Actualidacion;
     }
-       
-      public CompSchedule(Integer idSchedule, String asunto, Date fechaInicio, Date fechaFin ) {
-        this.idSchedule = idSchedule;
-        this.asunto = asunto;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.estado = "A";
-        
+
+    public CompSchedule(String ubicacion, String prioridad, String categoria) {
+        this.ubicacion = ubicacion;
+        this.prioridad = prioridad;
+        this.categoria = categoria;
     }
+
+      
       //Constructor para actualizacion
       
     public Integer getIdSchedule() {

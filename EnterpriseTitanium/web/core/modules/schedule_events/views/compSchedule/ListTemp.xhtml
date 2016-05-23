@@ -10,16 +10,17 @@
 
         <p:panel header="#{msg_schedule.ListCompScheduleTitle}">
             <p:contextMenu id="CompScheduleDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{msg_schedule.Create}" onclick="document.getElementById('CompScheduleListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{msg_schedule.View}" onclick="document.getElementById('CompScheduleListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{msg_schedule.Edit}" onclick="document.getElementById('CompScheduleListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg_schedule.Create}" style="visibility: hidden"    onclick="document.getElementById('CompScheduleListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg_schedule.View}"   onclick="document.getElementById('CompScheduleListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg_schedule.Edit}" style="visibility: hidden"   onclick="document.getElementById('CompScheduleListForm:editButton').click();" icon="ui-icon-pencil"/>
                 <p:menuitem value="#{msg_schedule.Delete}" onclick="document.getElementById('CompScheduleListForm:deleteButton').click();" icon="ui-icon-trash"/>
                 <p:separator/>
                 <p:menuitem value="#{msg_schedule.CompScheduleMenuItem_idCuenta}" icon="ui-icon-search"  actionListener="#{compScheduleController.prepareIdCuenta}" update=":CuentaUsuarioCompViewForm" oncomplete="PF('CuentaUsuarioCompViewDialog').show()" disabled="#{empty compScheduleController.selected.idCuenta}"/>  
             </p:contextMenu>
             <p:dataTable id="datalist"
-                         value="#{compScheduleController.lista}"
-                         rowKey="#{item.idSchedule}"
+                         value="#{compScheduleController.listaTemp}"
+                          rowKey="#{item.idSchedule}"
+                         lazy="true"
                          var="item"
                          paginator="true"
                          rows="10"
@@ -206,12 +207,14 @@
 
             </p:dataTable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg_schedule.Create}" actionListener="#{compScheduleController.prepareCreate}" update=":CompScheduleCreateForm" oncomplete="PF('CompScheduleCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg_schedule.View}" update=":CompScheduleViewForm" oncomplete="PF('CompScheduleViewDialog').show()" disabled="#{empty compScheduleController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_schedule.Edit}" update=":CompScheduleEditForm" oncomplete="PF('CompScheduleEditDialog').show()" disabled="#{empty compScheduleController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg_schedule.Delete}" actionListener="#{compScheduleController.delete}" update=":growl,datalist" disabled="#{empty compScheduleController.selected}">
+           
+            <p:commandButton id="viewButton"   style="visibility: visible;" icon="ui-icon-search" value="#{msg_schedule.View}" update=":CompScheduleViewForm" oncomplete="PF('CompScheduleViewDialog').show()" disabled="#{empty compScheduleController.selected}"/>
+           
+            <p:commandButton id="deleteButton" style="visibility: visible;" icon="ui-icon-trash"  value="#{msg_schedule.Delete}" actionListener="#{compScheduleController.delete}" update=":growl,datalist" disabled="#{empty compScheduleController.selected}">
                 <p:confirm header="#{msg_schedule.ConfirmationHeader}" message="#{msg_schedule.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
+            <p:commandButton id="createButton"   style="visibility: hidden;"    disabled="true"                        icon="ui-icon-plus"   value="#{msg_schedule.Create}" actionListener="#{compScheduleController.prepareCreate}" update=":CompScheduleCreateForm" oncomplete="PF('CompScheduleCreateDialog').show()"/>
+             <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg_schedule.Edit}" update=":CompScheduleEditForm" oncomplete="PF('CompScheduleEditDialog').show()" disabled="true"/>
 
         </p:panel>
         <ui:include src="/core/modules/schedule_events/views/includes/confirmation.xhtml"/>

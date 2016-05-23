@@ -1,11 +1,18 @@
 package com.modules.schedule.controllers;
 
 import com.modules.schedule.controllers.util.MobilePageController;
+import com.modules.schedule.ejb.LazyEntityDataModel;
 import com.modules.schedule.models.CompSchedule;
+import com.sun.xml.xsom.impl.scd.SCDParserConstants;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Named(value = "compScheduleController")
 @ViewScoped
@@ -39,4 +46,33 @@ public class CompScheduleController extends AbstractController<CompSchedule> {
             idCuentaController.setSelected(this.getSelected().getIdCuenta());
         }
     }
+    
+    
+    private List<CompSchedule> lista = new ArrayList<>();
+    @PersistenceContext
+    EntityManager em;
+    
+    public List<CompSchedule> getLista() {
+         lista = em.createNamedQuery("CompSchedule.findByEstado",CompSchedule.class)
+             .setParameter("estado", "A")
+             .getResultList();
+             
+             return lista;
+             
+    }
+
+     public List<CompSchedule> getListaTemp() {
+         lista = em.createNamedQuery("CompSchedule.findByEstado",CompSchedule.class)
+             .setParameter("estado", "N")
+             .getResultList();
+             
+             return lista;
+             
+    }
+    public void setLista(List<CompSchedule> lista) {
+        this.lista = lista;
+    }
+    
+    
+    
 }

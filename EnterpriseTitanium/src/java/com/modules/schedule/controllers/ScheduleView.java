@@ -6,7 +6,7 @@
 package com.modules.schedule.controllers;
 
 import com.global.general.GlobalMetods;
-import com.global.general.VarSystem;
+import com.modules.schedule.ejb.AbstractFacade;
 import com.modules.schedule.ejb.CompScheduleFacade;
 import com.modules.schedule.models.CompSchedule;
 import com.security.controllers.util.JsfUtil;
@@ -45,6 +45,10 @@ import org.primefaces.model.ScheduleModel;
 @ManagedBean
 @ViewScoped
 public class ScheduleView   extends GlobalMetods implements Serializable {
+   
+     @Inject
+     private AbstractFacade<CompSchedule> ejbFacade;
+    
     private ScheduleModel eventModel, eventModel2;
      /*
 Primefaces                         Recreadas
@@ -53,7 +57,7 @@ Interface ScheduleEvent         =  ScheduleEventExtender  // Define los metodos 
 Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implementa el constructor con la definicion de los metodos ScheduleModelExtender y
 							      algunos metodos de ScheduleEventExtender 
 */
-      private int id ;
+     // private int id ;
    
     
      @PersistenceContext
@@ -71,12 +75,13 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
     private List<CompSchedule> listadeevento = new  ArrayList<CompSchedule>();
     
     //datos de evento
+    private String Ubicacion;
     private String tipoEvento;
     private String Categoria;
     private String prioridad;
- 
-    private GlobalMetods Global;
-    private VarSystem    varSystem;
+    
+   
+
      /************************************************************************************************* 
      *PROCESO PARA CARGAR EL SCHEDULE O AGENDA DE EVENTOS EN EL SISTEMA                               *                                                                                                *                                                                                                * 
      *                                                                                                *
@@ -158,17 +163,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
  
         return calendar;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-     
-
-     
+   
     public ScheduleEvent getEvent() {
        
         return event;
@@ -213,9 +208,10 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
      ************************************************************************************************** 
      * @param actionEvent
      * @throws javax.transaction.RollbackException
+     * 
      */  
     
-    public void addEvent(ActionEvent actionEvent) throws javax.transaction.RollbackException  {
+    public void addEvent(ActionEvent actionEvent) throws javax.transaction.RollbackException   {
       //VALIDACION DE LA EXISTENCIA DEL EVENTO
         if(event.getId() == null && eventoSelect == null) {
             // SI NO EXISTE
@@ -224,7 +220,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
              * *************************************************************************************************
              */
       
-            eventoSelect= new CompSchedule (null, event.getTitle(), event.getStartDate(), event.getEndDate(), event.getDescription(),eventoDetalle.getCategoria(), eventoSelect.getUbicacion(),eventoSelect.getPrioridad(), Global.fecha_system(), null ); 
+            eventoSelect= new CompSchedule (null, event.getTitle(), event.getStartDate(), event.getEndDate(), event.getDescription(), getCategoria(), getUbicacion(), getPrioridad(), fecha_system(), null ); 
          
         try {
          
@@ -261,12 +257,12 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
           }
         eventoSelect.setIdSchedule(eventoSelect.getIdSchedule());
         eventoSelect.setAsunto(event.getTitle());
-        eventoSelect.setUbicacion(eventoSelect.getUbicacion());
+        eventoSelect.setUbicacion(getUbicacion());
         eventoSelect.setFechaInicio( event.getStartDate());
         eventoSelect.setFechaFin( event.getEndDate());
         eventoSelect.setDescripcion(event.getDescription());
-        eventoSelect.setCategoria(eventoSelect.getCategoria());
-        eventoSelect.setPrioridad(eventoSelect.getPrioridad());
+        eventoSelect.setCategoria( getCategoria());
+        eventoSelect.setPrioridad(getPrioridad());
                
         eventoDetalle.setFechaActualizacion(fecha_system());
           try {
@@ -285,7 +281,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
           }
         
               
-         
+          
        
           
         } catch (Exception e) {
@@ -294,14 +290,16 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         event = new DefaultScheduleEvent();
     }
     
+    
    public void eliminarEvento()  throws javax.transaction.RollbackException {
-       buscarEvento(event.getTitle(), event.getDescription());
+      
+      CompSchedule evento  = buscarEvento();
        try {
-            utx.begin();
-            em.remove(eventoSelect);
-           utx.commit(); 
-           
-            // MUESTRA NOTIFICACION EN PALANTALLA EXITOSO
+                 
+            ejbFacade.remove(evento); 
+      
+                    
+            // MUESTRA NOTIFICACION EN PANTALLA EXITOSO
            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":D Se elimino el evento \""+ event.getTitle() +"\" exitosamente", "");
            addMessage(message);
        } catch (Exception e) {
@@ -316,10 +314,13 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
    public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
         event2 = (ScheduleEvent) selectEvent.getObject();
-   
+         
          buscarEvento();
          eventoDetalle  = eventoSelect;
-       
+         setUbicacion(eventoSelect.getUbicacion());
+         setPrioridad(eventoSelect.getPrioridad());
+         setCategoria(eventoSelect.getCategoria());
+          
       
        
         
@@ -345,7 +346,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                //si existe
                if (eventoSelect != null) {
                  
-                  try {
+                  try { // try de validaciones y de parametros : Padre
                 /**
                  * PROCEDEMOS A ACTUCALIZAR DEL EVENTO, CON LA FECHA  DE INICIO Y FIN
                  * 
@@ -367,11 +368,11 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                                          eventoSelect.getUbicacion(),
                                          eventoSelect.getPrioridad(),
                                          DateNative,
-                                         new Date());
+                                         fecha_system());
                          
                          
          
-                       try {
+                       try { // inicio de try almacenamiento
                         //em.getTransaction().begin();
                          utx.begin();
                          em.merge(eventoMover);
@@ -381,18 +382,14 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,"Se movio el evento \"" + eventMove.getScheduleEvent().getTitle() + "\" desde "
                                  + eventMove.getScheduleEvent().getStartDate() + " hasta " + eventMove.getScheduleEvent().getEndDate(), "");
                             addMessage(message);
-                            
-                            FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO,"Fecha Registro : \"" + new Date() + "\" desde "
-                                 + eventMove.getScheduleEvent().getStartDate() + " hasta " + eventMove.getScheduleEvent().getEndDate(), "");
-                            addMessage(message1);
-
-
-                        }//fin del try
+                        
+                          }//fin del try almacenaniento
+                      
                        catch (NotSupportedException | SystemException | javax.transaction.RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
                             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al mover el evento "+ eventMove.getScheduleEvent().getTitle() +" ", e.getMessage());
                                    addMessage(message);
 
-                            }        
+                            }       // fin del try : Padre
         } catch (Exception e) {
               FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL,"Error al registrar el evento" + eventMove.getScheduleEvent().getTitle()+  " :" + e.getMessage(), "");
                    addMessage(message);
@@ -412,9 +409,8 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
      ************************************************************************************************** 
      * @param event
      */
-     
-    public void onEventResize(ScheduleEntryResizeEvent event) {
       
+       public void onEventResize(ScheduleEntryResizeEvent event) {
            
            if(event.getScheduleEvent().getId() != null){
                //Buscamos el evento seleccionado en la base de datos
@@ -438,14 +434,14 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                          CompSchedule  eventoMover = 
                              new CompSchedule(eventoSelect.getIdSchedule(),
                                          event.getScheduleEvent().getTitle(),
-                                         formatoCalendar(event.getScheduleEvent().getStartDate())       ,
+                                         formatoCalendar(event.getScheduleEvent().getStartDate()),
                                          formatoCalendar(event.getScheduleEvent().getEndDate()), 
                                          event.getScheduleEvent().getDescription(),
                                          eventoSelect.getCategoria(),
                                          eventoSelect.getUbicacion(),
                                          eventoSelect.getPrioridad(),
                                          DateNative,
-                                         new Date());
+                                         fecha_system());
                          
                          
          
@@ -471,15 +467,12 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         } catch (Exception e) {
               FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL,"Error al registrar el evento" + event.getScheduleEvent().getTitle()+  " :" + e.getMessage(), "");
                    addMessage(message);
-        }finally{
-                    // varSystem.DateNative = null;
-                  }
-               }
-      
-           }
-        
-          
+        } 
+                  
+      }
+    
     }
+  }
     
       /************************************************************************************************* 
      *PROCESO PARA BUSCAR EVENTO SELECCIONADO POR EL USUARIO                                          *                                                                                                *                                                                                                * 
@@ -553,7 +546,9 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
        
         try {
             
-            listadeevento = em.createNamedQuery("CompSchedule.findAll", CompSchedule.class).getResultList();
+            listadeevento = em.createNamedQuery("CompSchedule.findByEstado", CompSchedule.class)
+                    .setParameter("estado", "A")
+                    .getResultList();
             
             
         } catch (Exception e) {
@@ -607,6 +602,14 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
 
     public void setEventoDetalle(CompSchedule eventoDetalle) {
 //        this.eventoDetalle = eventoDetalle;
+    }
+
+    public String getUbicacion() {
+        return Ubicacion;
+    }
+
+    public void setUbicacion(String Ubicacion) {
+        this.Ubicacion = Ubicacion;
     }
     
      

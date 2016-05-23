@@ -31,11 +31,11 @@ public abstract class AbstractController<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Inject
-    private AbstractFacade<T> ejbFacade;
+    protected AbstractFacade<T> ejbFacade;
     private Class<T> itemClass;
     private T selected;
-    private Collection<T> items;
-    private LazyEntityDataModel<T> lazyItems;
+    protected Collection<T> items;
+    protected LazyEntityDataModel<T> lazyItems;
 
     private enum PersistAction {
 
