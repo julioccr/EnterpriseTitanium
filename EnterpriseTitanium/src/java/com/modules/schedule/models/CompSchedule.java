@@ -79,7 +79,7 @@ public class CompSchedule implements Serializable {
     @Size(max = 45)
     @Column(name = "estado")
     private String estado;
-    @Size(max = 45)
+    @Size(max = 45) 
     @Column(name = "categoria")
     private String categoria;
     @Size(max = 45)
@@ -149,13 +149,20 @@ public class CompSchedule implements Serializable {
                           String Descripcion, String Categoria,
                           String Ubicacion,  String Prioridad, 
                           Date Fecha_Registro,
-                          Date Fecha_Actualidacion) {
+                          Date Fecha_Actualidacion,
+                          String Estado) {
           
         this.idSchedule = idSchedule;
         this.asunto = asunto;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.estado = "A";
+          if (Estado.isEmpty() ) {
+           this.estado = "A";
+          }else {
+          
+          this.estado =  Estado;
+          }
+    
         this.descripcion = Descripcion;
         this.categoria = Categoria;
         this.ubicacion = Ubicacion;

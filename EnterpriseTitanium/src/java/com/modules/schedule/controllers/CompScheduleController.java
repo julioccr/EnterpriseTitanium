@@ -63,7 +63,7 @@ public class CompScheduleController extends AbstractController<CompSchedule> {
 
      public List<CompSchedule> getListaTemp() {
          lista = em.createNamedQuery("CompSchedule.findByEstado",CompSchedule.class)
-             .setParameter("estado", "N")
+             .setParameter("estado", "T")
              .getResultList();
              
              return lista;

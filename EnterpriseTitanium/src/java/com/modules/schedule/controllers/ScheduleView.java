@@ -10,11 +10,17 @@ import com.modules.schedule.ejb.AbstractFacade;
 import com.modules.schedule.ejb.CompScheduleFacade;
 import com.modules.schedule.models.CompSchedule;
 import com.security.controllers.util.JsfUtil;
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.javaIdentifierType;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -86,35 +92,43 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
      *PROCESO PARA CARGAR EL SCHEDULE O AGENDA DE EVENTOS EN EL SISTEMA                               *                                                                                                *                                                                                                * 
      *                                                                                                *
      ************************************************************************************************** 
+     *  
+     * @throws java.text.ParseException
      */ 
     @PostConstruct
-    public void init() {
+    public void init()    {
         //Se crearon dos event model uno para dar mantenimiento y otro solo para cargar contenido
         eventModel = new DefaultScheduleModel();
         eventModel2 = new DefaultScheduleModel();
         //ejecuta la consulta en la tabla de eventos  para cargar los eventos como objetos
         getListadeevento();
+            DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
          //se genera una lista
          for(int i = 0; i < getListadeevento().size(); i++){
            
             //por cada entidad consultada procede a guardarla en el objeto evento
-            evento =  getListadeevento().get(i);
+           
+         
+               evento =  getListadeevento().get(i);
               //Instanciamos un objeto de la calse DefaultScheduleEvent, es la que define los atributos de un evento
               DefaultScheduleEvent itemEvent = new DefaultScheduleEvent();
-              
+          
               //agregamos los atributos del evento a las propiedades de la isntancia de DefaultScheduleEvent itemEvent
               itemEvent.setId(String.valueOf(evento.getIdSchedule()));
               itemEvent.setTitle(evento.getAsunto());
-              itemEvent.setStartDate(formatoCalendar(evento.getFechaInicio()));
-              itemEvent.setEndDate(formatoCalendar(evento.getFechaFin()));
-              itemEvent.setStyleClass(evento.getCategoria());
-              itemEvent.setDescription(evento.getDescripcion());
+                itemEvent.setStartDate(fechaValidaCalendar(evento.getFechaInicio()));
+                itemEvent.setEndDate(fechaValidaCalendar(evento.getFechaFin()) );
+                itemEvent.setStyleClass(evento.getCategoria());
+                itemEvent.setDescription(evento.getDescripcion());
              
               //eventModel2 es para gestionar los eventos
-              eventModel2.addEvent(itemEvent);
+                eventModel2.addEvent(itemEvent);
               //añadimos todos los eventos hasta que finalice el for a la agenda.
               //eventModel es para mostrar contenido
-              eventModel.addEvent(itemEvent);
+                eventModel.addEvent(itemEvent);
+            
+              
+             
         
         }
          
@@ -175,7 +189,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         this.event = event;
     }
 
-    
+  
      private Date diaCompletoInicio() {
         Calendar t = (Calendar) today().clone();
         t.set(Calendar.AM_PM, Calendar.AM);
@@ -220,7 +234,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
              * *************************************************************************************************
              */
       
-            eventoSelect= new CompSchedule (null, event.getTitle(), event.getStartDate(), event.getEndDate(), event.getDescription(), getCategoria(), getUbicacion(), getPrioridad(), fecha_system(), null ); 
+            eventoSelect= new CompSchedule (null, event.getTitle(), event.getStartDate(), event.getEndDate(), event.getDescription(), getCategoria(), getUbicacion(), getPrioridad(), fecha_system(), null, GS_Activo ); 
          
         try {
          
@@ -263,6 +277,7 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
         eventoSelect.setDescripcion(event.getDescription());
         eventoSelect.setCategoria( getCategoria());
         eventoSelect.setPrioridad(getPrioridad());
+        
                
         eventoDetalle.setFechaActualizacion(fecha_system());
           try {
@@ -291,12 +306,13 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
     }
     
     
-   public void eliminarEvento()  throws javax.transaction.RollbackException {
+    public void temporarEvent()  throws javax.transaction.RollbackException {
       
       CompSchedule evento  = buscarEvento();
+      evento.setEstado(GS_Temporar);
        try {
                  
-            ejbFacade.remove(evento); 
+            ejbFacade.edit(evento); 
       
                     
             // MUESTRA NOTIFICACION EN PANTALLA EXITOSO
@@ -309,6 +325,26 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
        }
    
      
+   } 
+   public void eliminarEvento()  throws javax.transaction.RollbackException {
+      
+      CompSchedule evento  = buscarEvento();
+       evento.setEstado(GS_Nulo);
+       try {
+                 
+            ejbFacade.edit(evento); 
+      
+                    
+            // MUESTRA NOTIFICACION EN PANTALLA EXITOSO
+           FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, ":D Se elimino el evento \""+ event.getTitle() +"\" exitosamente", "");
+           addMessage(message);
+       } catch (Exception e) {
+      
+         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ":) ERROR al actualizar el evento "+ event.getTitle() +" ", e.getMessage());
+                 addMessage(message);
+       }
+    
+      
    } 
     
    public void onEventSelect(SelectEvent selectEvent) {
@@ -368,7 +404,8 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                                          eventoSelect.getUbicacion(),
                                          eventoSelect.getPrioridad(),
                                          DateNative,
-                                         fecha_system());
+                                         fecha_system(),
+                                         null);
                          
                          
          
@@ -441,7 +478,8 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
                                          eventoSelect.getUbicacion(),
                                          eventoSelect.getPrioridad(),
                                          DateNative,
-                                         fecha_system());
+                                         fecha_system(),
+                                            null);
                          
                          
          
@@ -571,7 +609,34 @@ Clase     DefaultScheduleModel  =  ScheduleEventExtenderImplementent // implemen
      fecha_valida = new java.sql.Date(FechaFormato.getTime().getTime());
      return  fecha_valida;
      }
-
+     
+    private  String formatoFechaHoraMinutos( java.util.Date Fecha)  {
+    DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    return  format1.format(Fecha);
+     }
+ 
+    
+        
+     private  java.util.Date fechaValidaCalendar (Date date)  {
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        // format : convierte una fecha a formato string
+        // Parset : convierte un String a fecha
+         java.sql.Date fecha_convert = new java.sql.Date(calendar.getTime().getTime());
+        
+         Date fecha_valida = null;
+         try {
+             fecha_valida = format1.parse( format1.format(fecha_convert));
+         } catch (ParseException ex) {
+             Logger.getLogger(ScheduleView.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         
+         return fecha_valida; 
+    }
+     
+     
     public String getTipoEvento() {
         return tipoEvento;
     }

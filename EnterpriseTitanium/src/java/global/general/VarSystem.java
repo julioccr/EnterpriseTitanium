@@ -3,18 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.global.general;
+package global.general;
 
  
 
 /**
- *
+ * Variables globales del sistema
  * @author JCortorreal
  */
 public abstract class  VarSystem {
     
    protected java.util.Date DateNative;
    protected java.sql.Date DateSQL;
+   
+   //Estados de Registros
+   public final String GS_Activo = "A";
+   public final String GS_Temporar = "T";
+   public final String GS_Nulo = "N";
+   
     
     
     

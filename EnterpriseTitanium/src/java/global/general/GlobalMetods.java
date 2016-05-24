@@ -5,6 +5,7 @@
  */
 package com.global.general;
 
+import global.general.VarSystem;
 import java.util.Date;
 
 /**

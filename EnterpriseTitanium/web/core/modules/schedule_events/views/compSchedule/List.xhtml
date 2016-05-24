@@ -58,7 +58,6 @@
                 </p:column>-->
 
 
-
                   <p:column sortBy="#{item.ubicacion}" filterBy="#{item.ubicacion}">
                     <f:facet name="header">
                         <h:outputText value="#{msg_schedule.ListCompScheduleTitle_ubicacion}"/>
@@ -72,7 +71,7 @@
                         <h:outputText value="#{msg_schedule.ListCompScheduleTitle_fechaInicio}"/>
                     </f:facet>
                     <h:outputText value="#{item.fechaInicio}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm"  />
                     </h:outputText>
                 </p:column>
 
