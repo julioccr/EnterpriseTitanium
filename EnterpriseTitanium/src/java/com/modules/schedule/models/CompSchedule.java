@@ -83,7 +83,7 @@ public class CompSchedule implements Serializable {
     @Column(name = "categoria")
     private String categoria;
     @Size(max = 45)
-    @Column(name = "tipo")
+    @Column(name = "tipo") 
     private String tipo;
     @Basic(optional = false)
     @NotNull

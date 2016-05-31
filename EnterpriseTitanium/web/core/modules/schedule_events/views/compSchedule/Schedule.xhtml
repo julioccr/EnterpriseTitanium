@@ -12,7 +12,7 @@
         <h:outputScript library="scripts" name="pfcrud.js"/>
     </h:head>
     <ui:composition template="/core/modules/schedule_events/views/includes/template.xhtml"> 
-        <ui:define name="title">Eventos</ui:define>
+        <ui:define name="title">Calendario</ui:define>
        <ui:define name="body">
         <ui:include src="/core/modules/schedule_events/views/menu/menutab.xhtml"/>
       
@@ -69,15 +69,15 @@
                         </h:panelGroup>
                         <p:outputLabel for="from" value="Desde:&emsp;" />
                         
-                        <p:calendar id="from" value="#{scheduleView.event.startDate}" showOn="button"  navigator="true" pattern="dd/MM/yyyy HH:mm"/>
+                        <p:calendar id="from" value="#{scheduleView.fecha_Inicio}"    showOn="button"  timeZone=""   navigator="true" pattern="dd/MM/yyyy HH:mm"/>
                        
                         <h:panelGroup >  
                             <center>
                             <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
                             </center>
-                        </h:panelGroup>
+                        </h:panelGroup> 
                         <p:outputLabel for="to" value="Hasta:&emsp;" />
-                        <p:calendar id="to" value="#{scheduleView.event.endDate}" showOn="button"  navigator="true" pattern="dd/MM/yyyy HH:mm"/>
+                        <p:calendar id="to" value="#{scheduleView.fecha_Conclucion}" showOn="button"  timeZone=""  navigator="true" pattern="dd/MM/yyyy HH:mm"/>
                     
                            
                        

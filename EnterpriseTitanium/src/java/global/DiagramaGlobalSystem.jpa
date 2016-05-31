@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings theme="MAC" jaxb-support="false" id="_14646208063471" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:ns4="http://nbmodeler.java.net" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <jpa:package>System.Global</jpa:package>
+    <jpa:mapped-superclass jaxb-root-element="false" static-metamodel="false" abstract="false" class="AbstrcPersisten" visibile="true" minimized="false" id="_1464621422641">
+        <jpa:attributes>
+            <jpa:element-collection name="Create" target-class="String" collection-type="java.util.Collection" visibile="true" id="_14646214590417">
+                <jpa:collection-table/>
+            </jpa:element-collection>
+            <jpa:element-collection name="attribute1" target-class="String" collection-type="java.util.Collection" visibile="true" id="_14646215056668">
+                <jpa:collection-table/>
+            </jpa:element-collection>
+            <jpa:transient name="attribute2" attribute-type="String" visibile="true" id="_14646215088909"/>
+        </jpa:attributes>
+    </jpa:mapped-superclass>
+    <jpa:embeddable static-metamodel="false" abstract="false" class="Embeddable_1" visibile="true" minimized="false" id="_1464621569677">
+        <jpa:attributes/>
+    </jpa:embeddable>
+    <jpa:diagram id="_14646208063472">
+        <plane elementRef="_14646208063471" id="_14646208063473_p">
+            <shape elementRef="_1464621422641" id="_1464621422641_gui">
+                <Bounds x="115.0" y="81.0" width="189.0" height="113.0"/>
+            </shape>
+            <shape elementRef="_1464621569677" id="_1464621569677_gui">
+                <Bounds x="417.0" y="112.0" width="184.0" height="24.0"/>
+            </shape>
+        </plane>
+    </jpa:diagram>
+</jpa:entity-mappings>
