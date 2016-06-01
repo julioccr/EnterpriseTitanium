@@ -6,7 +6,7 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-
+   
 @Named(value = "direccionElectronicaController")
 @ViewScoped
 public class DireccionElectronicaController extends AbstractController<DireccionElectronica> {

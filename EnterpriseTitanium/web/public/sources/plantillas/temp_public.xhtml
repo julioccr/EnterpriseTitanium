@@ -1,0 +1,137 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;">
+    <!ENTITY bull "&#8226;">
+    <!ENTITY copy "&#169;">
+]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="pfcrud.css"/>
+        <h:outputScript library="scripts" name="pfcrud.js"/>
+        
+        
+         <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="shortcut icon" type="image/png" href="resources/images/icons/titanium_iconb.png" />
+         </f:facet>
+
+ 
+    <h:outputStylesheet name="css/showcase.css" />
+    <h:outputStylesheet name="css/perfect-scrollbar.css" />
+    <h:outputStylesheet name="css/sh.css" />
+    <h:outputScript name="jquery/jquery.js" library="primefaces" />
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces" />
+    <h:outputScript name="scripts/perfect-scrollbar.js" />
+    <h:outputScript name="scripts/showcase.js" />
+    <ui:insert name="head" />
+
+        
+        
+    </h:head>
+
+    <h:body>
+
+        <p:growl id="growl" life="5000" globalOnly="true"/>
+
+        <p:layout fullPage="true" style="border:  0px">
+            <p:layoutUnit position="north" size="20" style="background-color: #25aae1" >
+                <!-- Menu here. Also a layout and a way to log a user out -->
+                <ui:include src="/public/sources/menu/m_panel.xhtml"/>  
+            </p:layoutUnit>
+
+<!--            <p:layoutUnit position="south" size="60">
+                <ui:insert name="footer"/>
+            </p:layoutUnit>-->
+
+           
+                
+                <ui:insert name="body"/>
+                
+                
+                 <p:layoutUnit  position="center">
+                        
+    <!-- PC CONTENT STARTS HERE-->
+    <div class="PC">
+        <br />
+        <br />
+        <div id="MENUSIDE" style="position:   absolute">
+    	<div id="MENUSIDEindent">
+           
+            <div class="MenuSideMainLink bordersOfMenuSide"><h:graphicImage name="images/zoom.svg" class="zoomIcon"/><input id="menuSearch" type="text" placeholder="Search Menu" class="boldFont fontSize14 mustClose searchInput"/></div>
+            
+            <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="/images/mono/ajaxCore.svg" /><span class="MainLinkText">Ajax Core</span></span>
+            <div class="SubMenuLinkContainer">
+            	<a class="SubMenuLink" href="#{request.contextPath}/core/administracion/views/entidades/index.xhtml">&bull; Basic</a>
+             
+            </div>
+            
+            
+          
+           
+            
+             
+            <span id="SubMenu-Multimedia" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="images/mono/multimedia.svg" /><h:graphicImage styleClass="hiddenIcons" name="images/mono/multimediaBlue.svg" /><span class="MainLinkText">Multimedia</span></span>
+            <div class="SubMenuLinkContainer">
+            </div>
+            
+            <span id="SubMenu-File" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="images/mono/file.svg" /><h:graphicImage styleClass="hiddenIcons" name="images/mono/fileBlue.svg" /><span class="MainLinkText">File</span></span>
+            <div class="SubMenuLinkContainer">
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/file/upload/basic.xhtml">&bull; Upload</a>
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/file/download.xhtml">&bull; Download</a>
+            </div>
+            
+            <span id="SubMenu-DragDrop" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="images/mono/dragdrop.svg" /><h:graphicImage styleClass="hiddenIcons" name="images/mono/dragdropBlue.svg" /><span class="MainLinkText">DragDrop</span></span>
+            <div class="SubMenuLinkContainer">
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/dnd/draggable.xhtml">&bull; Draggable</a>
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/dnd/dataGrid.xhtml">&bull; DataGrid</a>
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/dnd/dataTable.xhtml">&bull; DataTable</a>
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/dnd/custom.xhtml">&bull; Custom</a>
+            </div>
+            
+       
+            
+        
+ 
+    
+    <div id="CONTENTSIDE">
+    	<div id="CONTENTSIDEindent">
+            
+        
+            
+  
+            
+        </div>
+    </div>
+        </div>
+    
+    </div>
+    </div>
+    <!-- PC CONTENT END-->
+            </p:layoutUnit>
+
+       
+
+                
+  
+            
+     
+            
+
+              <ui:insert name="highlight">
+        <h:outputScript name="scripts/sh.js" target="body"/>
+    </ui:insert>
+    
+            
+        </p:layout>
+
+    </h:body>
+
+</html>

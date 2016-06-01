@@ -4,6 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <application>
+<!-- DEFINICION DE LOS RECURSOS DE MENSAJES -->       
         <resource-bundle>
             <base-name>/lang/it18/security/msg_security</base-name>
             <var>msg_security</var>
@@ -17,5 +18,10 @@
             <base-name>/lang/it18/modulos/schedule/msg_schedule</base-name>
             <var>msg_schedule</var>
         </resource-bundle>
+        <resource-bundle>
+        <base-name>/lang/it18/publico/msg_public</base-name>
+            <var>msg_public</var>
+        </resource-bundle>
+        
     </application>
 </faces-config>
