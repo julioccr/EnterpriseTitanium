@@ -24,31 +24,30 @@
 }
 
 /*  ----------------------------------------------------------------------------------------------------- */
+ 
 
-body{margin:0px; height:100%; overflow-x:hidden; overflow-y:auto; background-color:#20272a; font-family: 'latoregular', "Trebuchet MS", Arial, Helvetica, sans-serif;color:#5C666A;}
-
-	#LOGOTEXTSIDE{display:block;width:290px; float:left; height:74px; z-index:999; background-image:url("#{resource['main/images/logoCircuitLines.svg']}"); background-repeat:no-repeat; background-position:center right;
+	#LOGOTEXTSIDE{display:block;width:290px; float:left; height:74px; z-index:999; background-image:url("#{resource['main/images/logoCircuitLines.svg']}");   background-position:center right;
 				  margin:-20px 0px 0px 0px; padding-top:25px; line-height:30px;}
 		.logoDarkText{color:#5c666a;}
 		.logoBlueText{color:#25aae1;}
  
 	/* menu side style*/
-	#MENUSIDE{width:85px; float:left; background-color:#0078ae; border-right:solid 1px;color: #ffffff; overflow:hidden; width: 300px; position: fixed;}
+	#MENUSIDE{width:70px; float:left; background-color:#0078ae; border-right:solid 1px;color: #404a4e; overflow:hidden; width: 280px; position: fixed;}
 		#MENUSIDEindent{width:100%; height:auto;}
-			#LOGO{height:87px; display:block; padding:27px 0 5px 10px; z-index:997; background-color:#313b3f;margin-left:100px}
+			#LOGO{height:87px; display:block; padding:27px 0 5px 10px; z-index:997; background-color:#404a4e;margin-left:80px}
 				#LOGO img{width:62px; height:auto; }
 			.MenuSideMainLink{width:100%; height:45px; display:block; padding:15px 0px 0px 27px; cursor:pointer;}
-				.MenuSideMainLink input{ padding:6px; background-color:#354044; outline:none; border:0px; border:none; color:#9ba5ac; border-radius:20px;
+				.MenuSideMainLink input{ padding:6px; background-color:#404a4e; outline:none; border:0px; border:none; color:#9ba5ac; border-radius:40px;
 				-webkit-box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5); -moz-box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5); box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5);}
-			.MenuSideMainLinkDark{background-color:#20282b !important; -webkit-transition: all 0.5s ease; -moz-transition: all 0.5s ease; -ms-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease;}
-			.MenuSideMainLink:hover{background-color:#20282b; -webkit-transition: all 0.5s ease; -moz-transition: all 0.5s ease; -ms-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease;}
+			.MenuSideMainLinkDark{background-color:#404a4e !important; -webkit-transition: all 0.5s ease; -moz-transition: all 0.5s ease; -ms-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease;}
+			.MenuSideMainLink:hover{background-color:#404a4e; -webkit-transition: all 0.5s ease; -moz-transition: all 0.5s ease; -ms-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease;}
 				.MenuSideMainLink img{width:30px; height:auto; float:left;}
-				.MainLinkText{color:#9ba5ac; font-size:20px; margin:2px 0px 0px 60px; display:block;}
+				.MainLinkText{color:#9ba5ac; font-size:14px; margin:2px 0px 0px 60px; display:block;}
 				
-			.SubMenuLinkContainer{width:auto; padding:20px; overflow:hidden; background-color:#20282b; display: none;}
-				.SubMenuLink{width:50%; display:inline-block; float:left; padding:6px 0px; cursor:pointer; border-radius:4px; -webkit-border-radius:4px; color:#659eb3; font-size:14px;
+			.SubMenuLinkContainer{width:auto; padding:10px; overflow:hidden; background-color:#404a4e; display: none;}
+				.SubMenuLink{width:50%; display:inline-block; float:left; padding:6px 0px; cursor:pointer; border-radius:4px; -webkit-border-radius:4px; color:#8dc5d9; font-size:14px; background-color:#0078ae;
 				}
-				.SubMenuLink:hover{background-color:#101517; color:#8dc5d9;}
+				.SubMenuLink:hover{background-color:#0078ae; color:#8dc5d9;}
 						
 	.selectmenu{width:auto; max-width:120px; float:right; padding:5px; outline:none; font-size:16px; display:block; overflow:hidden;}
 		.LEVEL1{color:#25aae1; padding-left:10px;}
@@ -104,7 +103,7 @@ body{margin:0px; height:100%; overflow-x:hidden; overflow-y:auto; background-col
 			.MOBILE .BoxesIndent{width:85%; float:none; margin:0px auto; padding-top:30px;}
 	
 /** ThemeSwitcher **/
-.navOverlay{width:200px; max-height:400px; overflow-y:auto; background-color:#eff3f6; border:solid 1px #bcc7cf; z-index:99999999999; position: absolute; 
+.navOverlay{width:200px; max-height:400px; overflow-y:auto; background-color:#25AAE1; border:solid 1px #bcc7cf; z-index:99999999999; position: absolute; 
 				border-radius:10px; -moz-border-radius:10px; -webkit-border-radius:10px; -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.2); -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.2); 
 				box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.2); margin-left:-60px; display: none;}
 					.navOverlay a{display:block; padding:10px; border-bottom:solid 1px #bcc7cf; text-align:left; color:#87939B; overflow:hidden;}
@@ -217,9 +216,7 @@ input.searchInput {
     font-size: 90%;
 }
 
-.Implementation {
-    background-color:#ffffff;
-}
+ 
 
 .Implementation h3 {
     margin-top: 40px;

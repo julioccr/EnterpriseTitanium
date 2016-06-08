@@ -41,38 +41,63 @@
 
         <p:growl id="growl" life="5000" globalOnly="true"/>
 
-        <p:layout fullPage="true" style="border:  0px">
-            <p:layoutUnit position="north" size="20" style="background-color: #25aae1" >
-                <!-- Menu here. Also a layout and a way to log a user out -->
-                <ui:include src="/public/sources/menu/m_panel.xhtml"/>  
+        <p:layout fullPage="true"  style="border:  0px;  ">
+            <p:layoutUnit position="north"   style="  float: top; border: 0px;  border-radius: 0px; padding-bottom: 4%" collapseSize="0">
+           
+            
+                <h:form>
+                   
+                        
+                 
+                    
+                    <p:menubar class="PC" style="position: fixed; padding-bottom:  2.5%; padding-top: 2%;  padding-right: 99%; border: 0px;  border-radius: 0px;  background-color: #404a4e  !important;" >
+                <f:facet name="options">
+                    
+                    <h1  style="position:  absolute; left: 2.8%; top: -25%; font-size:  50px; color: #0078ae; font-family:initial ">Titanium </h1> 
+                </f:facet>
+                
+                
+                  
+                
+            <f:facet  name="options">
+            <p:inputText style="margin-right:10px; position: absolute; right: 11%" placeholder="Search" />
+            <p:commandButton type="button"    icon="fa fa-user" style="color: gold; position: absolute; right: 9.5%" label="Login" /> 
+            <p:commandButton type="button"   icon="fa fa-user-plus" style="color: chartreuse; position: absolute; right: 7.8%" label="Nueva Cuenta"/> 
+        </f:facet>
+            </p:menubar>
+                
+                        
+                       </h:form>
+            
+            
             </p:layoutUnit>
 
-<!--            <p:layoutUnit position="south" size="60">
-                <ui:insert name="footer"/>
-            </p:layoutUnit>-->
-
+ 
            
                 
-                <ui:insert name="body"/>
+               
                 
                 
-                 <p:layoutUnit  position="center">
+            <p:layoutUnit collapseSize="0" style="border-radius: 0px; border: 0px"  position="center"> 
+                 <ui:insert name="body"/>
+                
+                </p:layoutUnit>
                         
-    <!-- PC CONTENT STARTS HERE-->
-    <div class="PC">
-        <br />
-        <br />
-        <div id="MENUSIDE" style="position:   absolute">
+ 
+            
+    
+    
+                <p:layoutUnit  position="west"  minSize="280" style="border: 0px" size="100" >
+                        
+                         
+                           <div style="margin: 0.5%" class="PC">
+       
+        <div id="MENUSIDE" style="position:    fixed">
     	<div id="MENUSIDEindent">
            
             <div class="MenuSideMainLink bordersOfMenuSide"><h:graphicImage name="images/zoom.svg" class="zoomIcon"/><input id="menuSearch" type="text" placeholder="Search Menu" class="boldFont fontSize14 mustClose searchInput"/></div>
             
-            <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="/images/mono/ajaxCore.svg" /><span class="MainLinkText">Ajax Core</span></span>
-            <div class="SubMenuLinkContainer">
-            	<a class="SubMenuLink" href="#{request.contextPath}/core/administracion/views/entidades/index.xhtml">&bull; Basic</a>
-             
-            </div>
-            
+         
             
           
            
@@ -115,20 +140,11 @@
     </div>
     </div>
     <!-- PC CONTENT END-->
-            </p:layoutUnit>
-
-       
-
+                        
+      
+               </p:layoutUnit>
                 
-  
-            
-     
-            
-
-              <ui:insert name="highlight">
-        <h:outputScript name="scripts/sh.js" target="body"/>
-    </ui:insert>
-    
+                
             
         </p:layout>
 

@@ -241,18 +241,8 @@
  * @license
  * Dual licensed under the MIT and GPL licenses.
  */
-.syntaxhighlighter {
-  background-color: white !important;
-}
-.syntaxhighlighter .line.alt1 {
-  background-color: #EFF3F6 !important;
-}
-.syntaxhighlighter .line.alt2 {
-  background-color: #EFF3F6 !important;
-}
-.syntaxhighlighter .line.highlighted.alt1, .syntaxhighlighter .line.highlighted.alt2 {
-  background-color: #e0e0e0 !important;
-}
+ 
+ 
 .syntaxhighlighter .line.highlighted.number {
   color: black !important;
 }
@@ -324,11 +314,7 @@
 .syntaxhighlighter .constants {
   color: #0066cc !important;
 }
-.syntaxhighlighter .script {
-  font-weight: bold !important;
-  color: #006699 !important;
-  background-color: none !important;
-}
+ 
 .syntaxhighlighter .color1, .syntaxhighlighter .color1 a {
   color: gray !important;
 }

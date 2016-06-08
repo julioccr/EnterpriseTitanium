@@ -5,9 +5,7 @@
     z-index:20 !important;
     overflow:visible !important;;
 }
-.ui-layout-north .ui-layout-unit-content {
-    overflow:visible !important;
-}
+ 
 .ui-widget-header {
     text-align: center;
     text-transform: uppercase;
@@ -16,13 +14,28 @@
     text-align: left;
 }
 
+
 .column {
     font-weight: bold;
     background-color: menu;
 }
 
 .ui-widget-content a {
-    color: #0066cc;
+    color: #8dc5d9;
+}
+
+.ui-widget-content{
+    background: none;
+     
+}
+
+.ui-layout-unit .ui-layout-unit-content{
+    padding: 0.0em 0em;
+    border: 0px none;
+    overflow: auto;
+
+    
+    
 }
 
   .personal, .personal .fc-event-skin .personal a{ background: red !important; } 
