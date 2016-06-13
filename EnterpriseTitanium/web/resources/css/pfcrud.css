@@ -14,6 +14,12 @@
     text-align: left;
 }
 
+.formatButon{
+     width: 230px;
+     border-radius: 0px
+    
+    
+}
 
 .column {
     font-weight: bold;

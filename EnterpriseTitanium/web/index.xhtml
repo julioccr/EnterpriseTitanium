@@ -10,11 +10,8 @@
             <h:outputText value="#{msg_public.appName}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:form>
-                <p:panel style="border-radius: 0px; ;border-left: 0px " header="#{msg_security.Welcome}">
-                <p><h:outputText value="#{msg_security.WelcomeMessage}"></h:outputText></p>
-            </p:panel>
-            </h:form>
+       
+               <ui:include src="public/sources/frames/login.xhtml" />
         </ui:define>
 
     </ui:composition>

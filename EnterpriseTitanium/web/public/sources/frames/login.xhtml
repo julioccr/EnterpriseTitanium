@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition >
+     
+               <h:form>
+                   <center>
+                      
+                       <p:panel header="Inicio de Session" style="position: absolute" footer="Acceso al Sistema">
+                            <p:graphicImage value="/resources/images/logo-user.png"   height="90" width="90"  />                   
+                           <h:panelGrid columns="1" cellpadding="5" cellspacing="0">
+                    
+                               <p:outputLabel for="username" value="Nombre de Usuario "    />
+                               <p:inputText style="border-radius: 0px; width: 220px"  id="username" value="" required="true" />
+                               <p:outputLabel  for="password" value="Clave de Acceso "  />
+                    <p:password id="password" style="border-radius: 0px; width: 220px"  value="#" required="true" />
+                  
+            
+                </h:panelGrid>
+                           <h:panelGrid columns="1" cellpadding="3">
+                               <p:commandButton styleClass="formatButon" icon="fa fa-unlock" value="INICIAR SESSION" />
+                               <p:commandButton  styleClass="formatButon" icon="fa fa-user-plus" value="NUEVA CUENTA" />
+                    <p:commandButton styleClass="formatButon"  icon="fa fa-user-secret"   value="RECUPERAR CUENTA" />
+              
+                           </h:panelGrid>
+            </p:panel>
+                   </center>
+        
+        </h:form>  
+
+    </ui:composition>
+
+</html>
