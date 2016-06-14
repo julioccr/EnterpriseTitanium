@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition >
+      
+   <h:form>
+                   
+                        
+                 
+                    
+                    <p:menubar class="PC" style="position: fixed; padding-bottom:  2.5%; padding-top: 2%;  padding-right: 99%; border: 0px;  border-radius: 0px;  background-color: #404a4e  !important;" >
+                <f:facet name="options">
+                    
+                    <h1  style="position:  absolute; left: 2.8%; top: -25%; font-size:  50px; color: #0078ae; font-family:initial ">Titanium </h1> 
+                </f:facet>
+                
+                
+                  
+                
+            <f:facet  name="options">
+            <p:inputText style="margin-right:10px; position: absolute; right: 11%" placeholder="Search" />
+            <p:commandButton type="button"   onclick="PF('dlgLogin').show();" title="Iniciar Session"  icon="fa fa-user" style="color: gold; position: absolute; right: 9.5%" label="Login" /> 
+            <p:commandButton type="button"   icon="fa fa-user-plus" title="Nueva Cuenta" style="color:  chartreuse; position: absolute; right: 7.4%" label="Nueva Cuenta"/> 
+        </f:facet>
+            </p:menubar>
+                
+          <ui:include src="/public/sources/float/flogin.xhtml" />               
+                       </h:form>
+        
+        
+       
+
+    </ui:composition>
+
+</html>

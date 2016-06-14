@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition >
+ 
+                   
+                    
+                           <div style="margin: 0.5%" class="PC">
+       
+        <div id="MENUSIDE" style="position:    fixed">
+    	<div id="MENUSIDEindent">
+           
+            <div class="MenuSideMainLink bordersOfMenuSide"><h:graphicImage name="images/zoom.svg" class="zoomIcon"/><input id="menuSearch" type="text" placeholder="Search Menu" class="boldFont fontSize14 mustClose searchInput"/></div>
+            
+         
+            
+          
+           
+            
+             
+            <span id="SubMenu-Multimedia" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="images/mono/multimedia.svg" /><h:graphicImage styleClass="hiddenIcons" name="images/mono/multimediaBlue.svg" /><span class="MainLinkText">Multimedia</span></span>
+            <div class="SubMenuLinkContainer">
+            </div>
+            
+            <span id="SubMenu-File" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="images/mono/file.svg" /><h:graphicImage styleClass="hiddenIcons" name="images/mono/fileBlue.svg" /><span class="MainLinkText">File</span></span>
+            <div class="SubMenuLinkContainer">
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/file/upload/basic.xhtml">&bull; Upload</a>
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/file/download.xhtml">&bull; Download</a>
+            </div>
+            
+            <span id="SubMenu-DragDrop" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="images/mono/dragdrop.svg" /><h:graphicImage styleClass="hiddenIcons" name="images/mono/dragdropBlue.svg" /><span class="MainLinkText">DragDrop</span></span>
+            <div class="SubMenuLinkContainer">
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/dnd/draggable.xhtml">&bull; Draggable</a>
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/dnd/dataGrid.xhtml">&bull; DataGrid</a>
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/dnd/dataTable.xhtml">&bull; DataTable</a>
+                <a class="SubMenuLink" href="#{request.contextPath}/ui/dnd/custom.xhtml">&bull; Custom</a>
+            </div>
+            
+       
+            
+        
+ 
+    
+    <div id="CONTENTSIDE">
+    	<div id="CONTENTSIDEindent">
+            
+        
+            
+  
+            
+        </div>
+    </div>
+        </div>
+    
+    </div>
+    </div>
+    <!-- PC CONTENT END-->            
+               
+
+    </ui:composition>
+
+</html>

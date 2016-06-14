@@ -2,14 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:composition >
-     
- 
-
+        <p:dialog  showEffect="drop" hideEffect="drop"     widgetVar="dlgLogin"  footer="&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;INICIO DE SESSION" resizable="false" modal="true" appendTo="@(body)"  width="300" height="355">
+            <ui:include src="/public/sources/frames/login.xhtml" />
+     </p:dialog>
     </ui:composition>
 
 </html>
